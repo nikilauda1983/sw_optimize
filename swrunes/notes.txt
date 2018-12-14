@@ -1,0 +1,9 @@
+* Add filter : average damage : (non crit damage * (100-cr) + crit dmage * cr)/100
+* Add "Add pet" feature;
+* Non-main set : will be very slow.
+* change Recursive permuation -> Iterative
+* Add ungrind option in Runes Manager (View runes with hp% ungrinded)
+* Add global lock button in Pet Manager.
+* Fix problem lushen cant lock lushen1 or verse (no lock image button). 
+* Fix problem in Pet Manager when changing Enemy, the main tablle skills mesh up!
+* Improve speed , no second rune set+no brokenset.

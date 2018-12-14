@@ -1,0 +1,53 @@
+Basic 1. Skill - Flame Ray: 380% Atk
+Upgraded 1. Skill - Flame Ray - Flood: 100% Attack * ((Spd + 120) / 60)
+Upgraded 1. Skill - Flame Ray - Chain: 4 * 100% Atk
+Basic 2. Skill - Flaming Magic Bullet: 580% Atk
+Basic 2. Skill - Igniting Magic Bullet: 580% Atk
+Upgraded 2. Skill - Flaming Magic Bullet- Flood: 100% Atk * ((Spd + 170) / 50)
+Upgraded 2. Skill - Flaming Magic Bullet- Accelerate: 580% Atk
+Upgraded 2. Skill - Igniting Magic Bullet- Brand: 580% Atk
+Upgraded 2. Skill - Igniting Magic Bullet- Chain: 3 * 200% Atk
+3. Skill - Burn Soul: (Spd / 100 + (Enemy Spd + 225) / 60) * 100% Atk
+3. Skill - Flaming Thunder: 100% Atk * ((Spd + 165) / 70)
+3. Skill - Eruption: 800% Atk
+3. Skill - Flame Explosion: 4 * 200% Atk
+Homunculus - Water
+Basic 1. Skill - Frost Ray: 380% Atk
+Upgraded 1. Skill - Frost Ray - Purify: 380%
+Upgraded 1. Skill - Frost Ray - Fluctuate: 280%
+Basic 2. Skill - Pulverizing Magic Bullet: 580% Atk
+Basic 2. Skill - Icy Magic Bullet: 360% Atk
+Upgraded 2. Skill - Pulverizing Magic Bullet- Fluctuate: 360% Atk
+Upgraded 2. Skill - Pulverizing Magic Bullet- Amplify: 400% Atk + 10% Enemy MAX HP
+Upgraded 2. Skill - Icy Magic Bullet - Absorb: 360% Atk
+Upgraded 2. Skill - Icy Magic Bullet - Chain: 3 * 120% Atk
+3. Skill - Ice Explosion: 460% Atk
+3. Skill - Freeze Mind: 550% Atk + 10% Enemy MAX HP
+3. Skill - Frost Wind: 410% Atk
+3. Skill - Ice Mist: 460% Atk
+Homunculus - Wind
+Basic 1. Skill - Shock Ray: 380% Atk
+Upgraded 1. Skill - Shock Ray - Chain: 3 * 130% Atk
+Upgraded 1. Skill - Shock Ray - Destroy: 380%
+Basic 2. Skill - Air Magic Bullet: 580% Atk
+Basic 2. Skill - Lightning Magic Bullet: 580% Atk
+Upgraded 2. Skill - Air Magic Bullet - Brand: 580% Atk
+Upgraded 2. Skill - Air Magic Bullet - Chain: 3 * 200% Atk
+Upgraded 2. Skill - Lightning Magic Bullet - Destroy: 580% Atk
+Upgraded 2. Skill - Lightning Magic Bullet - Suppress: 580% Atk
+3. Skill - Whirling Wind: 3 * 250% Atk
+3. Skill - Magic Bullet Madness: 5 * 180% Atk
+3. Skill - Sharp Wind: 800% Atk
+3. Skill - Soul Shot: 800% Atk
+Light Shock: 360% Attack
+Light Shock - Purification: 360% Attack
+Light Shock - Chain: 3 x 120% Attack
+Dark Shock: 360% Attack
+Dark Shock - Purification: 360% Attack
+Dark Shock - Chain: 3 x 120% Attack
+Operation Gamma: 480% Attack
+Operation Gamma - Weaken: 480% Attack
+Operation Gamma - Control: 480% Attack
+Operation Delta: 480% Attack
+Operation Delta - Chain: 3 x 160% Attack
+Operation Delta - Ruin: 480% Attack

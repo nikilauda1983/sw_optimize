@@ -1,0 +1,28 @@
+13.845 dmg (hellhound)
+13.616
+12.19 vs (fire inu) (def 491)
+
+chikura hell 10.821 (def 579)/11.028
+chikura hell 8.700 dmg (def 837)
+8.6k dmg
+
+boss : 5694 (def 1386)
+
+
+Ferun castle : 3606 (wind ifrit);
+4710, 4770,4791 (def 544)
+4988 (def 484)
+
+Ran :
+faimon hell hound: 4380,4318,4336,4209
+skill 2 : 3.5
+faimon hell raoq : 3851
+chikura scorpion (837 def) : 2751,2662
+chikura flower (570 def) : 3500,3480,3418
+
+Ferun hard Skeleton (544) : 3400
+
+copper light :41.673,40104,41774
+Copper water : 40.400,40.000,40.875, 40.812  ;42.261,41,028,41.727,40.922;40.763
+Copper vs fire : 38.900,39.200 ,38.899,39.500;38.190,39.500
+Copper vs fire glancing : 11.039,

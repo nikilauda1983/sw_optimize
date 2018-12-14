@@ -1,0 +1,38 @@
+Lushen : 
+Best build : 1 : ___ : {ACC=8, ATK%=15%, CDmg=12, CRate=11, HP flat=156, ATK flat=118} ; [lv_12, 6*, id_897, Swift, Kaito]
+2 : SPD : {RES=4, CDmg=9, CRate=9, SPD=33 (39), ATK flat=15, HP%=11%} ; [lv_14, 5*, id_433, Swift, Julie]
+3 : ___ : {DEF flat=118, RES=5, CDmg=7, CRate=17, HP%=17%, DEF%=5%} ; [lv_12, 6*, id_668, Blade, Lushen]
+4 : CDmg : {ACC=14, ATK%=14%, CDmg=80, CRate=6, DEF%=12%} ; [lv_15, 6*, id_441, Blade, Tyron]
+5 : ___ : {ATK%=18%, CDmg=15, CRate=5, SPD=12, HP flat=1800} ; [lv_12, 6*, id_436, Swift, Julie]
+6 : ATK% : {ATK%=41 (63), CDmg=11, CRate=6, DEF%=11%} ; [lv_10, 6*, id_485, Swift, Stella]
+runesets : {DEF flat=118, ACC=22, RES=9, ATK%=110, CDmg=134, CRate=66, SPD=76, HP flat=1956, ATK flat=133, HP%=28, DEF%=28} : [Swi
+ft, Blade]
+ : Total : 14740
+Combo : {acc=22, cd=50+134, res=15+9, def=461+247, spd=103+76, hp=9225+4539, atk=900+1123, cr=15+66}
+Final : {acc=22, cd=184, res=24, def=708, spd=179, hp=13764, atk=2023, cr=81}
+
+Lushen : 
+Best build : 1 : ___ : {ATK%=15%, CDmg=4, CRate=13, ATK flat=94} ; [lv_9, 6*, id_112, Rage, ??]
+2 : SPD : {ACC=4, RES=4, ATK%=13%, CDmg=5, CRate=15, SPD=42} ; [lv_15, 6*, id_535, Focus, Spectra]
+3 : ___ : {DEF flat=106, CDmg=4, CRate=11, SPD=4, HP%=10%} ; [lv_13, 5*, id_650, Rage, Katarina]
+4 : CDmg : {ATK%=22%, CDmg=80, CRate=4, SPD=15, DEF%=12%} ; [lv_15, 6*, id_669, Rage, Lushen]
+5 : ___ : {ATK%=12%, CDmg=3, CRate=11, HP flat=1530, DEF%=6%} ; [lv_12, 5*, id_670, Rage, Lushen]
+6 : ATK% : {ACC=6, ATK%=63%, CDmg=7, CRate=17, SPD=10} ; [lv_15, 6*, id_437, Endure, Julie]
+runesets : {DEF flat=106, ACC=10, RES=4, ATK%=125, CDmg=143, CRate=71, SPD=71, HP flat=1530, ATK flat=94, HP%=10, DEF%=18} : [Rage
+]
+ : Total : 17875
+Combo : {acc=10, cd=50+143, res=15+4, def=461+188, spd=103+71, hp=9225+2452, atk=900+1219, cr=15+71}
+Final : {acc=10, cd=193, res=19, def=649, spd=174, hp=11677, atk=2119, cr=86
+
+
+Shumar : 
+Best build : 1 : ___ : {ATK%=4%, CDmg=8, CRate=8, SPD=13, HP flat=199, ATK flat=99} ; [lv_12, 5*, id_398, pet_1, Swift, Konamiya]
+2 : ATK% : {RES=12, ACC=5, ATK%=47 (63), CDmg=7, SPD=15, HP%=15%} ; [lv_12, 6*, id_67, pet_0, Swift, ??]
+3 : ___ : {DEF flat=99, CDmg=6, CRate=10, SPD=8, HP%=11%} ; [lv_12, 5*, id_430, pet_6, Swift, Julie]
+4 : ATK% : {DEF flat=13, ACC=8, ATK%=53 (63), CRate=17, DEF%=6%} ; [lv_14, 6*, id_605, pet_35, Blade, Orochi]
+5 : ___ : {ATK%=18%, CDmg=15, CRate=5, SPD=12, HP flat=1800} ; [lv_12, 6*, id_432, pet_6, Swift, Julie]
+6 : ATK% : {DEF flat=10, ATK%=37 (51), CDmg=8, CRate=10, HP%=13%} ; [lv_12, 5*, id_867, pet_96, Blade, Kaz]
+runesets : {DEF flat=122, ACC=13, RES=12, ATK%=199, CDmg=44, CRate=62, SPD=73, HP flat=1999, ATK flat=99, HP%=39, DEF%=6} : [Swift, Blade]
+ : Total : 79689
+Combo : {acc=13, cd=50+44, res=15+12, def=472+150, spd=113+73, hp=7575+4953, atk=834+1758, cr=30+62}
+Final : {acc=13, cd=94, res=27, def=622, spd=186, hp=12528, atk=2592, cr=92}  ; Total Remove Cost : 350000
