@@ -2,6 +2,7 @@ package swrunes;
 
 import com.google.gson.Gson;
 import gui.mainWindow;
+
 import java.io.BufferedReader;
 
 import java.io.FileReader;
@@ -21,35 +22,34 @@ import java.util.Map;
 public class Bestiary {
 
     public static class SkillWikiInfo {
-        public String skill_name,skill_desc,multy, tooltip;
-        public List<String> skill_up = new ArrayList<>();        
+        public String skill_name, skill_desc, multy, tooltip;
+        public List<String> skill_up = new ArrayList<>();
     }
 
     public static class PetInfo {
-
         String acc, cr, cd, res, star, spd, hp, atk, def;
         String uName, aName, element;
         String crawlLink;
         public List<SkillWikiInfo> skills = new ArrayList<>();
     }
+
     public Map<String, PetInfo> allPets = new HashMap<>();
 
     public static Bestiary loadFile() {
 
-        
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(Bestiary.class.getResourceAsStream("/res/Pet_Bestiary.json")));
-            String content="";
+            String content = "";
             String line;
             Gson gson = new Gson();
             while ((line = br.readLine()) != null) {
-                content+=line+"\n";
+                content += line + "\n";
             }
             br.close();
             //System.out.println("Content : "+content);
-            if (content.length()>0){
+            if (content.length() > 0) {
                 return gson.fromJson(content, Bestiary.class);
-            }                        
+            }
             Reader reader = new FileReader("Pet_Bestiary.json");
             return gson.fromJson(reader, Bestiary.class);
         } catch (Exception e) {
@@ -87,13 +87,13 @@ public class Bestiary {
                 //System.out.println("Load config ok : " + gson.toJson(instance));
             }
             (new Thread() {
-            public void run() {
-                //jLabelIcon.setText("");
-                System.out.println("Check missing avatars in Threading");
-                Crawler.checkMissingAvatar();
-                System.out.println("Done Check missing avatars in Threading");
-            }
-        }).start();
+                public void run() {
+                    //jLabelIcon.setText("");
+                    System.out.println("Check missing avatars in Threading");
+                    Crawler.checkMissingAvatar();
+                    System.out.println("Done Check missing avatars in Threading");
+                }
+            }).start();
         }
         return instance;
     }

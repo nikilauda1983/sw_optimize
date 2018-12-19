@@ -1,7 +1,0 @@
-verad : hp 11535+18886, def 800+1140, spd 93+146
-chloe : hp 11700+14504, def 648+715,  spd 111+164
-rakan : hp 11700+26795, def 637+430,  spd 95+47
-perna : hp 12345+16278, def +220, spd +85
-chasun : hp 27291 , def +585, spd +112
-theomar : +5956 , def +154, spd +107
-aladriel : +28260, +785, spd+48

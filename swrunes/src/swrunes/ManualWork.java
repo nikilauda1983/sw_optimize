@@ -34,10 +34,10 @@ public class ManualWork {
         lushen.showPetRune();
     }
 
-    public void copperWork() {             
+    public void copperWork() {
         getPet("Copper2").defDame = true;
         PetType lushen = searchPets("Copper2", x -> (x.f_atk * 3 + x.f_def * 3), 30);
-        
+
         if (true) return;
         // for lushen with max cd
         // RunePermutation.perMute("Rage,Blade", x -> (x.cr>=80 && x.atk>100),
@@ -103,6 +103,7 @@ public class ManualWork {
         lushen.applyRuneSet(RunePermutation.bestRuneSet);
         lushen.showPetRune();
     }
+
     int[] attackSet = {3, 4, 3};
 
     public void kahliWork() {
@@ -154,7 +155,7 @@ public class ManualWork {
         getPet("Taru").def_leader = 0;
         PetType lushen = searchPets("Taru");
         if (true) return;
-        
+
         lushen.SkillMulty = 3.7;
         lushen.skillsUp = 30;
         RunePermutation.slot246 = attackSet;
@@ -809,11 +810,11 @@ public class ManualWork {
 
         // RunePermutation.perMute("Despair", x -> (x.cr>=30 && x.spd>=100 && x.acc>68 && x.haveWill()),
         RunePermutation.perMute("Rage,Blade,Focus,Guard,Energy,will", x -> (x.cr >= 65 && x.spd >= 90),
-        //RunePermutation.perMute("Rage,will", x -> (x.cr >= 65 && x.spd >= 90),
+                //RunePermutation.perMute("Rage,will", x -> (x.cr >= 65 && x.spd >= 90),
                 //RunePermutation.perMute("Despair", x -> (x.cr>=30 && x.spd>=90 && x.acc>50),
                 x -> {
-                    if (x.spd > 10 || x.acc > 10 || x.cr > 10|| x.cd > 10|| x.atk > 10) {
-                        return Arrays.asList(x.spd, x.cr, x.cd,x.atk);
+                    if (x.spd > 10 || x.acc > 10 || x.cr > 10 || x.cd > 10 || x.atk > 10) {
+                        return Arrays.asList(x.spd, x.cr, x.cd, x.atk);
                     }
                     return null;
                 }, x -> (x.finalDamage()));
@@ -839,7 +840,7 @@ public class ManualWork {
         return s1;
     }
 
-    public void testOtherRune(String curPet,String otherPet){
+    public void testOtherRune(String curPet, String otherPet) {
         RunePermutation.noBrokenSet = true;
         PetType chasun = searchPets(curPet);
         RuneType.RuneSet g2 = getPetRune(otherPet);
@@ -1077,7 +1078,7 @@ public class ManualWork {
         //taruWork();
         //zairossWork();
         // galleonWork();
-         taruWork();
+        taruWork();
         // shumarWork();
         // shrenWork();
         // delphoyWork();
@@ -1087,6 +1088,7 @@ public class ManualWork {
         //basaltWork();
         //acasisWork();
     }
+
     public static void main(String[] args) {
         SwManager.getInstance().loadPets("optimizer.json");
         new ManualWork().testPests();
