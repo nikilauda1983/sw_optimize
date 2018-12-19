@@ -1,13 +1,13 @@
 # SW Rune Optimizer
 
-# Introduction
+## Introduction
 
 * This program I write to run for my own fun and FRR day because I have over 900 runes, hard to manage. Practice some java programming. I tried the optimizer web version and it seem to run quite slow, the Windows 10 version I haven't test due to I run Windows 7.
 * I only do this on my free time. But I may invest more, if I think people like it. 
 * The tool seem to run very fast. 1 million permutation in 1 second. So we can search for more runeset, and less focus. Just choose the Main Set and choose the main stat we focus (Damage,tanky,spd,effective hp...) We dont need to care much about rune slot or stats.
 * Write on java 8 so most ppl can run it, even Mac user or Linux.
 
-# Setup
+## Setup
 
 * Need Java 8 : http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 * Need data from swproxy : https://www.reddit.com/r/summonerswar/comments/490u23/swproxy_new_version_released/
@@ -15,7 +15,7 @@
 * Download file release.zip (latest release). If you already have earlier version of this tool, you may need to download only the Jar file, and overwrite it with your current version. If something go wrong, use the release.zip file !
 * Extract and run the .jar file (Double click on the jar file, it will run if you installed java)
 
-# Features
+## Features
 
 * Based on swproxy data (optimizer.json) file
 * Search for the best rune set that meet your requirement. 
@@ -26,7 +26,7 @@
 * All runes 2,4,6 are upgrade to lv 15
 * Turn off Multithread or decrease the number of Threads if your computer run laggy.
 
-# How to Use
+## How to Use
 
 * Generate optimizer.json file from SwProxy. If you dont know how check this : 
 	https://www.reddit.com/r/summonerswar/comments/490u23/swproxy_new_version_released/
@@ -46,9 +46,9 @@
 * If you have 2 same pet (ex:  Lushen), Lushen1 will be the second.
 * "Values>" next to this text. Is the value to filter all Runes. All rune will have at least one stat >= this value. The higher this value, the less Rune will match and run faster. 7-10 is ok, set it too high, and we will have no runes match our filter. For endGame user, you want it to be 10, most your rune will have substats >=10, but for begginer/medium players set to 5.
 
-# Updates
+## Updates
 
-## Update 1.3
+### Update 1.3
 
 * Add File/Load menu so we can choose json file instead of Edit/replace content of current json file.
 * Add filter (%hp,%def,%CD) for slot 2,4,6.
@@ -56,7 +56,7 @@
 * Rune management features . Click Manage Runes button.
 * Better UI with grid table for runeset display
 
-## Coming Soon
+### Coming Soon
 
 * Add filter : average damage : (non crit damage * (100-cr) + crit dmage * cr)/100
 * Add "Add pet" feature;
@@ -70,7 +70,7 @@
 
 
 
-# Deprecated Instructions
+## Deprecated Instructions
 
 Use ~~netbeans~~ IntelliJ to open the project.
 
