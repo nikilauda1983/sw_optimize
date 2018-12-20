@@ -1,3 +1,9 @@
 swrunes/.idea/*
 swrunes/bin/*
 swrunes/config.json
+/swrunes/.settings/*
+/swrunes/.gradle/*
+.DS_Store
+/swrunes/build/*
+/swrunes/out/*
+/swrunes/gradle

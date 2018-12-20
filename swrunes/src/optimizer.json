@@ -8,11 +8,11 @@
     "experience": 3800000,
     "wizard_mana": 7333919,
     "wizard_crystal": 656,
-    "wizard_energy": 17,
-    "arena_energy": 8,
+    "wizard_energy": 9,
+    "arena_energy": 7,
     "arena_energy_max": 10,
-    "arena_energy_next_gain": 1451,
-    "wizard_last_login": "2017-07-05 02:38:59",
+    "arena_energy_next_gain": 1549,
+    "wizard_last_login": "2017-07-05 02:07:21",
     "unit_slots": {
       "number": 100
     },
@@ -26,7 +26,7 @@
     "rep_assigned": 1,
     "pvp_event": 0,
     "mail_box_event": 1,
-    "next_energy_gain": 7,
+    "next_energy_gain": 59,
     "unit_depository_slots": {
       "number": 560,
       "upgrade": {
@@ -2205,8 +2205,8 @@
       "pos_y": 10,
       "gain_per_hour": 0.1,
       "harvest_max": 3,
-      "harvest_available": 1,
-      "next_harvest": 35328
+      "harvest_available": 0,
+      "next_harvest": 1226
     },
     {
       "building_id": 2382473,
@@ -2284,8 +2284,8 @@
       "pos_y": 17,
       "gain_per_hour": 0.125,
       "harvest_max": 3,
-      "harvest_available": 1,
-      "next_harvest": 27300
+      "harvest_available": 0,
+      "next_harvest": 398
     },
     {
       "building_id": 2382481,
@@ -2369,7 +2369,7 @@
       "gain_per_hour": 0.125,
       "harvest_max": 4,
       "harvest_available": 0,
-      "next_harvest": 15600
+      "next_harvest": 17498
     },
     {
       "building_id": 57231059,
@@ -21017,13 +21017,13 @@
       "pos_x": 23,
       "pos_y": 18,
       "building_id": 0,
-      "unit_master_id": 1000214,
+      "unit_master_id": 1000204,
       "unit_level": 1,
       "class": 5,
-      "con": 356,
-      "atk": 271,
-      "def": 299,
-      "spd": 101,
+      "con": 328,
+      "atk": 257,
+      "def": 271,
+      "spd": 100,
       "resist": 15,
       "accuracy": 0,
       "critical_rate": 15,
@@ -21042,10 +21042,6 @@
         ],
         [
           10243000,
-          1
-        ],
-        [
-          10244000,
           1
         ]
       ],
@@ -75206,7 +75202,7 @@
       11703,
       19003
     ],
-    "next_remained": 469261,
+    "next_remained": 471159,
     "third": [
       19701,
       16602,
@@ -75225,7 +75221,7 @@
       15303,
       20803
     ],
-    "third_remained": 1074061,
+    "third_remained": 1075959,
     "fourth": [
       17001,
       14402,
@@ -75244,7 +75240,7 @@
       10503,
       15903
     ],
-    "fourth_remained": 1678861
+    "fourth_remained": 1680759
   },
   "island_info": [
     {
@@ -75405,7 +75401,7 @@
       "wizard_id": 158523,
       "item_master_type": 11,
       "item_master_id": 12004,
-      "item_quantity": 20
+      "item_quantity": 30
     },
     {
       "wizard_id": 158523,
@@ -75417,7 +75413,7 @@
       "wizard_id": 158523,
       "item_master_type": 11,
       "item_master_id": 12006,
-      "item_quantity": 179
+      "item_quantity": 184
     },
     {
       "wizard_id": 158523,
@@ -75441,7 +75437,7 @@
       "wizard_id": 158523,
       "item_master_type": 11,
       "item_master_id": 13004,
-      "item_quantity": 38
+      "item_quantity": 58
     },
     {
       "wizard_id": 158523,
@@ -75453,7 +75449,7 @@
       "wizard_id": 158523,
       "item_master_type": 11,
       "item_master_id": 13006,
-      "item_quantity": 249
+      "item_quantity": 264
     },
     {
       "wizard_id": 158523,
@@ -76360,7 +76356,7 @@
     "trial_remained": 0,
     "login_sequence": 15,
     "wish_sequence": 15,
-    "next_update": 80461,
+    "next_update": 82359,
     "item_list": [
       {
         "wish_id": 1,
@@ -92911,7 +92907,7 @@
       {
         "wizard_id": 158523,
         "item_id": 901002,
-        "remained_time": 426061,
+        "remained_time": 427959,
         "purchase_count": 1
       },
       {
@@ -93016,7 +93012,7 @@
         "buy_cost": [
           300
         ],
-        "remained_time": 72560,
+        "remained_time": 74458,
         "notify": 0,
         "enable": 1,
         "purchase_count_left": 1
@@ -93095,7 +93091,7 @@
         "date_begin": "2017-06-30 22:00:00",
         "date_end": "2017-07-10 22:59:00",
         "purchase_limit": 1,
-        "remained_time": 508801,
+        "remained_time": 510699,
         "purchase_count_left": 1,
         "notify": 2,
         "enable": 1
@@ -93172,7 +93168,7 @@
         "date_begin": "2017-06-30 22:00:00",
         "date_end": "2017-07-10 22:59:00",
         "purchase_limit": 1,
-        "remained_time": 508801,
+        "remained_time": 510699,
         "purchase_count_left": 1,
         "notify": 2,
         "enable": 1
@@ -93281,7 +93277,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -93338,7 +93334,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -93395,7 +93391,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -93452,7 +93448,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -93509,7 +93505,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -93566,7 +93562,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -93623,7 +93619,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -93680,7 +93676,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -93737,7 +93733,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -93794,7 +93790,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -93851,7 +93847,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -93908,7 +93904,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -93965,7 +93961,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -94022,7 +94018,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -94079,7 +94075,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -94136,7 +94132,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -94193,7 +94189,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -94250,7 +94246,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -94307,7 +94303,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -94364,7 +94360,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -94421,7 +94417,7 @@
         "date_begin": "2017-06-30 11:01:00",
         "date_end": "2017-07-09 22:59:00",
         "purchase_limit": 10,
-        "remained_time": 422401,
+        "remained_time": 424299,
         "purchase_count_left": 10,
         "notify": 2,
         "enable": 1
@@ -103727,7 +103723,7 @@
     "total_invites": 50,
     "social_point_invites": 0,
     "social_point_invites_max": 10,
-    "invites_init_remained": 76861,
+    "invites_init_remained": 78759,
     "rewarded1": 1,
     "rewarded2": 1,
     "rewarded3": 1,
@@ -103771,8 +103767,8 @@
         "wizard_name": "IronKnight",
         "wizard_level": 50,
         "rating_id": 3002,
-        "arena_score": 1714,
-        "last_login_time": 3234
+        "arena_score": 1724,
+        "last_login_time": 294
       },
       {
         "guild_id": 33172,
@@ -103782,8 +103778,8 @@
         "wizard_name": "࿓ྉSuSu༣",
         "wizard_level": 50,
         "rating_id": 2002,
-        "arena_score": 1320,
-        "last_login_time": 5799
+        "arena_score": 1332,
+        "last_login_time": 2199
       },
       {
         "guild_id": 33172,
@@ -103794,7 +103790,7 @@
         "wizard_level": 50,
         "rating_id": 3001,
         "arena_score": 1521,
-        "last_login_time": 4657
+        "last_login_time": 1057
       },
       {
         "guild_id": 33172,
@@ -103804,8 +103800,8 @@
         "wizard_name": "࿓༅Dεstiny࿐",
         "wizard_level": 50,
         "rating_id": 4003,
-        "arena_score": 2082,
-        "last_login_time": 1475
+        "arena_score": 2062,
+        "last_login_time": 3938
       },
       {
         "guild_id": 33172,
@@ -103815,8 +103811,8 @@
         "wizard_name": "T.G.I.F",
         "wizard_level": 50,
         "rating_id": 3003,
-        "arena_score": 1858,
-        "last_login_time": 2888
+        "arena_score": 1848,
+        "last_login_time": 3409
       },
       {
         "guild_id": 33172,
@@ -103826,8 +103822,8 @@
         "wizard_name": "TM|PhúcBèo",
         "wizard_level": 50,
         "rating_id": 3002,
-        "arena_score": 1806,
-        "last_login_time": 1493
+        "arena_score": 1790,
+        "last_login_time": 11217
       },
       {
         "guild_id": 33172,
@@ -103837,8 +103833,8 @@
         "wizard_name": "ଠTàoଞLaoଠ",
         "wizard_level": 50,
         "rating_id": 3001,
-        "arena_score": 1641,
-        "last_login_time": 41638
+        "arena_score": 1633,
+        "last_login_time": 38038
       },
       {
         "guild_id": 33172,
@@ -103848,8 +103844,8 @@
         "wizard_name": "☞Sấu☜",
         "wizard_level": 50,
         "rating_id": 3002,
-        "arena_score": 1824,
-        "last_login_time": 917
+        "arena_score": 1789,
+        "last_login_time": 4073
       },
       {
         "guild_id": 33172,
@@ -103858,9 +103854,9 @@
         "channel_uid": 115162762,
         "wizard_name": "ƙƴℒαղ",
         "wizard_level": 50,
-        "rating_id": 4001,
-        "arena_score": 1895,
-        "last_login_time": 1018
+        "rating_id": 3003,
+        "arena_score": 1881,
+        "last_login_time": 9478
       },
       {
         "guild_id": 33172,
@@ -103871,7 +103867,7 @@
         "wizard_level": 50,
         "rating_id": 3001,
         "arena_score": 1628,
-        "last_login_time": 1893
+        "last_login_time": 476
       },
       {
         "guild_id": 33172,
@@ -103881,8 +103877,8 @@
         "wizard_name": "_Kứng_",
         "wizard_level": 50,
         "rating_id": 3001,
-        "arena_score": 1587,
-        "last_login_time": 6000
+        "arena_score": 1574,
+        "last_login_time": 2400
       },
       {
         "guild_id": 33172,
@@ -103891,9 +103887,9 @@
         "channel_uid": 130926209,
         "wizard_name": "≧Vỡ◡Nợ≦",
         "wizard_level": 50,
-        "rating_id": 4001,
-        "arena_score": 1938,
-        "last_login_time": 7266
+        "rating_id": 4002,
+        "arena_score": 1948,
+        "last_login_time": 3666
       },
       {
         "guild_id": 33172,
@@ -103903,8 +103899,8 @@
         "wizard_name": "Xuan-toc-do",
         "wizard_level": 50,
         "rating_id": 2001,
-        "arena_score": 1298,
-        "last_login_time": 5209
+        "arena_score": 1286,
+        "last_login_time": 1609
       },
       {
         "guild_id": 33172,
@@ -103913,9 +103909,9 @@
         "channel_uid": 116470454,
         "wizard_name": "TuanDragon",
         "wizard_level": 50,
-        "rating_id": 2002,
-        "arena_score": 1316,
-        "last_login_time": 1216
+        "rating_id": 2001,
+        "arena_score": 1289,
+        "last_login_time": 17246
       },
       {
         "guild_id": 33172,
@@ -103926,7 +103922,7 @@
         "wizard_level": 50,
         "rating_id": 2002,
         "arena_score": 1324,
-        "last_login_time": 5691
+        "last_login_time": 2091
       },
       {
         "guild_id": 33172,
@@ -103936,8 +103932,8 @@
         "wizard_name": "ChươngLê",
         "wizard_level": 50,
         "rating_id": 3002,
-        "arena_score": 1779,
-        "last_login_time": 2293
+        "arena_score": 1812,
+        "last_login_time": 20563
       },
       {
         "guild_id": 33172,
@@ -103947,8 +103943,8 @@
         "wizard_name": "✨Noop✨",
         "wizard_level": 50,
         "rating_id": 3001,
-        "arena_score": 1508,
-        "last_login_time": 1194
+        "arena_score": 1526,
+        "last_login_time": 1581
       },
       {
         "guild_id": 33172,
@@ -103957,9 +103953,9 @@
         "channel_uid": 111553983,
         "wizard_name": "༆BinClover࿐",
         "wizard_level": 50,
-        "rating_id": 4001,
-        "arena_score": 1933,
-        "last_login_time": 1630
+        "rating_id": 3003,
+        "arena_score": 1878,
+        "last_login_time": 1139
       },
       {
         "guild_id": 33172,
@@ -103970,7 +103966,7 @@
         "wizard_level": 50,
         "rating_id": 3001,
         "arena_score": 1561,
-        "last_login_time": 9295
+        "last_login_time": 5695
       },
       {
         "guild_id": 33172,
@@ -103981,7 +103977,7 @@
         "wizard_level": 50,
         "rating_id": 3001,
         "arena_score": 1542,
-        "last_login_time": 31083
+        "last_login_time": 27483
       },
       {
         "guild_id": 33172,
@@ -103990,9 +103986,9 @@
         "channel_uid": 77840812,
         "wizard_name": "༆Tommy࿐",
         "wizard_level": 50,
-        "rating_id": 3001,
-        "arena_score": 1690,
-        "last_login_time": 7713
+        "rating_id": 3002,
+        "arena_score": 1709,
+        "last_login_time": 4113
       },
       {
         "guild_id": 33172,
@@ -104003,7 +103999,7 @@
         "wizard_level": 50,
         "rating_id": 3001,
         "arena_score": 1634,
-        "last_login_time": 226
+        "last_login_time": 1622
       },
       {
         "guild_id": 33172,
@@ -104013,8 +104009,8 @@
         "wizard_name": "Charlie--Dean",
         "wizard_level": 50,
         "rating_id": 3002,
-        "arena_score": 1770,
-        "last_login_time": 5
+        "arena_score": 1801,
+        "last_login_time": 6636
       },
       {
         "guild_id": 33172,
@@ -104025,7 +104021,7 @@
         "wizard_level": 50,
         "rating_id": 1003,
         "arena_score": 1162,
-        "last_login_time": 1715
+        "last_login_time": 4543
       },
       {
         "guild_id": 33172,
@@ -104036,7 +104032,7 @@
         "wizard_level": 50,
         "rating_id": 3001,
         "arena_score": 1636,
-        "last_login_time": 17549
+        "last_login_time": 13949
       },
       {
         "guild_id": 33172,
@@ -104046,8 +104042,8 @@
         "wizard_name": "69_KAMA|SUTRA",
         "wizard_level": 50,
         "rating_id": 3002,
-        "arena_score": 1802,
-        "last_login_time": 4275
+        "arena_score": 1810,
+        "last_login_time": 675
       },
       {
         "guild_id": 33172,
@@ -104057,8 +104053,8 @@
         "wizard_name": "*K.A.H.N*",
         "wizard_level": 50,
         "rating_id": 3001,
-        "arena_score": 1508,
-        "last_login_time": 30016
+        "arena_score": 1518,
+        "last_login_time": 26416
       },
       {
         "guild_id": 33172,
@@ -104067,9 +104063,9 @@
         "channel_uid": 168620996,
         "wizard_name": "༦CONTRA࿐",
         "wizard_level": 50,
-        "rating_id": 4003,
-        "arena_score": 2055,
-        "last_login_time": 2630
+        "rating_id": 3002,
+        "arena_score": 1754,
+        "last_login_time": 4847
       }
     ],
     "guild_skills": [
@@ -104154,9 +104150,9 @@
   ],
   "guildwar_status": {
     "status": 2,
-    "prepare_remained": 336061,
-    "match_remained": 426061,
-    "reset_remained": 332461
+    "prepare_remained": 337959,
+    "match_remained": 427959,
+    "reset_remained": 334359
   },
   "guildwar_participation_info": {
     "guild_id": 33172,
@@ -104167,7 +104163,7 @@
     "match_lose": 0,
     "participated": 1,
     "energy": 2,
-    "energy_regen_remained": 37261,
+    "energy_regen_remained": 39159,
     "energy_max": 6
   },
   "guildwar_member_list": [
@@ -104179,8 +104175,8 @@
       "wizard_name": "IronKnight",
       "wizard_level": 50,
       "rating_id": 3002,
-      "arena_score": 1714,
-      "last_login_time": 3234
+      "arena_score": 1724,
+      "last_login_time": 294
     },
     {
       "guild_id": 33172,
@@ -104190,8 +104186,8 @@
       "wizard_name": "࿓ྉSuSu༣",
       "wizard_level": 50,
       "rating_id": 2002,
-      "arena_score": 1320,
-      "last_login_time": 5799
+      "arena_score": 1332,
+      "last_login_time": 2199
     },
     {
       "guild_id": 33172,
@@ -104202,7 +104198,7 @@
       "wizard_level": 50,
       "rating_id": 3001,
       "arena_score": 1521,
-      "last_login_time": 4657
+      "last_login_time": 1057
     },
     {
       "guild_id": 33172,
@@ -104212,8 +104208,8 @@
       "wizard_name": "࿓༅Dεstiny࿐",
       "wizard_level": 50,
       "rating_id": 4003,
-      "arena_score": 2082,
-      "last_login_time": 1475
+      "arena_score": 2062,
+      "last_login_time": 3938
     },
     {
       "guild_id": 33172,
@@ -104223,8 +104219,8 @@
       "wizard_name": "T.G.I.F",
       "wizard_level": 50,
       "rating_id": 3003,
-      "arena_score": 1858,
-      "last_login_time": 2888
+      "arena_score": 1848,
+      "last_login_time": 3409
     },
     {
       "guild_id": 33172,
@@ -104234,8 +104230,8 @@
       "wizard_name": "TM|PhúcBèo",
       "wizard_level": 50,
       "rating_id": 3002,
-      "arena_score": 1806,
-      "last_login_time": 1493
+      "arena_score": 1790,
+      "last_login_time": 11217
     },
     {
       "guild_id": 33172,
@@ -104245,8 +104241,8 @@
       "wizard_name": "ଠTàoଞLaoଠ",
       "wizard_level": 50,
       "rating_id": 3001,
-      "arena_score": 1641,
-      "last_login_time": 41638
+      "arena_score": 1633,
+      "last_login_time": 38038
     },
     {
       "guild_id": 33172,
@@ -104256,8 +104252,8 @@
       "wizard_name": "☞Sấu☜",
       "wizard_level": 50,
       "rating_id": 3002,
-      "arena_score": 1824,
-      "last_login_time": 917
+      "arena_score": 1789,
+      "last_login_time": 4073
     },
     {
       "guild_id": 33172,
@@ -104266,9 +104262,9 @@
       "channel_uid": 115162762,
       "wizard_name": "ƙƴℒαղ",
       "wizard_level": 50,
-      "rating_id": 4001,
-      "arena_score": 1895,
-      "last_login_time": 1018
+      "rating_id": 3003,
+      "arena_score": 1881,
+      "last_login_time": 9478
     },
     {
       "guild_id": 33172,
@@ -104279,7 +104275,7 @@
       "wizard_level": 50,
       "rating_id": 3001,
       "arena_score": 1628,
-      "last_login_time": 1893
+      "last_login_time": 476
     },
     {
       "guild_id": 33172,
@@ -104288,9 +104284,9 @@
       "channel_uid": 130926209,
       "wizard_name": "≧Vỡ◡Nợ≦",
       "wizard_level": 50,
-      "rating_id": 4001,
-      "arena_score": 1938,
-      "last_login_time": 7266
+      "rating_id": 4002,
+      "arena_score": 1948,
+      "last_login_time": 3666
     },
     {
       "guild_id": 33172,
@@ -104299,9 +104295,9 @@
       "channel_uid": 116470454,
       "wizard_name": "TuanDragon",
       "wizard_level": 50,
-      "rating_id": 2002,
-      "arena_score": 1316,
-      "last_login_time": 1216
+      "rating_id": 2001,
+      "arena_score": 1289,
+      "last_login_time": 17246
     },
     {
       "guild_id": 33172,
@@ -104311,8 +104307,8 @@
       "wizard_name": "ChươngLê",
       "wizard_level": 50,
       "rating_id": 3002,
-      "arena_score": 1779,
-      "last_login_time": 2293
+      "arena_score": 1812,
+      "last_login_time": 20563
     },
     {
       "guild_id": 33172,
@@ -104322,8 +104318,8 @@
       "wizard_name": "✨Noop✨",
       "wizard_level": 50,
       "rating_id": 3001,
-      "arena_score": 1508,
-      "last_login_time": 1194
+      "arena_score": 1526,
+      "last_login_time": 1581
     },
     {
       "guild_id": 33172,
@@ -104332,9 +104328,9 @@
       "channel_uid": 111553983,
       "wizard_name": "༆BinClover࿐",
       "wizard_level": 50,
-      "rating_id": 4001,
-      "arena_score": 1933,
-      "last_login_time": 1630
+      "rating_id": 3003,
+      "arena_score": 1878,
+      "last_login_time": 1139
     },
     {
       "guild_id": 33172,
@@ -104345,7 +104341,7 @@
       "wizard_level": 50,
       "rating_id": 3001,
       "arena_score": 1561,
-      "last_login_time": 9295
+      "last_login_time": 5695
     },
     {
       "guild_id": 33172,
@@ -104356,7 +104352,7 @@
       "wizard_level": 50,
       "rating_id": 3001,
       "arena_score": 1542,
-      "last_login_time": 31083
+      "last_login_time": 27483
     },
     {
       "guild_id": 33172,
@@ -104365,9 +104361,9 @@
       "channel_uid": 77840812,
       "wizard_name": "༆Tommy࿐",
       "wizard_level": 50,
-      "rating_id": 3001,
-      "arena_score": 1690,
-      "last_login_time": 7713
+      "rating_id": 3002,
+      "arena_score": 1709,
+      "last_login_time": 4113
     },
     {
       "guild_id": 33172,
@@ -104378,7 +104374,7 @@
       "wizard_level": 50,
       "rating_id": 3001,
       "arena_score": 1634,
-      "last_login_time": 226
+      "last_login_time": 1622
     },
     {
       "guild_id": 33172,
@@ -104388,8 +104384,8 @@
       "wizard_name": "Charlie--Dean",
       "wizard_level": 50,
       "rating_id": 3002,
-      "arena_score": 1770,
-      "last_login_time": 5
+      "arena_score": 1801,
+      "last_login_time": 6636
     },
     {
       "guild_id": 33172,
@@ -104400,7 +104396,7 @@
       "wizard_level": 50,
       "rating_id": 3001,
       "arena_score": 1636,
-      "last_login_time": 17549
+      "last_login_time": 13949
     },
     {
       "guild_id": 33172,
@@ -104410,8 +104406,8 @@
       "wizard_name": "69_KAMA|SUTRA",
       "wizard_level": 50,
       "rating_id": 3002,
-      "arena_score": 1802,
-      "last_login_time": 4275
+      "arena_score": 1810,
+      "last_login_time": 675
     },
     {
       "guild_id": 33172,
@@ -104420,9 +104416,9 @@
       "channel_uid": 168620996,
       "wizard_name": "༦CONTRA࿐",
       "wizard_level": 50,
-      "rating_id": 4003,
-      "arena_score": 2055,
-      "last_login_time": 2630
+      "rating_id": 3002,
+      "arena_score": 1754,
+      "last_login_time": 4847
     }
   ],
   "guild_member_defense_list": [
@@ -105624,7 +105620,7 @@
   ],
   "guildwar_ranking_info": {
     "league_type": 100,
-    "rank": 124,
+    "rank": 121,
     "match_score": 1065,
     "rating_id": 4011,
     "total_guild_count": 10977
@@ -105632,7 +105628,7 @@
   "guildwar_ranking_stat": {
     "current": {
       "league_type": 100,
-      "rank": 124,
+      "rank": 121,
       "match_score": 1065,
       "rating_id": 4011,
       "total_guild_count": 10977,
@@ -105694,8 +105690,8 @@
     "opp_guild_hp_win_cond": 15000,
     "member_count_current": 10,
     "status": 301,
-    "win_wait_remained": 25179,
-    "end_remained": 25179,
+    "win_wait_remained": 27077,
+    "end_remained": 27077,
     "atk_num": 23,
     "def_num": 10
   },
@@ -105825,8 +105821,8 @@
       "match_id": 11131503,
       "wizard_id": 475893,
       "guild_id": 33172,
-      "guild_point_var": 46,
-      "energy": 0
+      "guild_point_var": 0,
+      "energy": 3
     },
     {
       "match_id": 11131503,
@@ -105873,7 +105869,7 @@
     "match_lose": 0,
     "participated": 1,
     "energy": 1,
-    "energy_regen_remained": 37261,
+    "energy_regen_remained": 39159,
     "energy_max": 6
   },
   "opp_guild_info": {
@@ -105894,7 +105890,7 @@
     "master_wizard_name": "GuaBT",
     "master_wizard_level": 50,
     "cache_expire_time": {
-      "date": "2017-07-05 03:26:34",
+      "date": "2017-07-05 02:25:29",
       "timezone_type": 3,
       "timezone": "Asia/Seoul"
     }
@@ -105908,8 +105904,8 @@
       "wizard_name": "00神虎00",
       "wizard_level": 50,
       "rating_id": 1003,
-      "arena_score": 1178,
-      "last_login_time": 5238
+      "arena_score": 1121,
+      "last_login_time": 1621
     },
     {
       "guild_id": 13262,
@@ -105919,8 +105915,8 @@
       "wizard_name": "rockrev",
       "wizard_level": 50,
       "rating_id": 4001,
-      "arena_score": 1895,
-      "last_login_time": 9117
+      "arena_score": 1915,
+      "last_login_time": 5500
     },
     {
       "guild_id": 13262,
@@ -105930,8 +105926,8 @@
       "wizard_name": "Lufee",
       "wizard_level": 50,
       "rating_id": 1003,
-      "arena_score": 1175,
-      "last_login_time": 8381
+      "arena_score": 1193,
+      "last_login_time": 4764
     },
     {
       "guild_id": 13262,
@@ -105940,9 +105936,9 @@
       "channel_uid": 39355508,
       "wizard_name": "GuaBT",
       "wizard_level": 50,
-      "rating_id": 3001,
-      "arena_score": 1529,
-      "last_login_time": 2235
+      "rating_id": 2003,
+      "arena_score": 1487,
+      "last_login_time": 11424
     },
     {
       "guild_id": 13262,
@@ -105953,7 +105949,7 @@
       "wizard_level": 50,
       "rating_id": 3002,
       "arena_score": 1831,
-      "last_login_time": 399
+      "last_login_time": 6539
     },
     {
       "guild_id": 13262,
@@ -105963,8 +105959,8 @@
       "wizard_name": "00猫神00",
       "wizard_level": 50,
       "rating_id": 2002,
-      "arena_score": 1370,
-      "last_login_time": 11385
+      "arena_score": 1378,
+      "last_login_time": 7768
     },
     {
       "guild_id": 13262,
@@ -105974,8 +105970,8 @@
       "wizard_name": "FinalJudgement",
       "wizard_level": 50,
       "rating_id": 3003,
-      "arena_score": 1863,
-      "last_login_time": 4248
+      "arena_score": 1855,
+      "last_login_time": 631
     },
     {
       "guild_id": 13262,
@@ -105986,7 +105982,7 @@
       "wizard_level": 50,
       "rating_id": 1002,
       "arena_score": 1000,
-      "last_login_time": 444083
+      "last_login_time": 440466
     },
     {
       "guild_id": 13262,
@@ -105995,9 +105991,9 @@
       "channel_uid": 158029381,
       "wizard_name": "Serenade",
       "wizard_level": 50,
-      "rating_id": 2002,
-      "arena_score": 1339,
-      "last_login_time": 18780
+      "rating_id": 2001,
+      "arena_score": 1204,
+      "last_login_time": 15163
     },
     {
       "guild_id": 13262,
@@ -106007,8 +106003,8 @@
       "wizard_name": "Kr4sus",
       "wizard_level": 50,
       "rating_id": 2001,
-      "arena_score": 1258,
-      "last_login_time": 6291
+      "arena_score": 1267,
+      "last_login_time": 2674
     }
   ],
   "opp_defense_list": [
@@ -106384,8 +106380,8 @@
   ],
   "rune_lock_list": [],
   "arena_shutdown_info": {
-    "remained_start": 418861,
-    "remained_end": 422461
+    "remained_start": 420759,
+    "remained_end": 424359
   },
   "friend_del_interval": {
     "wizard_id": 158523,
@@ -106567,7 +106563,7 @@
           ]
         }
       ],
-      "remained_time": 2323260
+      "remained_time": 2325158
     }
   ],
   "friend_list": [
@@ -106580,7 +106576,7 @@
       "rating_id": 2003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 14924,
+      "last_login_time": 13026,
       "rep_unit_id": 2944406484,
       "rep_unit_master_id": 18911,
       "rep_unit_class": 6,
@@ -106595,7 +106591,7 @@
       "rating_id": 1002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 91561,
+      "last_login_time": 89663,
       "rep_unit_id": 3704560275,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -106610,7 +106606,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 16151,
+      "last_login_time": 14253,
       "rep_unit_id": 2470806137,
       "rep_unit_master_id": 16611,
       "rep_unit_class": 6,
@@ -106625,7 +106621,7 @@
       "rating_id": 3003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 5585,
+      "last_login_time": 3687,
       "rep_unit_id": 3556350707,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -106640,7 +106636,7 @@
       "rating_id": 3002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 5929,
+      "last_login_time": 4031,
       "rep_unit_id": 819395115,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -106655,7 +106651,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 42320,
+      "last_login_time": 40422,
       "rep_unit_id": 606175940,
       "rep_unit_master_id": 19211,
       "rep_unit_class": 6,
@@ -106670,7 +106666,7 @@
       "rating_id": 3002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 8355,
+      "last_login_time": 6457,
       "rep_unit_id": 3262142959,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -106685,7 +106681,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 2575,
+      "last_login_time": 677,
       "rep_unit_id": 3435177517,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -106700,7 +106696,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 6801,
+      "last_login_time": 4903,
       "rep_unit_id": 2756195484,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -106715,7 +106711,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 6682,
+      "last_login_time": 4784,
       "rep_unit_id": 2442935088,
       "rep_unit_master_id": 17911,
       "rep_unit_class": 6,
@@ -106730,7 +106726,7 @@
       "rating_id": 4002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 7948,
+      "last_login_time": 6050,
       "rep_unit_id": 1609332893,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -106745,7 +106741,7 @@
       "rating_id": 3002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 2975,
+      "last_login_time": 1077,
       "rep_unit_id": 478195425,
       "rep_unit_master_id": 19211,
       "rep_unit_class": 6,
@@ -106760,7 +106756,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 5499,
+      "last_login_time": 3601,
       "rep_unit_id": 1708552579,
       "rep_unit_master_id": 16611,
       "rep_unit_class": 6,
@@ -106775,7 +106771,7 @@
       "rating_id": 2003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 7318,
+      "last_login_time": 5420,
       "rep_unit_id": 1597794149,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -106790,7 +106786,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 9977,
+      "last_login_time": 8079,
       "rep_unit_id": 4140165130,
       "rep_unit_master_id": 16111,
       "rep_unit_class": 6,
@@ -106805,7 +106801,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 12992,
+      "last_login_time": 11094,
       "rep_unit_id": 3347527992,
       "rep_unit_master_id": 20412,
       "rep_unit_class": 6,
@@ -106820,7 +106816,7 @@
       "rating_id": 1002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 1575660,
+      "last_login_time": 1573762,
       "rep_unit_id": 1195920921,
       "rep_unit_master_id": 14415,
       "rep_unit_class": 6,
@@ -106835,7 +106831,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 5904,
+      "last_login_time": 4006,
       "rep_unit_id": 3669094305,
       "rep_unit_master_id": 21113,
       "rep_unit_class": 6,
@@ -106850,7 +106846,7 @@
       "rating_id": 1003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 54590,
+      "last_login_time": 52692,
       "rep_unit_id": 3842802449,
       "rep_unit_master_id": 16612,
       "rep_unit_class": 6,
@@ -106865,7 +106861,7 @@
       "rating_id": 3002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 10918,
+      "last_login_time": 9020,
       "rep_unit_id": 1311806991,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -106880,7 +106876,7 @@
       "rating_id": 1003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 12992,
+      "last_login_time": 11094,
       "rep_unit_id": 3417254679,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -106895,7 +106891,7 @@
       "rating_id": 3002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 11917,
+      "last_login_time": 10019,
       "rep_unit_id": 57148067,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -106910,7 +106906,7 @@
       "rating_id": 2002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 19830,
+      "last_login_time": 17932,
       "rep_unit_id": 540723991,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -106925,7 +106921,7 @@
       "rating_id": 1003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 2397,
+      "last_login_time": 499,
       "rep_unit_id": 2556142423,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -106940,7 +106936,7 @@
       "rating_id": 2003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 4696,
+      "last_login_time": 2798,
       "rep_unit_id": 1607523915,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -106955,7 +106951,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 18231,
+      "last_login_time": 16333,
       "rep_unit_id": 417032018,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -106970,7 +106966,7 @@
       "rating_id": 2003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 6279,
+      "last_login_time": 4381,
       "rep_unit_id": 641958520,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -106985,7 +106981,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 9058,
+      "last_login_time": 7160,
       "rep_unit_id": 4147996521,
       "rep_unit_master_id": 1000215,
       "rep_unit_class": 5,
@@ -107000,7 +106996,7 @@
       "rating_id": 1002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 48557,
+      "last_login_time": 46659,
       "rep_unit_id": 3620024547,
       "rep_unit_master_id": 19215,
       "rep_unit_class": 6,
@@ -107015,7 +107011,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 7021,
+      "last_login_time": 5123,
       "rep_unit_id": 848836059,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -107030,7 +107026,7 @@
       "rating_id": 2001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 19923,
+      "last_login_time": 18025,
       "rep_unit_id": 2556517413,
       "rep_unit_master_id": 13815,
       "rep_unit_class": 6,
@@ -107045,7 +107041,7 @@
       "rating_id": 3002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 4957,
+      "last_login_time": 3059,
       "rep_unit_id": 1901478715,
       "rep_unit_master_id": 18911,
       "rep_unit_class": 6,
@@ -107060,7 +107056,7 @@
       "rating_id": 2001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 25339,
+      "last_login_time": 23441,
       "rep_unit_id": 3317066611,
       "rep_unit_master_id": 14411,
       "rep_unit_class": 6,
@@ -107075,7 +107071,7 @@
       "rating_id": 1003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 28883,
+      "last_login_time": 26985,
       "rep_unit_id": 1165221930,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -107090,7 +107086,7 @@
       "rating_id": 2002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 5607,
+      "last_login_time": 3709,
       "rep_unit_id": 1757237468,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -107105,7 +107101,7 @@
       "rating_id": 2002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 242231,
+      "last_login_time": 240333,
       "rep_unit_id": 3083993912,
       "rep_unit_master_id": 14411,
       "rep_unit_class": 6,
@@ -107120,7 +107116,7 @@
       "rating_id": 3002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 3738,
+      "last_login_time": 1840,
       "rep_unit_id": 2425475715,
       "rep_unit_master_id": 18911,
       "rep_unit_class": 6,
@@ -107135,7 +107131,7 @@
       "rating_id": 1002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 2641050,
+      "last_login_time": 2639152,
       "rep_unit_id": 2832920830,
       "rep_unit_master_id": 18911,
       "rep_unit_class": 6,
@@ -107150,7 +107146,7 @@
       "rating_id": 1003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 29103,
+      "last_login_time": 27205,
       "rep_unit_id": 2545399866,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -107165,7 +107161,7 @@
       "rating_id": 1003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 134580,
+      "last_login_time": 132682,
       "rep_unit_id": 3107478857,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -107180,7 +107176,7 @@
       "rating_id": 1002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 10460,
+      "last_login_time": 8562,
       "rep_unit_id": 3451803996,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -107195,7 +107191,7 @@
       "rating_id": 2001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 20570,
+      "last_login_time": 18672,
       "rep_unit_id": 3362930935,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -107210,7 +107206,7 @@
       "rating_id": 1001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 3256,
+      "last_login_time": 1358,
       "rep_unit_id": 3229195066,
       "rep_unit_master_id": 21214,
       "rep_unit_class": 6,
@@ -107225,7 +107221,7 @@
       "rating_id": 1002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 6243,
+      "last_login_time": 4345,
       "rep_unit_id": 3574561484,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -107240,7 +107236,7 @@
       "rating_id": 2002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 20514,
+      "last_login_time": 18616,
       "rep_unit_id": 3623145257,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -107255,7 +107251,7 @@
       "rating_id": 1001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 11048,
+      "last_login_time": 9150,
       "rep_unit_id": 3845800217,
       "rep_unit_master_id": 17412,
       "rep_unit_class": 6,
@@ -107270,7 +107266,7 @@
       "rating_id": 1002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 68543,
+      "last_login_time": 66645,
       "rep_unit_id": 3833007884,
       "rep_unit_master_id": 19801,
       "rep_unit_class": 5,
@@ -107287,7 +107283,7 @@
       "rating_id": 1001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 3256,
+      "last_login_time": 1358,
       "rep_unit_id": 3229195066,
       "rep_unit_master_id": 21214,
       "rep_unit_class": 6,
@@ -107302,7 +107298,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 5904,
+      "last_login_time": 4006,
       "rep_unit_id": 3669094305,
       "rep_unit_master_id": 21113,
       "rep_unit_class": 6,
@@ -107317,7 +107313,7 @@
       "rating_id": 1002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 48557,
+      "last_login_time": 46659,
       "rep_unit_id": 3620024547,
       "rep_unit_master_id": 19215,
       "rep_unit_class": 6,
@@ -107332,7 +107328,7 @@
       "rating_id": 3002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 2975,
+      "last_login_time": 1077,
       "rep_unit_id": 478195425,
       "rep_unit_master_id": 19211,
       "rep_unit_class": 6,
@@ -107347,7 +107343,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 42320,
+      "last_login_time": 40422,
       "rep_unit_id": 606175940,
       "rep_unit_master_id": 19211,
       "rep_unit_class": 6,
@@ -107362,7 +107358,7 @@
       "rating_id": 1002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 2641050,
+      "last_login_time": 2639152,
       "rep_unit_id": 2832920830,
       "rep_unit_master_id": 18911,
       "rep_unit_class": 6,
@@ -107377,7 +107373,7 @@
       "rating_id": 3002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 3738,
+      "last_login_time": 1840,
       "rep_unit_id": 2425475715,
       "rep_unit_master_id": 18911,
       "rep_unit_class": 6,
@@ -107392,7 +107388,7 @@
       "rating_id": 2003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 14924,
+      "last_login_time": 13026,
       "rep_unit_id": 2944406484,
       "rep_unit_master_id": 18911,
       "rep_unit_class": 6,
@@ -107407,7 +107403,7 @@
       "rating_id": 3002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 4957,
+      "last_login_time": 3059,
       "rep_unit_id": 1901478715,
       "rep_unit_master_id": 18911,
       "rep_unit_class": 6,
@@ -107422,7 +107418,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 6682,
+      "last_login_time": 4784,
       "rep_unit_id": 2442935088,
       "rep_unit_master_id": 17911,
       "rep_unit_class": 6,
@@ -107437,7 +107433,7 @@
       "rating_id": 1001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 11048,
+      "last_login_time": 9150,
       "rep_unit_id": 3845800217,
       "rep_unit_master_id": 17412,
       "rep_unit_class": 6,
@@ -107452,7 +107448,7 @@
       "rating_id": 1003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 54590,
+      "last_login_time": 52692,
       "rep_unit_id": 3842802449,
       "rep_unit_master_id": 16612,
       "rep_unit_class": 6,
@@ -107467,7 +107463,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 5499,
+      "last_login_time": 3601,
       "rep_unit_id": 1708552579,
       "rep_unit_master_id": 16611,
       "rep_unit_class": 6,
@@ -107482,7 +107478,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 16151,
+      "last_login_time": 14253,
       "rep_unit_id": 2470806137,
       "rep_unit_master_id": 16611,
       "rep_unit_class": 6,
@@ -107497,7 +107493,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 9977,
+      "last_login_time": 8079,
       "rep_unit_id": 4140165130,
       "rep_unit_master_id": 16111,
       "rep_unit_class": 6,
@@ -107512,7 +107508,7 @@
       "rating_id": 1003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 29103,
+      "last_login_time": 27205,
       "rep_unit_id": 2545399866,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -107527,7 +107523,7 @@
       "rating_id": 1002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 10460,
+      "last_login_time": 8562,
       "rep_unit_id": 3451803996,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -107542,7 +107538,7 @@
       "rating_id": 2002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 19830,
+      "last_login_time": 17932,
       "rep_unit_id": 540723991,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -107557,7 +107553,7 @@
       "rating_id": 2002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 20514,
+      "last_login_time": 18616,
       "rep_unit_id": 3623145257,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -107572,7 +107568,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 7021,
+      "last_login_time": 5123,
       "rep_unit_id": 848836059,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -107587,7 +107583,7 @@
       "rating_id": 1003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 2397,
+      "last_login_time": 499,
       "rep_unit_id": 2556142423,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -107602,7 +107598,7 @@
       "rating_id": 2003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 7318,
+      "last_login_time": 5420,
       "rep_unit_id": 1597794149,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -107617,7 +107613,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 2575,
+      "last_login_time": 677,
       "rep_unit_id": 3435177517,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -107632,7 +107628,7 @@
       "rating_id": 1002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 91561,
+      "last_login_time": 89663,
       "rep_unit_id": 3704560275,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -107647,7 +107643,7 @@
       "rating_id": 1003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 12992,
+      "last_login_time": 11094,
       "rep_unit_id": 3417254679,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -107662,7 +107658,7 @@
       "rating_id": 4002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 7948,
+      "last_login_time": 6050,
       "rep_unit_id": 1609332893,
       "rep_unit_master_id": 14611,
       "rep_unit_class": 6,
@@ -107677,7 +107673,7 @@
       "rating_id": 1002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 1575660,
+      "last_login_time": 1573762,
       "rep_unit_id": 1195920921,
       "rep_unit_master_id": 14415,
       "rep_unit_class": 6,
@@ -107692,7 +107688,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 6801,
+      "last_login_time": 4903,
       "rep_unit_id": 2756195484,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -107707,7 +107703,7 @@
       "rating_id": 1003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 134580,
+      "last_login_time": 132682,
       "rep_unit_id": 3107478857,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -107722,7 +107718,7 @@
       "rating_id": 2001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 20570,
+      "last_login_time": 18672,
       "rep_unit_id": 3362930935,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -107737,7 +107733,7 @@
       "rating_id": 3003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 5585,
+      "last_login_time": 3687,
       "rep_unit_id": 3556350707,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -107752,7 +107748,7 @@
       "rating_id": 1002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 6243,
+      "last_login_time": 4345,
       "rep_unit_id": 3574561484,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -107767,7 +107763,7 @@
       "rating_id": 3002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 5929,
+      "last_login_time": 4031,
       "rep_unit_id": 819395115,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -107782,7 +107778,7 @@
       "rating_id": 3002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 8355,
+      "last_login_time": 6457,
       "rep_unit_id": 3262142959,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -107797,7 +107793,7 @@
       "rating_id": 1003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 28883,
+      "last_login_time": 26985,
       "rep_unit_id": 1165221930,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -107812,7 +107808,7 @@
       "rating_id": 2003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 4696,
+      "last_login_time": 2798,
       "rep_unit_id": 1607523915,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -107827,7 +107823,7 @@
       "rating_id": 2003,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 6279,
+      "last_login_time": 4381,
       "rep_unit_id": 641958520,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -107842,7 +107838,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 18231,
+      "last_login_time": 16333,
       "rep_unit_id": 417032018,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -107857,7 +107853,7 @@
       "rating_id": 3002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 11917,
+      "last_login_time": 10019,
       "rep_unit_id": 57148067,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -107872,7 +107868,7 @@
       "rating_id": 2002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 5607,
+      "last_login_time": 3709,
       "rep_unit_id": 1757237468,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -107887,7 +107883,7 @@
       "rating_id": 3002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 10918,
+      "last_login_time": 9020,
       "rep_unit_id": 1311806991,
       "rep_unit_master_id": 14412,
       "rep_unit_class": 6,
@@ -107902,7 +107898,7 @@
       "rating_id": 2001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 25339,
+      "last_login_time": 23441,
       "rep_unit_id": 3317066611,
       "rep_unit_master_id": 14411,
       "rep_unit_class": 6,
@@ -107917,7 +107913,7 @@
       "rating_id": 2002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 242231,
+      "last_login_time": 240333,
       "rep_unit_id": 3083993912,
       "rep_unit_master_id": 14411,
       "rep_unit_class": 6,
@@ -107932,7 +107928,7 @@
       "rating_id": 2001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 19923,
+      "last_login_time": 18025,
       "rep_unit_id": 2556517413,
       "rep_unit_master_id": 13815,
       "rep_unit_class": 6,
@@ -107947,7 +107943,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 12992,
+      "last_login_time": 11094,
       "rep_unit_id": 3347527992,
       "rep_unit_master_id": 20412,
       "rep_unit_class": 6,
@@ -107962,7 +107958,7 @@
       "rating_id": 3001,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 9058,
+      "last_login_time": 7160,
       "rep_unit_id": 4147996521,
       "rep_unit_master_id": 1000215,
       "rep_unit_class": 5,
@@ -107977,62 +107973,62 @@
       "rating_id": 1002,
       "next_gift_time": 0,
       "next_assist_time": 0,
-      "last_login_time": 68543,
+      "last_login_time": 66645,
       "rep_unit_id": 3833007884,
       "rep_unit_master_id": 19801,
       "rep_unit_class": 5,
       "rep_unit_level": 31
     }
   ],
-  "helper_remained": 80461,
+  "helper_remained": 82359,
   "mentor_helper_list": [],
   "mentee_slot_list": [
     {
       "reward_status": 0,
-      "next_reward_time": 80461,
+      "next_reward_time": 82359,
       "remain_complete": 0,
       "slot_status": 0,
       "wizard_id": 3535234,
       "channel_uid": 170007335,
       "wizard_level": 45,
       "wizard_name": "SG][Merlandox",
-      "last_login_time": 9474,
+      "last_login_time": 7576,
       "date_add": "2017-01-26 21:55:33"
     },
     {
       "reward_status": 0,
-      "next_reward_time": 80461,
+      "next_reward_time": 82359,
       "remain_complete": 0,
       "slot_status": 0,
       "wizard_id": 5462659,
       "channel_uid": 97098292,
       "wizard_level": 22,
       "wizard_name": "SenpaiKou",
-      "last_login_time": 68543,
+      "last_login_time": 66645,
       "date_add": "2017-06-13 07:51:09"
     },
     {
       "reward_status": 0,
-      "next_reward_time": 80461,
+      "next_reward_time": 82359,
       "remain_complete": 0,
       "slot_status": 0,
       "wizard_id": 5147465,
       "channel_uid": 179609821,
       "wizard_level": 27,
       "wizard_name": "Sakaki'",
-      "last_login_time": 743143,
+      "last_login_time": 741245,
       "date_add": "2017-06-17 11:03:44"
     },
     {
       "reward_status": 2,
-      "next_reward_time": 80461,
+      "next_reward_time": 82359,
       "remain_complete": 0,
       "slot_status": 0,
       "wizard_id": 5740197,
       "channel_uid": 195473845,
       "wizard_level": 29,
       "wizard_name": "Alcol",
-      "last_login_time": 6683,
+      "last_login_time": 4785,
       "date_add": "2017-06-21 05:11:17"
     }
   ],
@@ -108355,9 +108351,9 @@
   },
   "daily_reward_info": {
     "month": "2017-07-01",
-    "is_checked": 1,
-    "check_count": 5,
-    "prev_last_check": "2017-07-05"
+    "is_checked": 0,
+    "check_count": 4,
+    "prev_last_check": "2017-07-04"
   },
   "daily_reward_unit_upgrade_info": {
     "reward_exist": 0
@@ -108369,9 +108365,9 @@
     "arena_score": 1316,
     "attack_score": 2779,
     "win_streak": 1,
-    "win_streak_update_remained": 1576,
+    "win_streak_update_remained": 3474,
     "rating_id": 2002,
-    "rating_remained": 422461,
+    "rating_remained": 424359,
     "is_new": 0,
     "prev_rating_id": 0
   },
@@ -108469,17 +108465,17 @@
     "open_remained_time": 0,
     "battle_start_time": "2017-07-02 04:20:00",
     "battle_end_time": "2017-07-08 07:20:00",
-    "dead_remained_time": 276061,
+    "dead_remained_time": 277959,
     "close_time": "2017-07-08 08:20:00",
-    "close_remained_time": 279661,
+    "close_remained_time": 281559,
     "base_hp": 0,
-    "hp_rate": 50.153227843359,
-    "daily_battle_init_remained_time": 80461,
+    "hp_rate": 50.291220934298,
+    "daily_battle_init_remained_time": 82359,
     "refresh_term": 300
   },
   "worldboss_used_unit": [],
   "my_worldboss_ranking": {
-    "ranking": 5772,
+    "ranking": 5116,
     "accumulate_damage": 15581238,
     "rating_id": 4001,
     "ranking_rate": 5,
@@ -108539,8 +108535,8 @@
   "rtpvp_reward_info": [],
   "country": "US",
   "wizard_id": 158523,
-  "ts_val": 1165284412,
-  "tvalue": 1499189939,
-  "tvaluelocal": 1499186339,
+  "ts_val": 1165282753,
+  "tvalue": 1499188041,
+  "tvaluelocal": 1499184441,
   "tzone": "Asia/Shanghai"
 }

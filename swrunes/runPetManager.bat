@@ -1,1 +1,1 @@
-java -cp runeoptimize.jar gui.PetManager
+java -cp runeoptimize.jar com.swrunes.gui.PetManager

@@ -1,0 +1,26 @@
+plugins {
+    id 'application'
+}
+
+archivesBaseName = 'swrunes'
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.swrunes.gui.Application'
+    }
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.guava:guava:27.0.1-jre'
+    implementation 'org.jsoup:jsoup:1.11.3'
+    compile group: 'org.json', name: 'json', version: '20090211'
+}
+
+application {
+    mainClassName = 'com.swrunes.gui.Application'
+}
