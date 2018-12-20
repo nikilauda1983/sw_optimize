@@ -572,7 +572,8 @@ public class Crawler {
             for (String p1 : Bestiary.getInstance().allPets.keySet()) {
                 PetInfo pet = Bestiary.getInstance().allPets.get(p1);
                 String existingPath = "/imgs/" + pet.aName + ".png";
-                if (!new File(existingPath).isFile()) {
+                InputStream streamReader = Crawler.class.getResourceAsStream(existingPath);
+                if (streamReader == null) {
                     System.out.println("No image : " + pet.aName);
                     String petName = pet.aName;
                     if (petName.contains(" ")) {

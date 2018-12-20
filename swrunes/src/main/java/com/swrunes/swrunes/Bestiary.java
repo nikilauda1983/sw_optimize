@@ -13,9 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author ducnd2 on 10/5/2016.
- */
 public class Bestiary {
 
     public static class SkillWikiInfo {
@@ -33,7 +30,6 @@ public class Bestiary {
     public Map<String, PetInfo> allPets = new HashMap<>();
 
     public static Bestiary loadFile() {
-
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(Bestiary.class.getResourceAsStream("/Pet_Bestiary.json")));
             String content = "";
@@ -83,13 +79,11 @@ public class Bestiary {
             } else {
                 //System.out.println("Load config ok : " + gson.toJson(instance));
             }
-            (new Thread() {
-                public void run() {
-                    System.out.println("Check missing avatars in Threading");
-                    Crawler.checkMissingAvatar();
-                    System.out.println("Done Check missing avatars in Threading");
-                }
-            }).start();
+            (new Thread(() -> {
+                System.out.println("Check missing avatars in Threading");
+                Crawler.checkMissingAvatar();
+                System.out.println("Done Check missing avatars in Threading");
+            })).start();
         }
         return instance;
     }
