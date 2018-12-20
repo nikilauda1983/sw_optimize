@@ -85,7 +85,6 @@ public class Bestiary {
             }
             (new Thread() {
                 public void run() {
-                    //jLabelIcon.setText("");
                     System.out.println("Check missing avatars in Threading");
                     Crawler.checkMissingAvatar();
                     System.out.println("Done Check missing avatars in Threading");

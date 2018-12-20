@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.*;
@@ -56,9 +57,9 @@ public class Crawler {
             long l1 = System.currentTimeMillis();
             String existingPath = "/imgs/" + petName + ".png";
             try {
-                if (new File(existingPath).isFile()) {
-                    BufferedImage image = ImageIO.read(new File(existingPath));
-                    return image;
+                InputStream streamReader = Crawler.class.getResourceAsStream(existingPath);
+                if (streamReader != null) {
+                    return ImageIO.read(streamReader);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -570,7 +571,7 @@ public class Crawler {
         try {
             for (String p1 : Bestiary.getInstance().allPets.keySet()) {
                 PetInfo pet = Bestiary.getInstance().allPets.get(p1);
-                String existingPath = "./imgs/" + pet.aName + ".png";
+                String existingPath = "/imgs/" + pet.aName + ".png";
                 if (!new File(existingPath).isFile()) {
                     System.out.println("No image : " + pet.aName);
                     String petName = pet.aName;
@@ -605,7 +606,7 @@ public class Crawler {
                             imageUrl = e.get(1).attr("href");                        
                         }
                     }
-                    System.out.println("imageUrl : "+imageUrl);
+                    System.out.println("imageUrl : " + imageUrl);
 
                     BufferedImage image = ImageIO.read(new URL(imageUrl));
                     if (image.getWidth()<80){
