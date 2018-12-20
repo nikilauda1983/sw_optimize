@@ -46,7 +46,7 @@ public class ManualWork {
 
         RuneType.RuneSet.runePet = lushen;
 
-        System.out.println("Current equip damage : " + lushen.currentEquip.finalDamage());
+        //System.out.println("Current equip damage : " + lushen.currentEquip.finalDamage());
 
         // if (true) return;
         RunePermutation.genSlot246("DEF%", "CDmg", "DEF%");
@@ -81,7 +81,7 @@ public class ManualWork {
 
         RuneType.RuneSet.runePet = lushen;
 
-        System.out.println("Current equip damage : " + lushen.currentEquip.finalDamage());
+        //System.out.println("Current equip damage : " + lushen.currentEquip.finalDamage());
 
         // if (true) return;
         RunePermutation.genSlot246("DEF%", "DEF%", "DEF%");
@@ -301,7 +301,7 @@ public class ManualWork {
         RuneType.RuneSet.exceptPetRunes = "Copper,Tyron,Eshir,Lushen,Hwa,Bulldozer";
         RuneType.RuneSet.runePet = lushen;
 
-        System.out.println("Current equip damage : " + lushen.currentEquip.finalDamage());
+        //System.out.println("Current equip damage : " + lushen.currentEquip.finalDamage());
 
         // if (true) return;
         RunePermutation.perMute("Fatal,Blade", x -> (x.cr >= (65) && x.spd > 90), x -> {
@@ -327,7 +327,7 @@ public class ManualWork {
         RuneType.RuneSet.exceptPetRunes = "Copper,Tyron,Eshir,Lushen,Hwa,Theomars,Raki,Kahli";
         RuneType.RuneSet.runePet = lushen;
 
-        System.out.println("Current equip damage : " + lushen.currentEquip.finalDamage());
+        //System.out.println("Current equip damage : " + lushen.currentEquip.finalDamage());
 
         // if (true) return;
         RunePermutation.perMute("Rage,Will", x -> (x.cd >= (65)), x -> {
@@ -353,7 +353,7 @@ public class ManualWork {
         RuneType.RuneSet.exceptPetRunes = "Copper,Tyron,Eshir,Lushen,Hwa,Bulldozer";
         RuneType.RuneSet.runePet = lushen;
 
-        System.out.println("Current equip damage : " + lushen.currentEquip.finalDamage());
+        //System.out.println("Current equip damage : " + lushen.currentEquip.finalDamage());
 
         // if (true) return;
         RunePermutation.perMute("Swift", x -> (x.cr >= (65) && x.spd > 90), x -> {
@@ -377,7 +377,7 @@ public class ManualWork {
         RuneType.RuneSet.exceptPetRunes = "Copper,Zaiross,Hwa,Kahli,Akhamamir,Theomars,Eshir";
         RuneType.RuneSet.runePet = lushen;
 
-        System.out.println("Current equip damage : " + lushen.currentEquip.finalDamage());
+        //System.out.println("Current equip damage : " + lushen.currentEquip.finalDamage());
 
         // if (true) return;
         RunePermutation.perMute("Rage", x -> (x.cr >= (70) && x.cd > 120 && x.spd >= 60), x -> {
@@ -401,7 +401,7 @@ public class ManualWork {
         RuneType.RuneSet.exceptPetRunes = "Tyron";
         RuneType.RuneSet.runePet = lushen;
 
-        System.out.println("Current equip damage : " + lushen.currentEquip.finalDamage());
+        //System.out.println("Current equip damage : " + lushen.currentEquip.finalDamage());
 
         // if (true) return;
         // RunePermutation.perMute("Swift", x -> (x.cr>=(55) && x.cd>120 && x.spd>=100),
@@ -422,7 +422,7 @@ public class ManualWork {
         RuneType.RuneSet.exceptPetRunes = "Tyron,Lushen,Copper,Eshir";
         RuneType.RuneSet.runePet = lushen;
 
-        System.out.println("Current equip damage : " + lushen.currentEquip.finalDamage());
+        //System.out.println("Current equip damage : " + lushen.currentEquip.finalDamage());
 
         // if (true) return;
         // RunePermutation.perMute("Swift", x -> (x.cr>=(55) && x.cd>120 && x.spd>=100),
@@ -481,8 +481,8 @@ public class ManualWork {
 
         bernard.applyRuneSet(RunePermutation.bestRuneSet);
 
-        System.out.println("Combo : " + bernard.comboMap);
-        System.out.println("Final : " + bernard.statfixMap);
+        //System.out.println("Combo : " + bernard.comboMap);
+        //System.out.println("Final : " + bernard.statfixMap);
     }
 
     public void galleonWork() {
@@ -500,8 +500,8 @@ public class ManualWork {
         }, x -> (x.hp * x.def));
         bernard.applyRuneSet(RunePermutation.bestRuneSet);
 
-        System.out.println("Combo : " + bernard.comboMap);
-        System.out.println("Final : " + bernard.statfixMap);
+        //System.out.println("Combo : " + bernard.comboMap);
+        //System.out.println("Final : " + bernard.statfixMap);
     }
 
     public void meganWork() {
@@ -519,8 +519,8 @@ public class ManualWork {
         }, x -> (x.spd));
         bernard.applyRuneSet(RunePermutation.bestRuneSet);
 
-        System.out.println("Combo : " + bernard.comboMap);
-        System.out.println("Final : " + bernard.statfixMap);
+        //System.out.println("Combo : " + bernard.comboMap);
+        //System.out.println("Final : " + bernard.statfixMap);
     }
 
     public void bernardWork() {

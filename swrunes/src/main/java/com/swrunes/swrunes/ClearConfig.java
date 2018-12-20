@@ -11,7 +11,7 @@ package com.swrunes.swrunes;
  */
 public class ClearConfig {
     public static void main(String[] args) {
-        System.out.println("Clear config file");
+        //System.out.println("Clear config file");
         ConfigInfo cf = ConfigInfo.getInstance();
         cf.favourite.clear();          
         cf.loadPetLevel=1;
@@ -24,6 +24,6 @@ public class ClearConfig {
             p1.runeFilterValue = 5;
         }
         cf.saveFileOther();
-        System.out.println("Done !");
+        //System.out.println("Done !");
     }
 }

@@ -75,9 +75,9 @@ public class Application extends javax.swing.JFrame {
         jComboMainRune.addItem("Swift/Rage");
         jComboMainRune.addItem("Swift/Fatal");
 
-        System.out.println("jComboMainRune : " + jComboMainRune.getItemCount());
+        //System.out.println("jComboMainRune : " + jComboMainRune.getItemCount());
 
-        System.out.println("Hello");
+        //System.out.println("Hello");
         SwManager.getInstance().loadPets("optimizer.json");
         jComboPets.removeAllItems();
 
@@ -296,12 +296,12 @@ public class Application extends javax.swing.JFrame {
                 int row = jTableCurRuneOptimized.rowAtPoint(evt.getPoint());
                 int col = jTableCurRuneOptimized.columnAtPoint(evt.getPoint());
                 if (row >= 0 && col >= 0) {
-                    System.out.println("Row : " + row);
-                    System.out.println("col : " + col);
+                    //System.out.println("Row : " + row);
+                    //System.out.println("col : " + col);
                     if (row == 8) {
                         String pet = "" + jTableCurRuneOptimized.getValueAt(row - 1, col);
                         pet = pet.replaceAll("\\<.*?>", "");
-                        System.out.println("Pet : " + pet);
+                        //System.out.println("Pet : " + pet);
 
                         if (!pet.contains("Storage") && !pet.contains(curPet.name)) {
                             int dialogButton = JOptionPane.YES_NO_OPTION;
@@ -315,7 +315,7 @@ public class Application extends javax.swing.JFrame {
                                     jTextLocks.setText(jTextLocks.getText() + "," + pet);
                                 }
                             } else {
-                                System.out.println("No Option");
+                                //System.out.println("No Option");
                             }
                         }
                     }
@@ -331,7 +331,7 @@ public class Application extends javax.swing.JFrame {
      */
     public Application() {
         int fontSize = FONT_SIZE[ConfigInfo.getInstance().fontSize];
-        System.out.println("Font size : " + fontSize);
+        //System.out.println("Font size : " + fontSize);
         UIManager.getLookAndFeelDefaults()
                 .put("defaultFont", new Font("Tahoma", Font.PLAIN, fontSize));
         initComponents();
@@ -345,7 +345,7 @@ public class Application extends javax.swing.JFrame {
             public void valueChanged(ListSelectionEvent event) {
                 if (jTableResults.getSelectedRow() > -1) {
                     // print first column value from selected row
-                    System.out.println(jTableResults.getValueAt(jTableResults.getSelectedRow(), 0).toString());
+                    //System.out.println(jTableResults.getValueAt(jTableResults.getSelectedRow(), 0).toString());
                     int runeId = Integer.parseInt(jTableResults.getValueAt(jTableResults.getSelectedRow(), 0).toString()) - 1;
 
                     if (runeId < displayRuneList.size()) {
@@ -357,7 +357,7 @@ public class Application extends javax.swing.JFrame {
             }
         });
 
-        System.out.println("Come here last pet : " + ConfigInfo.getInstance().lastPet);
+        //System.out.println("Come here last pet : " + ConfigInfo.getInstance().lastPet);
         oTitle = this.getTitle();
 
         loadOnePet(ConfigInfo.getInstance().lastPet);
@@ -2695,7 +2695,7 @@ public class Application extends javax.swing.JFrame {
         if (petLoading) {
             return;
         }
-        System.out.println("Load one pet : " + petName);
+        //System.out.println("Load one pet : " + petName);
 
         if (petName == null) {
             petLoading = false;
@@ -2719,7 +2719,7 @@ public class Application extends javax.swing.JFrame {
         (new Thread() {
             public void run() {
                 //jLabelIcon.setText("");
-                System.out.println("petName Picture : [" + oname + "]");
+                //System.out.println("petName Picture : [" + oname + "]");
                 BufferedImage bf = Crawler.crawlPetPicture(oname);
                 if (bf != null) {
                     jLabelIcon.setSize(bf.getWidth(), bf.getHeight());
@@ -2729,14 +2729,14 @@ public class Application extends javax.swing.JFrame {
         }).start();
 
         curPet = pet;
-        System.out.println("Curpet : " + curPet.name);
+        //System.out.println("Curpet : " + curPet.name);
         loadPetSetting();
         if (curPet.skillItem.skillMulty == null) {
             curPet.skillItem.skillMulty = "(ATK*3)";
             curPet.skillItem.skillName = "Unknown";
         }
 
-        System.out.println("Curpet mainskill : " + ConfigInfo.getInstance().petMaps.get(petName).mainSkill);
+        //System.out.println("Curpet mainskill : " + ConfigInfo.getInstance().petMaps.get(petName).mainSkill);
 
         clearTable(jTableCurRuneOptimized);
         clearTable(jTablePetStatOptmized);
@@ -2752,7 +2752,7 @@ public class Application extends javax.swing.JFrame {
 
         jTextCurrentRune.setText(s2);
 
-        System.out.println("Curpet mainskill : " + ConfigInfo.getInstance().petMaps.get(petName).mainSkill);
+        //System.out.println("Curpet mainskill : " + ConfigInfo.getInstance().petMaps.get(petName).mainSkill);
 
         displayStatMain(jTableStatMain, curPet);
 
@@ -2770,7 +2770,7 @@ public class Application extends javax.swing.JFrame {
         ConfigInfo cf = ConfigInfo.getInstance();
         ConfigInfo.PetSetting cp = cf.petMaps.get(curPet.name);
 
-        System.out.println("Load pet : " + cp.petName + " ; " + cp.isSaved + " ; mainSkill : " + cp.mainSkill);
+        //System.out.println("Load pet : " + cp.petName + " ; " + cp.isSaved + " ; mainSkill : " + cp.mainSkill);
         if (cp != null && cp.isSaved) {
             loadOptimizedRune(getRuneSet(cp.buildUniqueId));
         }
@@ -2787,7 +2787,7 @@ public class Application extends javax.swing.JFrame {
             }
         }
 
-        System.out.println("*******Done load pet : " + cp.mainSkill + "************");
+        //System.out.println("*******Done load pet : " + cp.mainSkill + "************");
         petLoading = false;
         this.setTitle(oTitle + " - " + curPet.full_name + " - lv_" + curPet.level + " ; id_" + curPet.id + " ; master_id : " + curPet.master_id);
         jFrameResults.setVisible(false);
@@ -2799,7 +2799,7 @@ public class Application extends javax.swing.JFrame {
 
     private void jComboPetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPetsActionPerformed
         // TODO add your handling code here:
-        System.out.println("Came here comboPet : " + evt.getID() + "; " + jComboPets.getSelectedIndex() + " ; " + jComboPets.getSelectedItem());
+        //System.out.println("Came here comboPet : " + evt.getID() + "; " + jComboPets.getSelectedIndex() + " ; " + jComboPets.getSelectedItem());
 
         if (jComboPets.getSelectedItem() != null) {
             String petName = jComboPets.getSelectedItem().toString();
@@ -2814,7 +2814,7 @@ public class Application extends javax.swing.JFrame {
 
     //preoptimize; pre optimize
     void updateTotalPermutation() {
-        System.out.println("*************updateTotalPermutation***********");
+        //System.out.println("*************updateTotalPermutation***********");
         paraRunes = "";
         paraValue = 0;
         excludeList.clear();
@@ -2988,13 +2988,13 @@ public class Application extends javax.swing.JFrame {
         if (cp == null) {
             cf.petMaps.put(curPet.name, new ConfigInfo.PetSetting());
             cp = cf.petMaps.get(curPet.name);
-            System.out.println("Create new pet Setting : " + cp.petName);
+            //System.out.println("Create new pet Setting : " + cp.petName);
         }
-        System.out.println("Load pet : mainSKill : " + cp.mainSkill + " ; " + cp.petName);
+        //System.out.println("Load pet : mainSKill : " + cp.mainSkill + " ; " + cp.petName);
 
         cp.petName = curPet.name;
         if (cp != null) {
-            System.out.println("Load : " + cp.mainSet + " ; finalOptimize = " + cp.finalOptimize + " ; " + jComboOptimizeFinal.getItemCount());
+            //System.out.println("Load : " + cp.mainSet + " ; finalOptimize = " + cp.finalOptimize + " ; " + jComboOptimizeFinal.getItemCount());
 
             jComboMainRune.setSelectedIndex(cp.mainSet);
             tSecondRuneSet.setText(cp.secondSet);
@@ -3071,9 +3071,9 @@ public class Application extends javax.swing.JFrame {
                 jComboSkill.addItem("" + k1 + ":" + k.skillName);
                 k1++;
             }
-            System.out.println("cp.mainSkill : " + cp.mainSkill);
+            //System.out.println("cp.mainSkill : " + cp.mainSkill);
             if (cp.mainSkill == 0) {
-                System.out.println("Main Skill is not set !");
+                //System.out.println("Main Skill is not set !");
                 jComboSkill.setSelectedIndex(curPet.skillList.size() - 1);
             } else {
                 jComboSkill.setSelectedIndex(cp.mainSkill - 1);
@@ -3107,7 +3107,7 @@ public class Application extends javax.swing.JFrame {
                 res += "," + r1.id;
             }
         }
-        System.out.println("genExcludedListText : " + res);
+        //System.out.println("genExcludedListText : " + res);
         return res;
     }
 
@@ -3123,7 +3123,7 @@ public class Application extends javax.swing.JFrame {
                 }
             }
         }
-        System.out.println("Excluded list : " + list);
+        //System.out.println("Excluded list : " + list);
         return list;
     }
 
@@ -3263,19 +3263,19 @@ public class Application extends javax.swing.JFrame {
             if (s2.contains(">=")) {
                 final String s1 = s2.replace(">=", "").trim();
                 final int d1 = getInt(tFirstValue);
-                System.out.println("Add filter : " + s1 + ">=" + d1 + " parasize : " + RunePermutation.paraRuneList.size());
+                //System.out.println("Add filter : " + s1 + ">=" + d1 + " parasize : " + RunePermutation.paraRuneList.size());
                 RunePermutation.paraRuneList.add(x -> (x.getPetValue(s1) >= d1));
             }
             if (s2.contains("<=")) {
                 final String s1 = s2.replace("<=", "").trim();
                 final int d1 = getInt(tFirstValue);
-                System.out.println("Add filter : " + s1 + "<=" + d1 + " parasize : " + RunePermutation.paraRuneList.size());
+                //System.out.println("Add filter : " + s1 + "<=" + d1 + " parasize : " + RunePermutation.paraRuneList.size());
                 RunePermutation.paraRuneList.add(x -> (x.getPetValue(s1) <= d1));
             }
             if (s2.contains("==")) {
                 final String s1 = s2.replace("==", "").trim();
                 final int d1 = getInt(tFirstValue);
-                System.out.println("Add filter : " + s1 + "==" + d1 + " parasize : " + RunePermutation.paraRuneList.size());
+                //System.out.println("Add filter : " + s1 + "==" + d1 + " parasize : " + RunePermutation.paraRuneList.size());
                 RunePermutation.paraRuneList.add(x -> (x.getPetValue(s1) == d1));
             }
         }
@@ -3307,7 +3307,7 @@ public class Application extends javax.swing.JFrame {
     }
 
     public void loadOptimizedRune(RuneSet rs) {
-        System.out.println("loadOptimizedRune : " + rs);
+        //System.out.println("loadOptimizedRune : " + rs);
         if (rs == null) {
             return;
         }
@@ -3359,7 +3359,7 @@ public class Application extends javax.swing.JFrame {
             }
         }
 
-        System.out.println("included list : " + list + " ; " + Arrays.toString(RunePermutation.includeRunes));
+        //System.out.println("included list : " + list + " ; " + Arrays.toString(RunePermutation.includeRunes));
     }
 
     public List<Integer> getExcludedList(String l) {
@@ -3371,7 +3371,7 @@ public class Application extends javax.swing.JFrame {
                 list.add(t2);
             }
         }
-        System.out.println("Excluded list : " + list);
+        //System.out.println("Excluded list : " + list);
         return list;
     }
 
@@ -3388,10 +3388,10 @@ public class Application extends javax.swing.JFrame {
                     }
                     //System.out.println(idu+" : "+r1);
                 }
-                System.out.println("Lock list : " + p1.petName + " : " + list2);
+                //System.out.println("Lock list : " + p1.petName + " : " + list2);
             }
         }
-        System.out.println("Locked list : " + list);
+        //System.out.println("Locked list : " + list);
         return list;
     }
 
@@ -3446,7 +3446,7 @@ public class Application extends javax.swing.JFrame {
                         + "\n In the filter this is final stat, if you set spd <= 60, "
                         + "\nthere no result,pet base speed are at least 90";
                 if (RunePermutation.preCalc == 0) {
-                    System.out.println("preCalc = 0 . paraValue = " + paraValue);
+                    //System.out.println("preCalc = 0 . paraValue = " + paraValue);
 
                     jTextOutput.setText(jTextOutput.getText() + " \n No runeset found !");
 
@@ -3855,11 +3855,11 @@ public class Application extends javax.swing.JFrame {
 
     private void tLeaderSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tLeaderSkillActionPerformed
         // TODO add your handling code here:
-        System.out.println("Came here ! tLeaderSkillActionPerformed");
+        //System.out.println("Came here ! tLeaderSkillActionPerformed");
         if (curPet != null) {
             savePetSetting();
 
-            System.out.println("Came here pet ! " + curPetSetting.mainSkill);
+            //System.out.println("Came here pet ! " + curPetSetting.mainSkill);
             loadOnePet(curPet.name);
         }
     }//GEN-LAST:event_tLeaderSkillActionPerformed
@@ -3870,7 +3870,7 @@ public class Application extends javax.swing.JFrame {
 
     private void tLeaderSkillFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tLeaderSkillFocusLost
 
-        System.out.println("Focus lost : " + getInt(tLeaderSkill) + " ; " + curPet.leader_skill);
+        //System.out.println("Focus lost : " + getInt(tLeaderSkill) + " ; " + curPet.leader_skill);
         if (getInt(tLeaderSkill) != curPet.leader_skill) {
             curPet.leader_skill = getInt(tLeaderSkill);
             savePetSetting();
@@ -4486,7 +4486,7 @@ public class Application extends javax.swing.JFrame {
             return;
         }
 
-        System.out.println("Came here !");
+        //System.out.println("Came here !");
 
         setupTable(jTableBuilds);
         jTableBuilds.getColumnModel().getColumn(3).setPreferredWidth(120);
@@ -4508,7 +4508,7 @@ public class Application extends javax.swing.JFrame {
                 model.addRow(new Object[jTableBuilds.getModel().getColumnCount()]);
                 SwManager.getPet(p1.petName).savedBuild = rs;
 
-                System.out.println("Build : " + k + " : " + p1.petName + " ; " + p1.isSaved + " ; " + rs);
+                //System.out.println("Build : " + k + " : " + p1.petName + " ; " + p1.isSaved + " ; " + rs);
 
                 jTableBuilds.setValueAt(k, k, 0);
                 jTableBuilds.setValueAt(p1.petName, k, 1);
@@ -4583,7 +4583,7 @@ public class Application extends javax.swing.JFrame {
     //lock build
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        System.out.println("Selected : " + jTableBuilds.getSelectedRow() + " ; " + jTableBuilds.getSelectedRowCount());
+        //System.out.println("Selected : " + jTableBuilds.getSelectedRow() + " ; " + jTableBuilds.getSelectedRowCount());
         if (jTableBuilds.getSelectedRowCount() > 0) {
             for (int i = 0; i < jTableBuilds.getSelectedRowCount(); i++) {
                 int row = jTableBuilds.getSelectedRow() + i;

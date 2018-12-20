@@ -242,7 +242,7 @@ public class RuneType implements Serializable {
                 if (t1<=(minTotal+d2)) d2--;
                 int tg=(d2+1)*(MaxStatValue[v1]+MinStatValue[v1])/2;
                 if (t1<(tg-1))d2--;
-                System.out.println(slabelsMain2[v1]+" ; avg = "+g+" ; d2="+d2+" ; Mintotal ="+minTotal+" val = "+t1+" avg Total = "+(tg));
+                //System.out.println(slabelsMain2[v1]+" ; avg = "+g+" ; d2="+d2+" ; Mintotal ="+minTotal+" val = "+t1+" avg Total = "+(tg));
                 if (d2>0){
                     sum+=d2;
                 }                

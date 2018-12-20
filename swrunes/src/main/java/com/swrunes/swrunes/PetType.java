@@ -1035,7 +1035,7 @@ public class PetType implements Comparable<PetType> {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println("Error : " + set);
+                //System.out.println("Error : " + set);
                 System.exit(0);
             }
 
@@ -1213,7 +1213,7 @@ public class PetType implements Comparable<PetType> {
                         if (p.element.equalsIgnoreCase(attribute)) {
                             if (b_hp == Integer.parseInt(p.hp) && b_def == Integer.parseInt(p.def) && b_atk == Integer.parseInt(p.atk)
                                     && b_spd == Integer.parseInt(p.spd)) {
-                                System.out.println("Found unknown : " + p.aName + " ; " + p.uName + " ; " + p.element);
+                                //System.out.println("Found unknown : " + p.aName + " ; " + p.uName + " ; " + p.element);
                                 name = p.aName;
                             }
                         }
@@ -1221,7 +1221,7 @@ public class PetType implements Comparable<PetType> {
                 }
             }
             if (name == null) {
-                System.out.println("Failed to load this pet : " + master_id);
+                //System.out.println("Failed to load this pet : " + master_id);
                 return;
             }
             name = name.replace("*", "").trim();
@@ -1270,7 +1270,7 @@ public class PetType implements Comparable<PetType> {
             //System.out.println("statfixMap : "+statfixMap+" ; "+info);
         } catch (JSONException e) {
             // TODO Auto-generated catch block
-            System.out.println("Pet error : " + p1);
+            //System.out.println("Pet error : " + p1);
             e.printStackTrace();
         }
     }
@@ -1302,22 +1302,22 @@ public class PetType implements Comparable<PetType> {
         s += "\n" + ("*****************Done****************************");
 
         //wind vs fire ,95% dmg. disadvantage.
-        System.out.println("Atk glory : " + cf.glory_atk + " ; cd=" + cf.glory_cd + " ; atk_element=" + cf.gloryAtkElement[this.element]);
-        System.out.println("Buff : def_buff : " + this.def_buff + " ; atk_buff : " + atk_buff + " skill_up=" + (int) this.skillsUp);
+        //System.out.println("Atk glory : " + cf.glory_atk + " ; cd=" + cf.glory_cd + " ; atk_element=" + cf.gloryAtkElement[this.element]);
+        //System.out.println("Buff : def_buff : " + this.def_buff + " ; atk_buff : " + atk_buff + " skill_up=" + (int) this.skillsUp);
         //System.out.println("Dmg vs faimon Hell : ");
-        System.out.println(s);
+        //System.out.println(s);
         return s;
     }
 
     public static void checkPet(String petName) {
-        System.out.println("Found pet in petNameMap : " + petName + " : " + petNameMap.values().contains(petName));
-        System.out.println("petsBestiary : " + petName + " : " + petsBestiary.containsKey(petName));
+        //System.out.println("Found pet in petNameMap : " + petName + " : " + petNameMap.values().contains(petName));
+        //System.out.println("petsBestiary : " + petName + " : " + petsBestiary.containsKey(petName));
 
-        System.out.println("Found id : " + petNameMapInv.get(petName));
+        //System.out.println("Found id : " + petNameMapInv.get(petName));
 
         if (petsBestiary.containsKey(petName)) {
-            System.out.println("Family : [" + petsBestiary.get(petName).u_name + "]");
-            System.out.println("Found id : " + petNameMapInv.get(petsBestiary.get(petName).u_name));
+            //System.out.println("Family : [" + petsBestiary.get(petName).u_name + "]");
+            //System.out.println("Found id : " + petNameMapInv.get(petsBestiary.get(petName).u_name));
         }
     }
 

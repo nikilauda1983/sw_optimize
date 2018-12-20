@@ -788,8 +788,8 @@ public class RuneManager extends javax.swing.JFrame {
     public void updateAllrunesTable() {
         if (loadingData) return;
         
-        System.out.println("************* updateAllrunesTable : ******* : RuneType : "+jComboSearchRuneType.getSelectedItem()+" : "+(jComboSearchRuneType.getSelectedIndex()-1)
-                +" slot = "+jComboSearchRuneSlot.getSelectedItem());
+        //System.out.println("************* updateAllrunesTable : ******* : RuneType : "+jComboSearchRuneType.getSelectedItem()+" : "+(jComboSearchRuneType.getSelectedIndex()-1)
+        //        +" slot = "+jComboSearchRuneSlot.getSelectedItem());
         ((DefaultTableModel) jTableAllRunes.getModel()).setNumRows(0);
         //applyCurrentRune();
         for (int i = 0; i < RuneType.slabelsMainDisplay.length; i++) {
@@ -1045,7 +1045,7 @@ public class RuneManager extends javax.swing.JFrame {
         
         jTextMainStat.setValue(r1.mainStatVal);
         for (int i=0;i<r1.subStat1.size();i++){            
-                System.out.println(i+" : "+comboList.get(i).getItemCount()+" ; "+r1.subStat1.get(i));
+                //System.out.println(i+" : "+comboList.get(i).getItemCount()+" ; "+r1.subStat1.get(i));
                 comboList.get(i).setSelectedIndex(r1.subStat1.get(i)+1);
             textList.get(i).setValue(r1.subStat2.get(i));            
         }

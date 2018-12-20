@@ -27,14 +27,14 @@ public class Crawler {
         try {
             String data = "";
             //url = "http://summonerswar.wikia.com/wiki/Perna";
-            System.out.println("crawlPage : " + url);
+            //System.out.println("crawlPage : " + url);
             try {
                 data = Resources.toString(new URL(url), Charsets.UTF_8);
             } catch (Exception e) {
                 //e.printStackTrace();
                 data = readUrlData(url);
             }
-            System.out.println("Load from wiki : " + data);
+            //System.out.println("Load from wiki : " + data);
             return Jsoup.parse(data);
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,24 +64,24 @@ public class Crawler {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            System.out.println("petName : "+petName);
+            //System.out.println("petName : "+petName);
 
             //unawaken
             if (petName.contains("(")) {
                 petName = petName.replace(" ", "_");
             }
             String data = Resources.toString(new URL("http://summonerswar.wikia.com/wiki/" + petName), Charsets.UTF_8);
-            System.out.println("Load from wiki : " + data);
+            //System.out.println("Load from wiki : " + data);
 
             Document doc = Jsoup.parse(data);
             Elements e = doc.select("div.monstertable a");
             String url = e.get(1).attr("href");
-            System.out.println(url);
+            //System.out.println(url);
             BufferedImage image = ImageIO.read(new URL(url));
-            System.out.println("Image size : " + image.getHeight() + " x " + image.getWidth());
+            //System.out.println("Image size : " + image.getHeight() + " x " + image.getWidth());
             ImageIO.write(image, "png", new File(existingPath));
 
-            System.out.println("Done in " + (System.currentTimeMillis() - l1));
+            //System.out.println("Done in " + (System.currentTimeMillis() - l1));
 
             return image;
         } catch (Exception e) {
@@ -113,7 +113,7 @@ public class Crawler {
                 if (t1.text().contains(stat)) {
                     hp1++;
                     if (hp1 % 2 == 0) {
-                        System.out.println(hp1 + " : " + t1.text());
+                        //System.out.println(hp1 + " : " + t1.text());
                         if (hp1 / 2 == homuIndex + 1) {
                             return t1.select("td").get(3).text();
                         }
@@ -130,7 +130,7 @@ public class Crawler {
             long l1 = System.currentTimeMillis();
             String data = "";
             //url = "http://summonerswar.wikia.com/wiki/Perna";
-            System.out.println("crawlPage : " + url);
+            //System.out.println("crawlPage : " + url);
             try {
                 data = Resources.toString(new URL(url), Charsets.UTF_8);
             } catch (Exception e) {
@@ -168,7 +168,7 @@ public class Crawler {
                     String multy = t1.select("span.basic-tooltip").text();
                     String tooltip = t1.select("span.basic-tooltip").attr("title");
                     if (multy.length() > 0) {
-                        System.out.println("\ntooltip : " + tooltip + " ; multy = " + multy);
+                        //System.out.println("\ntooltip : " + tooltip + " ; multy = " + multy);
                     }
                     if (el.size() > 0) {
                         if (t1.select("td").size() == 2) {
@@ -192,8 +192,8 @@ public class Crawler {
                                 homuSkill = "Dark";
                             }
 
-                            System.out.println(count + " : SkillName : [" + skillName + "]     ;  " + homuSkill);
-                            System.out.println("Skill : [" + skildes + "]");
+                            //System.out.println(count + " : SkillName : [" + skillName + "]     ;  " + homuSkill);
+                            //System.out.println("Skill : [" + skildes + "]");
 
                             skillInfo = new Bestiary.SkillWikiInfo();
                             skillInfo.tooltip = tooltip;
@@ -201,10 +201,10 @@ public class Crawler {
                             skillInfo.skill_desc = skildes;
                             skillInfo.skill_name = skillName;
                             for (Element e1 : el) {
-                                System.out.println(e1.text());
+                                //System.out.println(e1.text());
                                 skillInfo.skill_up.add(e1.text());
                             }
-                            if (homuSkill.equalsIgnoreCase(element) && skillName.length()>2) {
+                            if (homuSkill.equalsIgnoreCase(element) && skillName.length() > 2) {
                                 petinfo.skills.add(skillInfo);
                             }
                         }
@@ -240,38 +240,38 @@ public class Crawler {
 
     public static void crawlSkills(Document doc, PetInfo petinfo, String prefix) {
         int d1 = doc.select("div.row").size();
-        System.out.println("d1 : "+d1);
+        //System.out.println("d1 : "+d1);
         Element main = doc.select("div.row").get(0);
         if (d1 == 4) {
             main = doc.select("div.row").get(2);
-        }        
+        }
         Elements sk2 = main.select("div.panel.panel-default");
         for (Element sk : sk2) {
             int li = sk.select("li").size();
             if (li > 0) {
-                System.out.println(li + " : " + sk.text());
+                //System.out.println(li + " : " + sk.text());
                 String name = sk.select("p.panel-title").text();
-                System.out.println("Skill : " + name);
-                System.out.println("Skill des: " + sk.select("p").get(1).text());
+                //System.out.println("Skill : " + name);
+                //System.out.println("Skill des: " + sk.select("p").get(1).text());
                 Elements ff = sk.select("li:contains(Formula) p");
 
                 Elements uls = sk.select("ul.list-unstyled li");
                 Bestiary.SkillWikiInfo skillInfo = new Bestiary.SkillWikiInfo();
 
-                skillInfo.skill_desc = name+": "+sk.select("p").get(1).text();
-                
-                if (prefix.length()>0){
-                    name +=" ("+prefix+")";
+                skillInfo.skill_desc = name + ": " + sk.select("p").get(1).text();
+
+                if (prefix.length() > 0) {
+                    name += " (" + prefix + ")";
                 }
-                skillInfo.skill_name = name;                
+                skillInfo.skill_name = name;
                 skillInfo.tooltip = "";
 
                 for (Element ul : uls) {
-                    System.out.println("Skill up : " + ul.text());
+                    //System.out.println("Skill up : " + ul.text());
                     skillInfo.skill_up.add(ul.text());
                 }
                 if (ff.size() == 2) {
-                    System.out.println("Skill Multy: " + ff.get(1).text());
+                    //System.out.println("Skill Multy: " + ff.get(1).text());
                     skillInfo.multy = ff.get(1).text();
                 }
                 petinfo.skills.add(skillInfo);
@@ -283,7 +283,7 @@ public class Crawler {
     public static Bestiary.PetInfo crawlSwafarmPage(String url) {
         try {
             //url = "http://summonerswar.wikia.com/wiki/Perna";
-            System.out.println("crawlPage : " + url);
+            //System.out.println("crawlPage : " + url);
             //System.out.println("Load from wiki : " + data);
             Document doc = getDoc(url);
             Bestiary.PetInfo petinfo = new Bestiary.PetInfo();
@@ -308,7 +308,7 @@ public class Crawler {
                 if (i > 0) {
                     int d1 = tr.select("td").size();
                     String vl = tr.select("td").get(d1 - 1).text();
-                    System.out.println(i + " : " + vl + "  ;  " + tr.text());                    
+                    //System.out.println(i + " : " + vl + "  ;  " + tr.text());
                     pstats.add(vl);
                 }
                 i++;
@@ -329,25 +329,25 @@ public class Crawler {
             petinfo.cd = pstats.get(5);
             petinfo.acc = pstats.get(6);
             petinfo.res = pstats.get(7);
-                        
-            petinfo.star = ""+(doc.select("div.monster-box").get(0).select("img").size()-1);
+
+            petinfo.star = "" + (doc.select("div.monster-box").get(0).select("img").size() - 1);
 
             petinfo.aName = fullname;
             petinfo.uName = uname;
-            System.out.println("Full name : [" + fullname + "]");
-            System.out.println("uname : [" + uname + "]");
-            System.out.println("petType : " + petType);
+            //System.out.println("Full name : [" + fullname + "]");
+            //System.out.println("uname : [" + uname + "]");
+            //System.out.println("petType : " + petType);
 
-            if (uname.contains("Unicorn")){
+            if (uname.contains("Unicorn")) {
                 String humanLink = url.replace("-unicorn", "");
-                humanLink=humanLink.replace(fullname.toLowerCase(), fullname.toLowerCase()+"-human");
-                System.out.println("Human Link : "+humanLink);
+                humanLink = humanLink.replace(fullname.toLowerCase(), fullname.toLowerCase() + "-human");
+                //System.out.println("Human Link : "+humanLink);
                 crawlSkills(getDoc(humanLink), petinfo, "Human");
             }
-                    
+
             Gson gson = new Gson();
-            System.out.println("json : " + gson.toJson(petinfo));
-            
+            //System.out.println("json : " + gson.toJson(petinfo));
+
             Bestiary.addPet(fullname, petinfo);
         } catch (Exception e) {
             e.printStackTrace();
@@ -364,7 +364,7 @@ public class Crawler {
             String data = "";
 
             //url = "http://summonerswar.wikia.com/wiki/Perna";
-            System.out.println("crawlPage : " + url);
+            //System.out.println("crawlPage : " + url);
             try {
                 data = Resources.toString(new URL(url), Charsets.UTF_8);
             } catch (Exception e) {
@@ -387,11 +387,11 @@ public class Crawler {
             }
             star = star.replace("(", "").replace(")", "").replace("x", "").trim();
             petinfo.star = star;
-            System.out.println("fullname : " + fullname);
-            System.out.println("unawake Name : " + petinfo.uName);
-            System.out.println("awake Name : " + petinfo.aName);
-            System.out.println("element : " + petinfo.element);
-            System.out.println("star : " + petinfo.star);
+            //System.out.println("fullname : " + fullname);
+            //System.out.println("unawake Name : " + petinfo.uName);
+            //System.out.println("awake Name : " + petinfo.aName);
+            //System.out.println("element : " + petinfo.element);
+            //System.out.println("star : " + petinfo.star);
 
             Elements eSkills = doc.select("table.monstertable tr");
             int count = 0;
@@ -403,18 +403,18 @@ public class Crawler {
                     String multy = t1.select("span.basic-tooltip").text();
                     String tooltip = t1.select("span.basic-tooltip").attr("title");
                     if (multy.length() > 0) {
-                        System.out.println("tooltip : " + tooltip + " ; multy = " + multy);
+                        //System.out.println("tooltip : " + tooltip + " ; multy = " + multy);
                     }
                     if (el.size() > 0) {
                         for (Element e1 : el) {
-                            System.out.println(e1.text());
+                            //System.out.println(e1.text());
                             skillInfo.skill_up.add(e1.text());
                         }
                     } else {
                         if (t1.select("td").size() == 2) {
                             Element skill = t1.select("td").get(1);
-                            System.out.println("Skill : " + skill);
-                            System.out.println(count + " : [" + t1.text() + "]");
+                            //System.out.println("Skill : " + skill);
+                            //System.out.println(count + " : [" + t1.text() + "]");
 
                             skillInfo = new Bestiary.SkillWikiInfo();
                             skillInfo.tooltip = tooltip;
@@ -442,7 +442,7 @@ public class Crawler {
                     }
                 }
             }
-            System.out.println("pstats : " + pstats);
+            //System.out.println("pstats : " + pstats);
             for (int i = 0; i < pstats.size(); i++) {
                 //System.out.println(i+" : "+pstats.get(i));
             }
@@ -458,11 +458,11 @@ public class Crawler {
             petinfo.res = pstats.get(25);
             petinfo.acc = pstats.get(26);
 
-            System.out.println("stats : " + stats);
+            //System.out.println("stats : " + stats);
 
-            System.out.println("Done in " + (System.currentTimeMillis() - l1));
+            //System.out.println("Done in " + (System.currentTimeMillis() - l1));
             Gson gson = new Gson();
-            System.out.println("json : " + gson.toJson(petinfo));
+            //System.out.println("json : " + gson.toJson(petinfo));
 
             return petinfo;
         } catch (Exception e) {
@@ -482,25 +482,25 @@ public class Crawler {
         Gson gson = new Gson();
         Bestiary.getInstance();
         String url = "http://summonerswar.wikia.com" + petName;
-        System.out.println("url : " + url);
+        //System.out.println("url : " + url);
 
         PetInfo p1 = crawlPage(url);
-        System.out.println("p1 : " + gson.toJson(p1));
+        //System.out.println("p1 : " + gson.toJson(p1));
         Bestiary.addPet(p1.aName, p1);
     }
 
-    public static void crawlPetHomuInfo(String petName, String element,String uName) {
+    public static void crawlPetHomuInfo(String petName, String element, String uName) {
         Gson gson = new Gson();
         Bestiary.getInstance();
         String url = "http://summonerswar.wikia.com" + petName;
-        System.out.println("url : " + url);
+        //System.out.println("url : " + url);
 
         PetInfo p1 = crawlHomuPage(url, element);
-        System.out.println("p1 : " + p1.aName + " : " + gson.toJson(p1));
-        int count=0;
-        p1.uName=uName;
-        for (Bestiary.SkillWikiInfo k1 :p1.skills){
-            System.out.println((count++)+" : "+k1.skill_name);
+        //System.out.println("p1 : " + p1.aName + " : " + gson.toJson(p1));
+        int count = 0;
+        p1.uName = uName;
+        for (Bestiary.SkillWikiInfo k1 : p1.skills) {
+            //System.out.println((count++)+" : "+k1.skill_name);
         }
         Bestiary.addPet(p1.aName, p1);
     }
@@ -533,7 +533,7 @@ public class Crawler {
                     }
 
                     if (count < 500) {
-                        System.out.println(count + " : " + url);
+                        //System.out.println(count + " : " + url);
                         String nurl = url;
                         if (url.contains("Feng_Yan")) {
                             nurl = "wiki/Panda_Warrior_(Wind)";
@@ -559,7 +559,7 @@ public class Crawler {
         for (String p1 : Bestiary.getInstance().allPets.keySet()) {
             PetInfo pet = Bestiary.getInstance().allPets.get(p1);
             if (pet.aName.contains("(") || pet.aName.length() < 3) {
-                System.out.println("Found : " + pet.aName + " ; " + p1);
+                //System.out.println("Found : " + pet.aName + " ; " + p1);
                 //crawlPetInfo(p1);
             }
         }
@@ -574,7 +574,7 @@ public class Crawler {
                 String existingPath = "/imgs/" + pet.aName + ".png";
                 InputStream streamReader = Crawler.class.getResourceAsStream(existingPath);
                 if (streamReader == null) {
-                    System.out.println("No image : " + pet.aName);
+                    //System.out.println("No image : " + pet.aName);
                     String petName = pet.aName;
                     if (petName.contains(" ")) {
                         petName = petName.replace(" ", "_");
@@ -583,44 +583,44 @@ public class Crawler {
                         petName = "Panda_Warrior_(Wind)";
                     }
                     String imageUrl = "";
-                    if (pet.aName.equalsIgnoreCase("HomunLight")){
-                        imageUrl="http://swarfarm.com/static/herders/images/monsters/unit_icon_0044_2_1.png";
+                    if (pet.aName.equalsIgnoreCase("HomunLight")) {
+                        imageUrl = "http://swarfarm.com/static/herders/images/monsters/unit_icon_0044_2_1.png";
                     }
-                    if (pet.aName.equalsIgnoreCase("HomunDark")){
-                        imageUrl="http://swarfarm.com/static/herders/images/monsters/unit_icon_0044_3_1.png";
+                    if (pet.aName.equalsIgnoreCase("HomunDark")) {
+                        imageUrl = "http://swarfarm.com/static/herders/images/monsters/unit_icon_0044_3_1.png";
                     }
-                    if (imageUrl.isEmpty()){
-                        if (pet.crawlLink!=null && pet.crawlLink.contains("swarfarm")){
-                            System.out.println("crawllink : "+pet.crawlLink);
-                            Document doc = getDoc(pet.crawlLink);                        
-                            imageUrl = "https://swarfarm.com"+doc.select("div.monster-box").get(1).select("img").attr("src");
-                        }else{
-                            if (petName.compareToIgnoreCase("Bagir")==0){
+                    if (imageUrl.isEmpty()) {
+                        if (pet.crawlLink != null && pet.crawlLink.contains("swarfarm")) {
+                            //System.out.println("crawllink : "+pet.crawlLink);
+                            Document doc = getDoc(pet.crawlLink);
+                            imageUrl = "https://swarfarm.com" + doc.select("div.monster-box").get(1).select("img").attr("src");
+                        } else {
+                            if (petName.compareToIgnoreCase("Bagir") == 0) {
                                 petName = "Giant_Warrior_(Water)_-_Bagir";
                             }
-                            System.out.println("Load image petName : " + petName);
+                            //System.out.println("Load image petName : " + petName);
                             String data = Resources.toString(new URL("http://summonerswar.wikia.com/wiki/" + petName), Charsets.UTF_8);
                             //System.out.println("Load from wiki : " + data);
 
                             Document doc = Jsoup.parse(data);
                             Elements e = doc.select("div.monstertable a");
-                            imageUrl = e.get(1).attr("href");                        
+                            imageUrl = e.get(1).attr("href");
                         }
                     }
-                    System.out.println("imageUrl : " + imageUrl);
+                    //System.out.println("imageUrl : " + imageUrl);
 
                     BufferedImage image = ImageIO.read(new URL(imageUrl));
-                    if (image.getWidth()<80){
-                        System.out.println("Image too small, maybe wrong!");
+                    if (image.getWidth() < 80) {
+                        //System.out.println("Image too small, maybe wrong!");
                         continue;
                     }
-                    System.out.println(pet.aName + " ; Image size : " + image.getHeight() + " x " + image.getWidth());
+                    //System.out.println(pet.aName + " ; Image size : " + image.getHeight() + " x " + image.getWidth());
                     ImageIO.write(image, "png", new File(existingPath));
                 } else {
                     count++;
                 }
             }
-            System.out.println("Found " + count + " images. on " + Bestiary.getInstance().allPets.size() + " pets in Bestiary");
+            //System.out.println("Found " + count + " images. on " + Bestiary.getInstance().allPets.size() + " pets in Bestiary");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -645,7 +645,7 @@ public class Crawler {
                 crawled.add(p1.aName);
             }
         }
-        System.out.println("Crawled : " + crawled);
+        //System.out.println("Crawled : " + crawled);
         Bestiary.getInstance().saveFile();
     }
 
@@ -653,8 +653,8 @@ public class Crawler {
         //crawlPetHomuInfo("/wiki/Homunculus", "Fire");
         //crawlPetHomuInfo("/wiki/Homunculus", "Water");
         //crawlPetHomuInfo("/wiki/Homunculus", "Wind");
-        crawlPetHomuInfo("/wiki/Homunculus", "Light","HomunLD");
-        crawlPetHomuInfo("/wiki/Homunculus", "Dark","HomunLD");
+        crawlPetHomuInfo("/wiki/Homunculus", "Light", "HomunLD");
+        crawlPetHomuInfo("/wiki/Homunculus", "Dark", "HomunLD");
         Bestiary.getInstance().saveFile();
     }
 
@@ -664,7 +664,7 @@ public class Crawler {
         String[] list = {"Fire", "Water", "Dark", "Light", "Wind"};
         for (String s : list) {
             String u = familyName + "_(" + s + ")";
-            System.out.println(u);
+            //System.out.println(u);
             crawlPetInfo("/wiki/" + u);
         }
     }
@@ -690,6 +690,7 @@ public class Crawler {
         crawlFamily("Jack-o'-lantern");
         Bestiary.getInstance().saveFile();
     }
+
     public static void crawlPatch3_2_0() {
         crawlFamily("Dragon_Knight");
         crawlFamily("Fairy_King");
@@ -704,7 +705,7 @@ public class Crawler {
         Bestiary.getInstance().saveFile();
     }
 
-    public static void crawlUnicorns(){
+    public static void crawlUnicorns() {
         crawlSwafarmPage("https://swarfarm.com/bestiary/dark-unicorn-alexandra/");
         crawlSwafarmPage("https://swarfarm.com/bestiary/fire-unicorn-helena/");
         crawlSwafarmPage("https://swarfarm.com/bestiary/water-unicorn-amelia/");
@@ -719,7 +720,7 @@ public class Crawler {
         //crawlPatch3_2_0();
         //crawlPatch3_2_5();
         //crawlUnicorns();
-        
+
         //crawlAll();
         //crawlPage("");
         //crawlAllImage();

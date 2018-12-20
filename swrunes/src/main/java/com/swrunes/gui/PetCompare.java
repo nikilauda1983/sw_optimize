@@ -376,7 +376,7 @@ public class PetCompare extends javax.swing.JFrame {
 
     private void jLabelIcon1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelIcon1MouseClicked
         // TODO add your handling code here:
-        System.out.println("Mouse click : ");
+        //System.out.println("Mouse click : ");
         PetManager.getInstance().showDialogDetail(curpet1.name);
     }//GEN-LAST:event_jLabelIcon1MouseClicked
 

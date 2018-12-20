@@ -47,7 +47,7 @@ public class PetManager extends javax.swing.JFrame {
      */
     public PetManager() {
         int fontSize = Application.FONT_SIZE[ConfigInfo.getInstance().fontSize];
-        System.out.println("Font size : " + fontSize);
+        //System.out.println("Font size : " + fontSize);
         UIManager.getLookAndFeelDefaults()
                 .put("defaultFont", new Font("Tahoma", Font.PLAIN, fontSize));
 
@@ -66,7 +66,7 @@ public class PetManager extends javax.swing.JFrame {
                     if (p2 != null) {
                         updatePetMath(p2, skillName, p2.currentEquip);
                     }
-                    System.out.println("Select : " + petName + " ; skill = " + skillName);
+                    //System.out.println("Select : " + petName + " ; skill = " + skillName);
 
                 }
             }
@@ -811,10 +811,10 @@ public class PetManager extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (curPetDetail != null) {
             String u1 = curPetDetail.u_name + " (Dark)";
-            System.out.println(u1);
+            //System.out.println(u1);
             String p2 = SwManager.petFamily.get(u1);
             if (p2 != null) {
-                System.out.println("Found dark : " + p2);
+                //System.out.println("Found dark : " + p2);
                 LoadPetDetail(p2);
             }
         }
@@ -824,10 +824,10 @@ public class PetManager extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (curPetDetail != null) {
             String u1 = curPetDetail.u_name + " (Light)";
-            System.out.println(u1);
+            //System.out.println(u1);
             String p2 = SwManager.petFamily.get(u1);
             if (p2 != null) {
-                System.out.println("Found dark : " + p2);
+                //System.out.println("Found dark : " + p2);
                 LoadPetDetail(p2);
             }
         }
@@ -837,10 +837,10 @@ public class PetManager extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (curPetDetail != null) {
             String u1 = curPetDetail.u_name + " (Fire)";
-            System.out.println(u1);
+            //System.out.println(u1);
             String p2 = SwManager.petFamily.get(u1);
             if (p2 != null) {
-                System.out.println("Found dark : " + p2);
+                //System.out.println("Found dark : " + p2);
                 LoadPetDetail(p2);
             }
         }
@@ -850,10 +850,10 @@ public class PetManager extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (curPetDetail != null) {
             String u1 = curPetDetail.u_name + " (Water)";
-            System.out.println(u1);
+            //System.out.println(u1);
             String p2 = SwManager.petFamily.get(u1);
             if (p2 != null) {
-                System.out.println("Found dark : " + p2);
+                //System.out.println("Found dark : " + p2);
                 LoadPetDetail(p2);
             }
         }
@@ -863,10 +863,10 @@ public class PetManager extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (curPetDetail != null) {
             String u1 = curPetDetail.u_name + " (Wind)";
-            System.out.println(u1);
+            //System.out.println(u1);
             String p2 = SwManager.petFamily.get(u1);
             if (p2 != null) {
-                System.out.println("Found dark : " + p2);
+                //System.out.println("Found dark : " + p2);
                 LoadPetDetail(p2);
             }
         }
@@ -955,7 +955,7 @@ public class PetManager extends javax.swing.JFrame {
             return;
         }
         String scale = jComboSkillScale.getSelectedItem().toString().toLowerCase();
-        System.out.println("Scale : " + scale);
+        //System.out.println("Scale : " + scale);
         selectRuneEquip(x -> (x.atk * x.cd));
         if (scale.contains("scale defense")) {
             selectRuneEquip(x -> (x.def * x.cd));
@@ -972,7 +972,7 @@ public class PetManager extends javax.swing.JFrame {
 
     private void jTabbedAllPetsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedAllPetsStateChanged
         // TODO add your handling code here:
-        System.out.println("Tab change : " + jTabbedAllPets.getSelectedIndex());
+        //System.out.println("Tab change : " + jTabbedAllPets.getSelectedIndex());
         if (jTablePetsCompare.getRowCount() < 5) {
             updateCompareDmgPetsTable();
         }
@@ -988,7 +988,7 @@ public class PetManager extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        System.out.println("Window closing : " + runAlone);
+        //System.out.println("Window closing : " + runAlone);
         if (runAlone) {
             System.exit(0);
         }
@@ -1045,7 +1045,7 @@ public class PetManager extends javax.swing.JFrame {
     public static PetType curPetDetail = null;
 
     void LoadPetDetail(String petName) {
-        System.out.println("LoadPetDetail : " + petName);
+        //System.out.println("LoadPetDetail : " + petName);
         PetType curPet = detectPet(petName);
         jLabelIconDetail.setIcon(new ImageIcon(Crawler.crawlPetPicture(curPet.a_name)));
 
@@ -1059,7 +1059,7 @@ public class PetManager extends javax.swing.JFrame {
 
         if (curPet != null) {
             jDialogPetDetail.setTitle("Pet Detail - " + curPet.full_name + " - " + curPet.stars + "*");
-            System.out.println("uname : " + curPet.u_name + " : " + SwManager.petFamily.get(curPet.u_name));
+            //System.out.println("uname : " + curPet.u_name + " : " + SwManager.petFamily.get(curPet.u_name));
             curPetDetail = curPet;
         }
 
@@ -1499,8 +1499,8 @@ public class PetManager extends javax.swing.JFrame {
                 }
             }
         }
-        System.out.println("Finish in " + (System.currentTimeMillis() - t1));
-        System.out.println("Num rows : " + jTablePetsCompare.getRowCount());
+        //System.out.println("Finish in " + (System.currentTimeMillis() - t1));
+        //System.out.println("Num rows : " + jTablePetsCompare.getRowCount());
     }
 
     public List<PetType> BossList = new ArrayList();
@@ -1544,13 +1544,13 @@ public class PetManager extends javax.swing.JFrame {
 
                     p.finalValue = s1.atk * s1.cd + s1.def * s1.cd;
                     if (p.name.equalsIgnoreCase("Arang") || p.name.equalsIgnoreCase("Akhamamir")) {
-                        System.out.println(p.name + " : " + p.finalValue + " ; " + p.currentEquip.details());
-                        System.out.println("f_atk : " + s1.f_atk);
-                        System.out.println("pet_atk : " + s1.pet_atk);
-                        System.out.println("b_atk : " + p.b_atk);
-                        System.out.println("f_cd : " + s1.f_cd);
-                        System.out.println("pet_cd : " + s1.pet_cd);
-                        System.out.println("multy : " + p.skillItem.skillMulty);
+                        //System.out.println(p.name + " : " + p.finalValue + " ; " + p.currentEquip.details());
+                        //System.out.println("f_atk : " + s1.f_atk);
+                        //System.out.println("pet_atk : " + s1.pet_atk);
+                        //System.out.println("b_atk : " + p.b_atk);
+                        //System.out.println("f_cd : " + s1.f_cd);
+                        //System.out.println("pet_cd : " + s1.pet_cd);
+                        //System.out.println("multy : " + p.skillItem.skillMulty);
                     }
                     if (p.currentEquip != null && p.currentEquip.numRune == 6) {
                         tr2.add(p);
@@ -1632,7 +1632,7 @@ public class PetManager extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        System.out.println("Run Rune Manage alone");
+        //System.out.println("Run Rune Manage alone");
         runAlone = true;
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1710,10 +1710,10 @@ public class PetManager extends javax.swing.JFrame {
     public void updatePetMath(PetType p2, String petSkill, RuneSet runeEquip) {
         if (p2 != null) {
             for (RuneSkill r1 : p2.skillList) {
-                System.out.println(r1.skillName);
+                //System.out.println(r1.skillName);
                 if (r1.skillName.equalsIgnoreCase(petSkill)) {
                     jTextSkillDesc.setText(r1.skillDesc);
-                    System.out.println("Found skill : " + r1.skillDesc);
+                    //System.out.println("Found skill : " + r1.skillDesc);
                     String mainText = "";
                     String dmg = "(Final_CritDmg+1)*" + r1.skillMulty + "*(Defense Reduction)";
                     p2.skillItem = r1;
@@ -1765,7 +1765,7 @@ public class PetManager extends javax.swing.JFrame {
                             + (p2.r_cd + p2.b_cd) + " + " + glory_cd + "+" + skill_up + "+" + r1.extra_cd * 100 + " = " + f_cd + "% = " + f_cd / 100;
 
                     mainEquipSet.enemy_hp = bossHp;
-                    System.out.println("damageMultySkill : " + r1.damageMultySkill);
+                    //System.out.println("damageMultySkill : " + r1.damageMultySkill);
                     long skillDamage = Math.round(r1.damageMultySkill.apply(mainEquipSet));
 
                     //1000/(1140+boss_def*3.5) http://summonerswar.wikia.com/wiki/Equations
@@ -1828,17 +1828,17 @@ public class PetManager extends javax.swing.JFrame {
                     }
                     jTextSkillExplain.setText(mainText);
 
-                    System.out.println("MainText : " + mainText);
+                    //System.out.println("MainText : " + mainText);
                     double f_cd2 = (1 + ((double) mainEquipSet.pet_cd + glory_cd + skill_up) / 100.0);
-                    System.out.println("DMG vs boss : " + p2.name + " : " + mainEquipSet.dmgVsBoss(curBoss.def * 0.3, curBoss.hp));
-                    System.out.println("Pure DMG : " + mainEquipSet.pureDamage());
-                    System.out.println("f_cd : " + mainEquipSet.f_cd);
-                    System.out.println("f_atk : " + Math.round(mainEquipSet.f_atk));
-                    System.out.println("pet_atk : " + mainEquipSet.pet_atk);
-                    System.out.println("leader_skill : " + p2.leader_skill);
-                    System.out.println("pet_cd : " + mainEquipSet.pet_cd);
-                    System.out.println("f_cd2 : " + f_cd2);
-                    System.out.println("f_cd : " + f_cd);
+                    //System.out.println("DMG vs boss : " + p2.name + " : " + mainEquipSet.dmgVsBoss(curBoss.def * 0.3, curBoss.hp));
+                    //System.out.println("Pure DMG : " + mainEquipSet.pureDamage());
+                    //System.out.println("f_cd : " + mainEquipSet.f_cd);
+                    //System.out.println("f_atk : " + Math.round(mainEquipSet.f_atk));
+                    //System.out.println("pet_atk : " + mainEquipSet.pet_atk);
+                    //System.out.println("leader_skill : " + p2.leader_skill);
+                    //System.out.println("pet_cd : " + mainEquipSet.pet_cd);
+                    //System.out.println("f_cd2 : " + f_cd2);
+                    //System.out.println("f_cd : " + f_cd);
                 }
             }
         }
@@ -1856,7 +1856,7 @@ public class PetManager extends javax.swing.JFrame {
                 //System.out.println(jTableAllRunes.getValueAt(jTableAllRunes.getSelectedRow(), 1).toString());
                 String petName = jTablePetsCompare.getValueAt(jTablePetsCompare.getSelectedRow(), 0).toString();
                 String petSkill = jTablePetsCompare.getValueAt(jTablePetsCompare.getSelectedRow(), 2).toString();
-                System.out.println("petSkill : " + petSkill);
+                //System.out.println("petSkill : " + petSkill);
                 jTextPetName.setText(petName);
 
                 PetType p2 = SwManager.petsBestiary.get(petName);

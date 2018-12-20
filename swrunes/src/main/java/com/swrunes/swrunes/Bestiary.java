@@ -47,7 +47,7 @@ public class Bestiary {
             return gson.fromJson(reader, Bestiary.class);
         } catch (Exception e) {
             //e.printStackTrace();
-            System.out.println("File not found !");
+            //System.out.println("File not found !");
         }
         return null;
     }
@@ -59,7 +59,7 @@ public class Bestiary {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Save file Done");
+        //System.out.println("Save file Done");
         //System.out.println("Save config file : " + gson.toJson(this));
     }
 
@@ -80,9 +80,9 @@ public class Bestiary {
                 //System.out.println("Load config ok : " + gson.toJson(instance));
             }
             (new Thread(() -> {
-                System.out.println("Check missing avatars in Threading");
+                //System.out.println("Check missing avatars in Threading");
                 Crawler.checkMissingAvatar();
-                System.out.println("Done Check missing avatars in Threading");
+                //System.out.println("Done Check missing avatars in Threading");
             })).start();
         }
         return instance;

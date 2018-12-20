@@ -99,7 +99,7 @@ public class RunePermutation implements Serializable {
     public static Map<Long, int[]> cacheRunes = new HashMap();
 
     public void saveCache() {
-        System.out.println("Save caches : " + cacheRunes.size());
+        //System.out.println("Save caches : " + cacheRunes.size());
         try {
             FileOutputStream fos = new FileOutputStream("cacheRunes.dat");
 
@@ -148,7 +148,7 @@ public class RunePermutation implements Serializable {
             cacheRunes.clear();
         }
 
-        System.out.println("Load caches : " + cacheRunes.size() + "  in " + (System.currentTimeMillis() - t1) + " ms");
+        //System.out.println("Load caches : " + cacheRunes.size() + "  in " + (System.currentTimeMillis() - t1) + " ms");
     }
 
     public long getRuneSetId(List<RuneType> curRune) {
@@ -222,7 +222,7 @@ public class RunePermutation implements Serializable {
 
             RuneSet p1 = resultTreeRunes.pollFirst();
             minTreeValue = p1.bestValue;
-            // System.out.println("Remove tree : "+minTreeValue+" ; size = "+resultTreeRunes.size());
+            //System.out.println("Remove tree : "+minTreeValue+" ; size = "+resultTreeRunes.size());
         }
     }
 
@@ -309,8 +309,8 @@ public class RunePermutation implements Serializable {
                         allBest = bestpara.apply(r1);
                     }
                 }
-                System.out.println("Done this patch : " + formation + " : " + totalCount + " : in " + (System.currentTimeMillis() - time1) + " ms. [" + Thread.currentThread().getName() + "] Best rune set : "
-                        + bestpara.apply(r1) + " : " + r1.runeSets + " curBest : " + allBest);
+                //System.out.println("Done this patch : " + formation + " : " + totalCount + " : in " + (System.currentTimeMillis() - time1) + " ms. [" + Thread.currentThread().getName() + "] Best rune set : "
+                //        + bestpara.apply(r1) + " : " + r1.runeSets + " curBest : " + allBest);
                 foundRuneGroup.addAll(bestRuneSet);
                 time1 = System.currentTimeMillis();
                 return;
@@ -421,8 +421,8 @@ public class RunePermutation implements Serializable {
                 allBest = bestpara.apply(r1);
 
             }
-            System.out.println("Done this patch : " + formation + " : " + totalCount + " : in " + (System.currentTimeMillis() - time1) + " ms. [" + Thread.currentThread().getName() + "] Best rune set : "
-                    + bestpara.apply(r1) + " : " + r1.runeSets + " curBest : " + allBest);
+            //System.out.println("Done this patch : " + formation + " : " + totalCount + " : in " + (System.currentTimeMillis() - time1) + " ms. [" + Thread.currentThread().getName() + "] Best rune set : "
+            //        + bestpara.apply(r1) + " : " + r1.runeSets + " curBest : " + allBest);
             foundRuneGroup.addAll(bestRuneSet);
         }
     }
@@ -519,12 +519,12 @@ public class RunePermutation implements Serializable {
 
     public static void preOptimize(String mainSet, Function<RuneType, List<Integer>> paraRune, Collection<Set<Integer>> alls) {
         int mainSetId = RuneType.getSetId(mainSet);
-        System.out.println("preOptimize MainId : " + mainSetId + " ; mainSet = " + mainSet + " ; runes : " + SwManager.runes.size());
+        //System.out.println("preOptimize MainId : " + mainSetId + " ; mainSet = " + mainSet + " ; runes : " + SwManager.runes.size());
         //loadCache();
         lockPetLists.clear();
         exceptPetIds.clear();
 
-        System.out.println("perRunes : " + perRunes.size());
+        //System.out.println("perRunes : " + perRunes.size());
         allBest = 0;
 
         if (mainSetId < 0) {
@@ -540,16 +540,16 @@ public class RunePermutation implements Serializable {
         Set<Integer> runeStatOnly = new HashSet();
         if (paraRune != null) {
             runeStatOnly = RuneType.detectRuneStatIds(paraRune, SwManager.runes);
-            System.out.println("runeStatOnly : " + runeStatOnly);
+            //System.out.println("runeStatOnly : " + runeStatOnly);
             Set<String> s2 = new HashSet();
             for (int i : runeStatOnly) {
                 s2.add(RuneType.setBonnusLabel[i]);
             }
-            System.out.println("runeStatOnly : " + s2);
+            //System.out.println("runeStatOnly : " + s2);
         }
 
         String[] ps = RuneSet.exceptPetRunes.split(",");
-        System.out.println("exceptPetRunes : " + Arrays.toString(ps));
+        //System.out.println("exceptPetRunes : " + Arrays.toString(ps));
         for (String s2 : ps) {
             s2 = s2.trim().toLowerCase();
             if (SwManager.pets.containsKey(s2)) {
@@ -558,10 +558,10 @@ public class RunePermutation implements Serializable {
             }
         }
 
-        System.out.println("exceptPetIds : " + exceptPetIds);
-        System.out.println("exceptPetIds : " + lockPetLists);
-        System.out.println("excludeList runes : " + excludeList);
-        System.out.println("slot246 : " + Arrays.toString(slotData));
+        //System.out.println("exceptPetIds : " + exceptPetIds);
+        //System.out.println("exceptPetIds : " + lockPetLists);
+        //System.out.println("excludeList runes : " + excludeList);
+        //System.out.println("slot246 : " + Arrays.toString(slotData));
 
         Set<RuneType> optimizeRunes = new HashSet();
         int i2 = 0;
@@ -641,7 +641,7 @@ public class RunePermutation implements Serializable {
             }
 
             if (r.slot == 2) {
-                //     System.out.println("ok Rune : "+(i2++)+" : "+r+" ; "+paraRune.apply(r));
+                //System.out.println("ok Rune : "+(i2++)+" : "+r+" ; "+paraRune.apply(r));
             }
             //System.out.println("bestSlot : "+bestSlot+" : "+r);
             boolean goodRune = true;
@@ -675,7 +675,7 @@ public class RunePermutation implements Serializable {
                     if (runeCompare(paraRune.apply(r), paraRune.apply(r2))) {
                         needRemoves.add(r2);
                         if (r2.monsterId == RuneSet.runePet.id) {
-                            System.out.println("Rune current on pet remove : " + r2);
+                            //System.out.println("Rune current on pet remove : " + r2);
                         }
                     }
                     if (runeCompare(paraRune.apply(r2), paraRune.apply(r))) {
@@ -703,8 +703,8 @@ public class RunePermutation implements Serializable {
 
         perRunes.clear();
         perRunes.addAll(optimizeRunes);
-        System.out.println("Curpet : " + RuneSet.runePet.name);
-        System.out.println("runeset : " + perRunes.size());
+        //System.out.println("Curpet : " + RuneSet.runePet.name);
+        //System.out.println("runeset : " + perRunes.size());
 
         Collections.sort(perRunes, new Comparator<RuneType>() {
             @Override
@@ -746,7 +746,7 @@ public class RunePermutation implements Serializable {
                     if (dtype[r1.runeTypeIndex] == 1 && setBonnusNum[r1.runeTypeIndex] == 2 && !tempRunes1.contains(r1)) {
                         tempRunes1.add(r1);
                         dtype[r1.runeTypeIndex]++;
-                        System.out.println("Add broken runes pair : " + r1);
+                        //System.out.println("Add broken runes pair : " + r1);
                     }
                 }
             }            
@@ -776,8 +776,8 @@ public class RunePermutation implements Serializable {
                 count2++;
             }
         }*/
-            System.out.println("Add all left main runes : " + count2+" ; "+count4);
-            System.out.println("After remove : " + perRunes.size() + " -> " + tempRunes1.size());
+            //System.out.println("Add all left main runes : " + count2+" ; "+count4);
+            //System.out.println("After remove : " + perRunes.size() + " -> " + tempRunes1.size());
             perRunes = tempRunes1;
         }
 
@@ -790,8 +790,8 @@ public class RunePermutation implements Serializable {
          if (r.monsterId == RuneSet.runePet.id)
          System.out.println("Current Optimize Rune : " + r);
          }*/
-        System.out.println(mainSet + " ; Optimize : " + optimizeRunes.size());
-        System.out.println("main RunesSet : " + SwManager.runes.size());
+        //System.out.println(mainSet + " ; Optimize : " + optimizeRunes.size());
+        //System.out.println("main RunesSet : " + SwManager.runes.size());
 
         preRunes = optimizeRunes.size();
         preCalc = 1;
@@ -809,11 +809,11 @@ public class RunePermutation implements Serializable {
                     }
                 }
             }
-            System.out.println("Runes : " + (i - 1) + " ; " + count3 + " ; " + count + " ; " + rs);
+            //System.out.println("Runes : " + (i - 1) + " ; " + count3 + " ; " + count + " ; " + rs);
             preCalc *= count;
         }
 
-        System.out.println("Estimate : " + preCalc);
+        //System.out.println("Estimate : " + preCalc);
         if (mainSet.contains("x2")) {
             numSet = 4;
         }
@@ -834,7 +834,7 @@ public class RunePermutation implements Serializable {
                     temp1.add(p1);
                 }
             }
-            System.out.println("Temp1.size : " + temp1.size());
+            //System.out.println("Temp1.size : " + temp1.size());
             for (int i = 1; i <= 6; i++) {
                 int count = 0;
                 int cd_stat = 0;
@@ -859,7 +859,7 @@ public class RunePermutation implements Serializable {
     }
 
     public static void preOptimizeGui(String mainSet, String paraRune, int paraRuneValue) {
-        System.out.println("paraRune : [" + paraRune + "] ; paraRuneValue : " + paraRuneValue + " ; mainSet : " + mainSet);
+        //System.out.println("paraRune : [" + paraRune + "] ; paraRuneValue : " + paraRuneValue + " ; mainSet : " + mainSet);
 
         Function<RuneType, List<Integer>> paraRune1 = x -> (x.getParaList(paraRune, paraRuneValue));
         Collection<Set<Integer>> alls = Sets.newHashSet();
@@ -993,7 +993,7 @@ public class RunePermutation implements Serializable {
             mainStringSet.add(mainSet);
         }
 
-        System.out.println("mainStringSet : " + mainStringSet + "; mainSet = " + mainSet);
+        //System.out.println("mainStringSet : " + mainStringSet + "; mainSet = " + mainSet);
         long t1 = System.currentTimeMillis();
         fullStop = false;
 
@@ -1014,11 +1014,11 @@ public class RunePermutation implements Serializable {
             }
 
             int secondSetId = RuneType.getSecondSetId(m2);
-            System.out.println("*************Start permu***************");
-            System.out.println("Mainset : " + mainSetId + " ; secondSet : " + secondSetId + " ; numSet = " + numSet);
+            //System.out.println("*************Start permu***************");
+            //System.out.println("Mainset : " + mainSetId + " ; secondSet : " + secondSetId + " ; numSet = " + numSet);
             if (numSet == 4 && secondSetId >= 0) {
                 completeSet = true;
-                System.out.println("Complete set : " + m2);
+                //System.out.println("Complete set : " + m2);
             }
 
 
@@ -1054,7 +1054,7 @@ public class RunePermutation implements Serializable {
             if (!useThreads) {
 
                 for (Set<Integer> g1 : alls) {
-                    System.out.println((icount++) + "/" + alls.size() + " : " + g1 + " ;  total = " + totalCount);
+                    //System.out.println((icount++) + "/" + alls.size() + " : " + g1 + " ;  total = " + totalCount);
                     RuneSet b1 = null;
                     if (useNonRecursive) {
                         iteratePermute(mainSetId, g1, para, paraRune, bestpara, new ArrayList<RuneSet>());
@@ -1071,7 +1071,7 @@ public class RunePermutation implements Serializable {
                         public void run() {
                             final Set<Integer> f2 = new HashSet();
                             f2.addAll(g1);
-                            System.out.println((icount++) + "/" + alls.size() + " : " + f2 + " ; " + totalCount);
+                            //System.out.println((icount++) + "/" + alls.size() + " : " + f2 + " ; " + totalCount);
                             if (useNonRecursive) {
                                 iteratePermute(mainSetId, f2, para, paraRune, bestpara, new ArrayList<RuneSet>());
                             } else {
@@ -1092,7 +1092,7 @@ public class RunePermutation implements Serializable {
                     executorService2.shutdownNow();
                 }
             }
-            System.out.println("bestRuneSetAll : " + foundRuneGroup.size() + "   ; mainSet = " + m2);
+            //System.out.println("bestRuneSetAll : " + foundRuneGroup.size() + "   ; mainSet = " + m2);
         }
 
         System.out.println("Finish in : " + (System.currentTimeMillis() - t1) / 1000 + " s.");
@@ -1116,15 +1116,15 @@ public class RunePermutation implements Serializable {
         int i = 0;
         for (RuneSet r1 : resultTreeRunes) {
             if (i < 10) {
-                System.out.println((i++) + " : " + r1 + "-> " + r1.bestValue + " ; cost=" + r1.removeCost);
+                //System.out.println((i++) + " : " + r1 + "-> " + r1.bestValue + " ; cost=" + r1.removeCost);
             }
         }
-        System.out.println("Sort tree in : " + (System.currentTimeMillis() - t2) + " ms!");
+        //System.out.println("Sort tree in : " + (System.currentTimeMillis() - t2) + " ms!");
 
         //saveCache();
         if (bestRuneSet != null) {
-            System.out.println(RuneSet.runePet.name + " : ");
-            System.out.println("Best build : " + bestRuneSet.details() + " : Total : " + bestpara.apply(bestRuneSet));
+            //System.out.println(RuneSet.runePet.name + " : ");
+            //System.out.println("Best build : " + bestRuneSet.details() + " : Total : " + bestpara.apply(bestRuneSet));
         }
 
         return finalResult;
