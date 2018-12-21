@@ -9,11 +9,11 @@
 
 ## Setup
 
-* Need Java 8 : http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+* Need Java 8: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 * Need data from swproxy : https://www.reddit.com/r/summonerswar/comments/490u23/swproxy_new_version_released/
-* Download : https://github.com/nikilauda1983/sw_optimize/releases
-* Download file release.zip (latest release). If you already have earlier version of this tool, you may need to download only the Jar file, and overwrite it with your current version. If something go wrong, use the release.zip file !
-* Extract and run the .jar file (Double click on the jar file, it will run if you installed java)
+* Download: https://github.com/nikilauda1983/sw_optimize/releases
+    * Download the current release file: `swrunes-<current_version>.jar`
+    * Simply run the jar and you're ready to begin optimizing!
 
 ## Features
 
