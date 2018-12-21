@@ -48,14 +48,21 @@
 
 ## Updates
 
-### Update 1.3.1
+### Update 1.3.1 - Project Modernization
 
 * Small internal updates related to new tooling and build process
     * You can now build the jar by going into the `swrunes` folder via terminal and using `./gradlew jar` command.
-    * The file will be located under `build/libs/swrunes-<current_version>.jar`
-    * You can also find new releases under the **Release** tab at the top of the main repository page (here)[https://github.com/nikilauda1983/sw_optimize/releases].
+        * The file will be located under `build/libs/swrunes-<current_version>.jar`
+        * You can also find new releases under the **Release** tab at the top of the main repository page (here)[https://github.com/nikilauda1983/sw_optimize/releases].
+    * You can also simply run the project (with logging) by using `./gradlew run`
+* Project no longer requires ANT to build
+* Project no longer requires Netbeans to open -- use IntelliJ IDEA
+* Project now relies on Gradle build tooling
+* Project now contains all resources within the jar -- in update 1.4, better optimizations for locally downloading missing resources will be introduced. (Current implementation is broken due to the above transitions)
+* A few resource names were fixed
+* Many `System.out.print` statements were silenced -- new logging will be introduced in version 1.4.X
 
-### Update 1.3
+### Update 1.3 - Summoners War Monster Update and New Features
 
 * Add File/Load menu so we can choose json file instead of Edit/replace content of current json file.
 * Add filter (%hp,%def,%CD) for slot 2,4,6.
@@ -74,11 +81,3 @@
 * Fix problem lushen cant lock lushen1 or verse (no lock image button).
 * Fix problem in Pet Manager when changing Enemy, the main tablle skills mesh up!
 * Improve speed , no second rune set+no brokenset.
-
-
-
-## Deprecated Instructions
-
-Use ~~netbeans~~ IntelliJ to open the project.
-
-run makejar.sh in cygwin/linux env to generate the jar file. (Need ant)
