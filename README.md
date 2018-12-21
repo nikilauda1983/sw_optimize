@@ -53,14 +53,14 @@
 * Small internal updates related to new tooling and build process
     * You can now build the jar by going into the `swrunes` folder via terminal and using `./gradlew jar` command.
         * The file will be located under `build/libs/swrunes-<current_version>.jar`
-        * You can also find new releases under the **Release** tab at the top of the main repository page (here)[https://github.com/nikilauda1983/sw_optimize/releases].
+        * You can also find new releases under the **Release** tab at the top of the main repository page [(here)](https://github.com/nikilauda1983/sw_optimize/releases).
     * You can also simply run the project (with logging) by using `./gradlew run`
 * Project no longer requires ANT to build
 * Project no longer requires Netbeans to open -- use IntelliJ IDEA
 * Project now relies on Gradle build tooling
-* Project now contains all resources within the jar -- in update 1.4, better optimizations for locally downloading missing resources will be introduced. (Current implementation is broken due to the above transitions)
+* Project now contains all resources within the jar -- in update 3.2, better optimizations for locally downloading missing resources will be introduced. (Current implementation is broken due to the above transitions)
 * A few resource names were fixed
-* Many `System.out.print` statements were silenced -- new logging will be introduced in version 1.4.X
+* Many `System.out.print` statements were silenced -- new logging will be introduced in version 3.2.X
 
 ### Coming Soon
 
