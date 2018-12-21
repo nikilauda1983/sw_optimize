@@ -939,6 +939,7 @@ public class PetType implements Comparable<PetType> {
         u_name = p1.uName;
         full_name = p1.aName + " - " + p1.uName + " (" + p1.element + ")";
     }
+
     PetType(JSONObject p1, boolean optimizerFile, int index, int runeIndex) {
         try {
             jsonData = p1;
@@ -1035,10 +1036,7 @@ public class PetType implements Comparable<PetType> {
                     }
                 }
             }
-            if (name == null) {
-                //System.out.println("Failed to load this pet : " + master_id);
-                return;
-            }
+
             name = name.replace("*", "").trim();
             name = name.replace("(In Storage)", "").trim();
             oname = name;
@@ -1062,8 +1060,8 @@ public class PetType implements Comparable<PetType> {
                 name = name.replace(" (Water)", ".Wa");
                 name = name.replace(" (Light)", ".L");
                 name = name.replace(" (Dark)", ".D");
-
             }
+
             if (name.contains("Unknown")) {
                 name = "Unknown";
                 oname = name;
@@ -1081,10 +1079,8 @@ public class PetType implements Comparable<PetType> {
                     equipRuneList.add(r1);
                 }
             }
-
             //System.out.println("statfixMap : "+statfixMap+" ; "+info);
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
             //System.out.println("Pet error : " + p1);
             e.printStackTrace();
         }
@@ -1093,7 +1089,6 @@ public class PetType implements Comparable<PetType> {
     public static void checkPet(String petName) {
         //System.out.println("Found pet in petNameMap : " + petName + " : " + petNameMap.values().contains(petName));
         //System.out.println("petsBestiary : " + petName + " : " + petsBestiary.containsKey(petName));
-
         //System.out.println("Found id : " + petNameMapInv.get(petName));
 
         if (petsBestiary.containsKey(petName)) {
