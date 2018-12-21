@@ -7,10 +7,31 @@ import java.util.List;
 import static com.swrunes.swrunes.SwManager.getPet;
 import static com.swrunes.swrunes.SwManager.searchPets;
 
-/**
- * @author ducnd2 on 10/3/2016.
- */
+
 public class ManualWork {
+
+    int[] attackSet = {3, 4, 3};
+
+    public static RuneType.RuneSet getPetRune(String petId) {
+        System.out.println("Get Pet RUne : " + petId + " ; " + SwManager.runes.size());
+        List<RuneType> runeList = new ArrayList();
+        for (int i = 0; i < 6; i++) {
+            runeList.add(new RuneType());
+        }
+
+        for (RuneType r : SwManager.runes) {
+            if (r.monster.equalsIgnoreCase(petId)) {
+                runeList.set(r.slot - 1, r);
+            }
+        }
+        RuneType.RuneSet s1 = new RuneType.RuneSet(runeList);
+        return s1;
+    }
+
+    public static void main(String[] args) {
+        SwManager.getInstance().loadPets("optimizer.json");
+        new ManualWork().testPests();
+    }
 
     public void BulldozerWork() {
         getPet("Bulldozer").defDame = true;
@@ -103,8 +124,6 @@ public class ManualWork {
         lushen.applyRuneSet(RunePermutation.bestRuneSet);
         lushen.showPetRune();
     }
-
-    int[] attackSet = {3, 4, 3};
 
     public void kahliWork() {
         getPet("Kahli").atk_leader = 0;
@@ -824,22 +843,6 @@ public class ManualWork {
         System.out.println("Final : " + chasun.statfixMap);
     }
 
-    public static RuneType.RuneSet getPetRune(String petId) {
-        System.out.println("Get Pet RUne : " + petId + " ; " + SwManager.runes.size());
-        List<RuneType> runeList = new ArrayList();
-        for (int i = 0; i < 6; i++) {
-            runeList.add(new RuneType());
-        }
-
-        for (RuneType r : SwManager.runes) {
-            if (r.monster.equalsIgnoreCase(petId)) {
-                runeList.set(r.slot - 1, r);
-            }
-        }
-        RuneType.RuneSet s1 = new RuneType.RuneSet(runeList);
-        return s1;
-    }
-
     public void testOtherRune(String curPet, String otherPet) {
         RunePermutation.noBrokenSet = true;
         PetType chasun = searchPets(curPet);
@@ -1087,10 +1090,5 @@ public class ManualWork {
         // sieqWork();
         //basaltWork();
         //acasisWork();
-    }
-
-    public static void main(String[] args) {
-        SwManager.getInstance().loadPets("optimizer.json");
-        new ManualWork().testPests();
     }
 }

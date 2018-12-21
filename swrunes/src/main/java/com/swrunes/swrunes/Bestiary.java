@@ -3,7 +3,6 @@ package com.swrunes.swrunes;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
@@ -15,18 +14,7 @@ import java.util.Map;
 
 public class Bestiary {
 
-    public static class SkillWikiInfo {
-        public String skill_name, skill_desc, multy, tooltip;
-        public List<String> skill_up = new ArrayList<>();
-    }
-
-    public static class PetInfo {
-        String acc, cr, cd, res, star, spd, hp, atk, def;
-        String uName, aName, element;
-        String crawlLink;
-        public List<SkillWikiInfo> skills = new ArrayList<>();
-    }
-
+    static Bestiary instance;
     public Map<String, PetInfo> allPets = new HashMap<>();
 
     public static Bestiary loadFile() {
@@ -52,19 +40,6 @@ public class Bestiary {
         return null;
     }
 
-    public void saveFile() {
-        Gson gson = new Gson();
-        try (FileWriter writer = new FileWriter("Pet_Bestiary.json")) {
-            gson.toJson(this, writer);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        //System.out.println("Save file Done");
-        //System.out.println("Save config file : " + gson.toJson(this));
-    }
-
-    static Bestiary instance;
-
     public static void addPet(String url, PetInfo p1) {
         getInstance().allPets.put(url, p1);
     }
@@ -86,5 +61,28 @@ public class Bestiary {
             })).start();
         }
         return instance;
+    }
+
+    public void saveFile() {
+        Gson gson = new Gson();
+        try (FileWriter writer = new FileWriter("Pet_Bestiary.json")) {
+            gson.toJson(this, writer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //System.out.println("Save file Done");
+        //System.out.println("Save config file : " + gson.toJson(this));
+    }
+
+    public static class SkillWikiInfo {
+        public String skill_name, skill_desc, multy, tooltip;
+        public List<String> skill_up = new ArrayList<>();
+    }
+
+    public static class PetInfo {
+        public List<SkillWikiInfo> skills = new ArrayList<>();
+        String acc, cr, cd, res, star, spd, hp, atk, def;
+        String uName, aName, element;
+        String crawlLink;
     }
 }

@@ -1,38 +1,35 @@
 package com.swrunes.swrunes;
 
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
-import java.util.function.Function;
-
-import javax.imageio.ImageIO;
-
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
+import com.swrunes.swrunes.PetType.*;
+import com.swrunes.swrunes.RuneType.RuneSet;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
+import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import com.swrunes.swrunes.PetType.RuneSkill;
-import com.swrunes.swrunes.RuneType.RuneSet;
-
-import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
-
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
 
-import org.jsoup.helper.StringUtil;
-
-import static com.swrunes.swrunes.PetType.petNameElement;
-import static com.swrunes.swrunes.PetType.petNameMap;
-import static com.swrunes.swrunes.PetType.petNameMapInv;
+import static com.swrunes.swrunes.PetType.*;
 
 public class SwManager {
 
@@ -48,29 +45,17 @@ public class SwManager {
     public static Map<String, RuneType> runesIds = new HashMap();
     public static Map<Integer, RuneType> runesSimpleIds = new HashMap();
     public static Map<String, RuneType> runeMaps = new HashMap();
-
+    public static JSONObject mainJsonContent;
     static SwManager instance;
+    String bombers[] = {"Seara", "Liebli", "Malaka", "Taurus", "Dover", "Jojo"};
+    double bombersMulty[] = {5, 4, 4.2, 4.2, 4.2, 4};
+    int bombersSkillUp[] = {30, 25, 25, 30, 30, 25};
 
     public static SwManager getInstance() {
         if (instance == null) {
             instance = new SwManager();
         }
         return instance;
-    }
-
-    public List<RuneType> searchRunes(String runeName, Function<RuneType, Boolean> para) {
-        List<RuneType> res = new ArrayList();
-        //System.out.println("************Rune Search************ : ");
-        for (RuneType r : runes) {
-            if (runeName == null || runeName.length() == 0 || runeName.toLowerCase().contains(r.runeType.toLowerCase())) {
-                if (para.apply(r)) {
-                    res.add(r);
-                    //System.out.println(r);
-                }
-            }
-        }
-        //System.out.println("************Rune Search************");
-        return res;
     }
 
     static public PetType getPet(String pet) {
@@ -117,14 +102,6 @@ public class SwManager {
         return searchPets(pet, x -> (x.f_atk * 3), 30);
     }
 
-    String getContent(String s) {
-        if (s.contains("\"")) {
-            int pos1 = s.indexOf("\"") + 1;
-            return s.substring(pos1, s.length() - 1);
-        }
-        return s;
-    }
-
     public static boolean isDouble(String s) {
         try {
             double d = Double.parseDouble(s);
@@ -151,7 +128,7 @@ public class SwManager {
         String[] ss = s1.split(",");
 
         if (s1.contains("SPD")) {
-            //System.out.println("ss : "+Arrays.toString(ss)+" ; "+ss.length);        
+            //System.out.println("ss : "+Arrays.toString(ss)+" ; "+ss.length);
         }
         //if (petName.equalsIgnoreCase("teshar"))
         //System.out.println(petName+" ; ss : "+Arrays.toString(ss)+" ; "+ss.length+"   ; "+text);
@@ -274,12 +251,6 @@ public class SwManager {
         return p1;
     }
 
-    String bombers[] = {"Seara", "Liebli", "Malaka", "Taurus", "Dover", "Jojo"};
-    double bombersMulty[] = {5, 4, 4.2, 4.2, 4.2, 4};
-    int bombersSkillUp[] = {30, 25, 25, 30, 30, 25};
-
-    public static JSONObject mainJsonContent;
-
     public static void saveFile() {
         try {
             FileWriter file = new FileWriter("optimizer.json");
@@ -353,6 +324,185 @@ public class SwManager {
         return false;
     }
 
+    public static void addPet(String petName) {
+        PetType p2 = petsBestiary.get(petName);
+        JSONObject newone = new JSONObject();
+        int newId = -1;
+        for (int i = 1; i < 100000; i++) {
+            if (!petsIds.containsKey(i)) {
+                newId = i;
+                break;
+            }
+        }
+        if (p2 != null) {
+            //System.out.println("Add pet : " + p2.name + " ; newId = " + newId);
+            try {
+                newone.put("name", p2.a_name);
+                newone.put("attribute", p2.attribute);
+                newone.put("level", 40);
+                newone.put("stars", 6);
+                newone.put("id", newId);
+                for (int i = 0; i < PetType.petLabels.length; i++) {
+                    newone.put(PetType.petLabels[i], p2.baseStats[i]);
+                }
+                //System.out.println("newone : " + newone);
+                int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to to add this pet to your account : " + p2.name
+                        + " ? \nBe carefull, this will change the json File, Better back it up!", "Confirm", JOptionPane.YES_NO_OPTION);
+                if (dialogResult == 0) {
+                    JSONArray monsJson = mainJsonContent.getJSONArray("mons");
+                    monsJson.put(newone);
+                    p2.id = newId;
+                    pets.put(p2.name.toLowerCase(), p2);
+                    petsIds.put(newId, p2);
+                    saveFile();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    static public BufferedImage crawlPetPicture(String petName) {
+        //http://summonerswar.wikia.com/wiki/Perna
+        try {
+            if (petName.contains("Unknown")) {
+                return crawlPetPicture("unknown");
+            }
+            if (petName.contains("2")) {
+                petName = petName.replace("2", "");
+            }
+            if (petName.contains("3")) {
+                petName = petName.replace("3", "");
+            }
+            long l1 = System.currentTimeMillis();
+            String existingPath = "/imgs/" + petName + ".png";
+
+            try {
+                if (new File(existingPath).isFile()) {
+                    BufferedImage image = ImageIO.read(new File(existingPath));
+                    return image;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            //unawaken
+            if (petName.contains("(")) {
+                petName = petName.replace(" ", "_");
+            }
+            String data = Resources.toString(new URL("http://summonerswar.wikia.com/wiki/" + petName), Charsets.UTF_8);
+            //System.out.println("Load from wiki : " + data);
+
+            Document doc = Jsoup.parse(data);
+            Elements e = doc.select("div.monstertable a");
+            String url = e.get(1).attr("href");
+            //System.out.println(url);
+            BufferedImage image = ImageIO.read(new URL(url));
+            //System.out.println("Image size : " + image.getHeight() + " x " + image.getWidth());
+            ImageIO.write(image, "png", new File(existingPath));
+
+            //System.out.println("Done in " + (System.currentTimeMillis() - l1));
+
+            return image;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return crawlPetPicture("unknown");
+        }
+        //return null;
+    }
+
+    public static void generateValues(int begin, int last) {
+        double incre = (last - begin) / (double) 14;
+        for (int i = 0; i < 15; i++) {
+            double p1 = begin + i * incre;
+            int v = (int) Math.floor(begin + i * incre);
+            if ((p1 - Math.floor(p1)) > 0.43) {
+                v++;
+            }
+            //System.out.println(i + " : " + v + " : " + (begin + i * incre));
+        }
+    }
+
+    //grade4*-6*
+    public static int get135MainStat(int level, int grade, int slot) {
+        int[] lv15 = {92, 135, 160};
+        int[] lv_hp_15 = {1704, 2088, 2448};
+        if (level == 15) {
+            if (slot < 4) {
+                return lv15[grade - 4];
+            }
+            return lv_hp_15[grade - 4];
+        }
+        int[] begin = {10, 15, 22};
+        int[] begin_hp = {160, 270, 360};
+        int[] incre = {6, 7, 8};
+        int[] incre_hp = {90, 105, 120};
+
+        if (slot < 4) {
+            return begin[grade - 4] + level * incre[grade - 4];
+        }
+
+        return begin_hp[grade - 4] + level * incre_hp[grade - 4];
+    }
+
+    public static void main(String[] args) {
+        SwManager.getInstance().loadPets("optimizer.json");
+
+        /*generateValues(8,54);
+        generateValues(4,36);
+        generateValues(5,39);
+        generateValues(8,43);*/
+        for (RuneType r1 : runes) {
+            if (r1.slot % 2 == 1 && r1.grade >= 4) {
+                if (r1.mainStatVal != get135MainStat(r1.level, r1.grade, r1.slot)) {
+                    //System.out.println("Found problem : " + r1);
+                }
+            }
+        }
+
+        //System.out.println("Finish done !");
+        /*for (int i = 0;i<RuneType.slabelsMain.length;i++){
+            Map <String,Integer> runestat= new HashMap();
+            for (RuneType r1:runes){
+                if (r1.mainStatIndex==i && r1.level==15){
+                    String s1=RuneType.slabelsMain[i]+"_lv"+r1.level+"_"+r1.grade+"*";
+                    runestat.put(s1, r1.mainStatVal);
+                }
+            }
+            System.out.println("runestat : "+i+" : "+RuneType.slabelsMain[i]+" : "+runestat);
+        }*/
+
+        //SwManager.getInstance().loadPets("D:\\SWProxy-windows\\158523-optimizer.json");
+        //loadHomuSkills();
+        //SwManager.getInstance().testPests();
+        //SwManager.getInstance().crawlPetPicture("Perna");
+        //ConfigInfo.getInstance().saveFile();
+        // new SwManager().loadPets("runes.json");
+    }
+
+    public List<RuneType> searchRunes(String runeName, Function<RuneType, Boolean> para) {
+        List<RuneType> res = new ArrayList();
+        //System.out.println("************Rune Search************ : ");
+        for (RuneType r : runes) {
+            if (runeName == null || runeName.length() == 0 || runeName.toLowerCase().contains(r.runeType.toLowerCase())) {
+                if (para.apply(r)) {
+                    res.add(r);
+                    //System.out.println(r);
+                }
+            }
+        }
+        //System.out.println("************Rune Search************");
+        return res;
+    }
+
+    String getContent(String s) {
+        if (s.contains("\"")) {
+            int pos1 = s.indexOf("\"") + 1;
+            return s.substring(pos1, s.length() - 1);
+        }
+        return s;
+    }
+
     public void updateSkillInfo(String petName, RuneSkill r1, Bestiary.SkillWikiInfo sk) {
         String nameSkill = r1.skillName;
         if (nameSkill.equalsIgnoreCase("Unknown")) {
@@ -381,7 +531,7 @@ public class SwManager {
         if (desc.contains("% for each harmful effect")
                 || desc.contains("% increased damage if the enemy is under weakening effect")
                 || desc.contains("% increased damage on enemies that are under harmful effect")) {
-            //System.out.println("Increased dame : "+petName+" ; type="+r1.type+" :"+sk.skill_desc);                    
+            //System.out.println("Increased dame : "+petName+" ; type="+r1.type+" :"+sk.skill_desc);
             int pos1 = desc.indexOf("% for each harmful effect");
             if (pos1 > 0) {
                 String d2 = desc.substring(pos1 - 2, pos1);
@@ -397,7 +547,7 @@ public class SwManager {
 
         }
         if (detectMultiplaer(r1.skillMulty, petName) == null) {
-            //System.out.println("Update wiki : " + petName + " ; type=" + r1.type + " :" + sk.skill_desc);                    
+            //System.out.println("Update wiki : " + petName + " ; type=" + r1.type + " :" + sk.skill_desc);
             //System.out.println("Skill Multy : "+r1.skillMulty+" ; "+detectMultiplaer(r1.skillMulty, petName));
             //System.out.println("wiki multy : "+sk.tooltip);
 
@@ -523,7 +673,7 @@ public class SwManager {
         }
 
         if (r1.ignoreChance) {
-            //System.out.println("Ignore chance : "+petName+" ; "+r1.skillDesc);                    
+            //System.out.println("Ignore chance : "+petName+" ; "+r1.skillDesc);
             if (petName.equalsIgnoreCase("Reno")) {
                 r1.ignoreChanceNum = 72;
             }
@@ -566,44 +716,6 @@ public class SwManager {
 
     }
 
-    public static void addPet(String petName) {
-        PetType p2 = petsBestiary.get(petName);
-        JSONObject newone = new JSONObject();
-        int newId = -1;
-        for (int i = 1; i < 100000; i++) {
-            if (!petsIds.containsKey(i)) {
-                newId = i;
-                break;
-            }
-        }
-        if (p2 != null) {
-            //System.out.println("Add pet : " + p2.name + " ; newId = " + newId);
-            try {
-                newone.put("name", p2.a_name);
-                newone.put("attribute", p2.attribute);
-                newone.put("level", 40);
-                newone.put("stars", 6);
-                newone.put("id", newId);
-                for (int i = 0; i < PetType.petLabels.length; i++) {
-                    newone.put(PetType.petLabels[i], p2.baseStats[i]);
-                }
-                //System.out.println("newone : " + newone);
-                int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to to add this pet to your account : " + p2.name
-                        + " ? \nBe carefull, this will change the json File, Better back it up!", "Confirm", JOptionPane.YES_NO_OPTION);
-                if (dialogResult == 0) {
-                    JSONArray monsJson = mainJsonContent.getJSONArray("mons");
-                    monsJson.put(newone);
-                    p2.id = newId;
-                    pets.put(p2.name.toLowerCase(), p2);
-                    petsIds.put(newId, p2);
-                    saveFile();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public boolean loadPets(String filename) {
         try {
             pets.clear();
@@ -633,7 +745,7 @@ public class SwManager {
                     //System.out.println("No code : "+p1.aName+" : "+p1.element+" : "+petNameElement.get(p1.element));
                     if (petNameMapInv.containsKey(p1.uName)) {
                         String code = petNameMapInv.get(p1.uName) + petNameElement.get(p1.element);
-                        //System.out.println("family code : "+petNameMapInv.get(p1.uName));                        
+                        //System.out.println("family code : "+petNameMapInv.get(p1.uName));
                         //System.out.println("code : "+code);
 
                         petNameMap.put(code, p1.aName);
@@ -1004,124 +1116,6 @@ public class SwManager {
             e.printStackTrace();
         }
         return true;
-    }
-
-    static public BufferedImage crawlPetPicture(String petName) {
-        //http://summonerswar.wikia.com/wiki/Perna
-        try {
-            if (petName.contains("Unknown")) {
-                return crawlPetPicture("unknown");
-            }
-            if (petName.contains("2")) {
-                petName = petName.replace("2", "");
-            }
-            if (petName.contains("3")) {
-                petName = petName.replace("3", "");
-            }
-            long l1 = System.currentTimeMillis();
-            String existingPath = "/imgs/" + petName + ".png";
-
-            try {
-                if (new File(existingPath).isFile()) {
-                    BufferedImage image = ImageIO.read(new File(existingPath));
-                    return image;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            //unawaken
-            if (petName.contains("(")) {
-                petName = petName.replace(" ", "_");
-            }
-            String data = Resources.toString(new URL("http://summonerswar.wikia.com/wiki/" + petName), Charsets.UTF_8);
-            //System.out.println("Load from wiki : " + data);
-
-            Document doc = Jsoup.parse(data);
-            Elements e = doc.select("div.monstertable a");
-            String url = e.get(1).attr("href");
-            //System.out.println(url);
-            BufferedImage image = ImageIO.read(new URL(url));
-            //System.out.println("Image size : " + image.getHeight() + " x " + image.getWidth());
-            ImageIO.write(image, "png", new File(existingPath));
-
-            //System.out.println("Done in " + (System.currentTimeMillis() - l1));
-
-            return image;
-        } catch (Exception e) {
-            //e.printStackTrace();
-            return crawlPetPicture("unknown");
-        }
-        //return null;
-    }
-
-    public static void generateValues(int begin, int last) {
-        double incre = (last - begin) / (double) 14;
-        for (int i = 0; i < 15; i++) {
-            double p1 = begin + i * incre;
-            int v = (int) Math.floor(begin + i * incre);
-            if ((p1 - Math.floor(p1)) > 0.43) {
-                v++;
-            }
-            //System.out.println(i + " : " + v + " : " + (begin + i * incre));
-        }
-    }
-
-    //grade4*-6*
-    public static int get135MainStat(int level, int grade, int slot) {
-        int[] lv15 = {92, 135, 160};
-        int[] lv_hp_15 = {1704, 2088, 2448};
-        if (level == 15) {
-            if (slot < 4) {
-                return lv15[grade - 4];
-            }
-            return lv_hp_15[grade - 4];
-        }
-        int[] begin = {10, 15, 22};
-        int[] begin_hp = {160, 270, 360};
-        int[] incre = {6, 7, 8};
-        int[] incre_hp = {90, 105, 120};
-
-        if (slot < 4) {
-            return begin[grade - 4] + level * incre[grade - 4];
-        }
-
-        return begin_hp[grade - 4] + level * incre_hp[grade - 4];
-    }
-
-    public static void main(String[] args) {
-        SwManager.getInstance().loadPets("optimizer.json");
-
-        /*generateValues(8,54);
-        generateValues(4,36);
-        generateValues(5,39);
-        generateValues(8,43);*/
-        for (RuneType r1 : runes) {
-            if (r1.slot % 2 == 1 && r1.grade >= 4) {
-                if (r1.mainStatVal != get135MainStat(r1.level, r1.grade, r1.slot)) {
-                    //System.out.println("Found problem : " + r1);
-                }
-            }
-        }
-
-        //System.out.println("Finish done !");
-        /*for (int i = 0;i<RuneType.slabelsMain.length;i++){
-            Map <String,Integer> runestat= new HashMap();
-            for (RuneType r1:runes){
-                if (r1.mainStatIndex==i && r1.level==15){
-                    String s1=RuneType.slabelsMain[i]+"_lv"+r1.level+"_"+r1.grade+"*";
-                    runestat.put(s1, r1.mainStatVal);
-                }
-            }
-            System.out.println("runestat : "+i+" : "+RuneType.slabelsMain[i]+" : "+runestat);
-        }*/
-
-        //SwManager.getInstance().loadPets("D:\\SWProxy-windows\\158523-optimizer.json");
-        //loadHomuSkills();
-        //SwManager.getInstance().testPests();
-        //SwManager.getInstance().crawlPetPicture("Perna");
-        //ConfigInfo.getInstance().saveFile();
-        // new SwManager().loadPets("runes.json");
     }
 }
 

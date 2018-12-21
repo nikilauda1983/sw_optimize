@@ -1,8 +1,34 @@
 package com.swrunes.gui;
 
-import static com.swrunes.gui.PetCompare.detectPet;
-import static com.swrunes.gui.Application.displayRune2Table;
+import com.swrunes.swrunes.Bestiary;
+import com.swrunes.swrunes.ConfigInfo;
+import com.swrunes.swrunes.Crawler;
+import com.swrunes.swrunes.PetType;
+import com.swrunes.swrunes.PetType.RuneSkill;
+import com.swrunes.swrunes.RuneType;
+import com.swrunes.swrunes.RuneType.RuneSet;
+import com.swrunes.swrunes.SwManager;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.UIManager;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.DefaultCaret;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Point;
@@ -12,35 +38,88 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 import java.util.function.Function;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.UIManager;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.text.DefaultCaret;
 
-import com.swrunes.swrunes.Bestiary;
-import com.swrunes.swrunes.ConfigInfo;
-import com.swrunes.swrunes.Crawler;
-import com.swrunes.swrunes.PetType;
-import com.swrunes.swrunes.PetType.RuneSkill;
-
+import static com.swrunes.gui.Application.displayRune2Table;
+import static com.swrunes.gui.PetCompare.detectPet;
 import static com.swrunes.swrunes.PetType.petLabels;
-
-import com.swrunes.swrunes.RuneType;
-import com.swrunes.swrunes.RuneType.RuneSet;
-import com.swrunes.swrunes.SwManager;
-
 import static com.swrunes.swrunes.SwManager.getPetRune;
 
 /**
  * @author tuanha
  */
 public class PetManager extends javax.swing.JFrame {
+
+    public static boolean runAlone = false;
+    public static PetType curPetDetail = null;
+    static PetManager instance;
+    public RuneSet mainEquipSet = null;
+    public List<RuneSet> equipList = new ArrayList();
+    public List<PetType> BossList = new ArrayList();
+    PetType curBoss = null;
+    boolean loadingData = false;
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private JButton jButton1;
+    private JButton jButton2;
+    private JCheckBox jCheckBox1;
+    private JCheckBox jCheckOnlyPets;
+    private JCheckBox jCheckShowBaseStat;
+    private JComboBox<String> jComboAllPet;
+    private JComboBox<String> jComboBoss;
+    private JComboBox<String> jComboEquipRunes;
+    private JComboBox<String> jComboLeaderSkill;
+    private JComboBox<String> jComboNumDebuff;
+    private JComboBox<String> jComboPetElement;
+    private JComboBox<String> jComboPetHave;
+    private JComboBox<String> jComboSkillFilter;
+    private JComboBox<String> jComboSkillScale;
+    private JDialog jDialogPetDetail;
+    private JLabel jLabel1;
+    private JLabel jLabel10;
+    private JLabel jLabel11;
+    private JLabel jLabel12;
+    private JLabel jLabel2;
+    private JLabel jLabel3;
+    private JLabel jLabel4;
+    private JLabel jLabel5;
+    private JLabel jLabel6;
+    private JLabel jLabel7;
+    private JLabel jLabel8;
+    private JLabel jLabel9;
+    private JLabel jLabelIcon1;
+    private JLabel jLabelIconDark;
+    private JLabel jLabelIconDetail;
+    private JLabel jLabelIconFire;
+    private JLabel jLabelIconLight;
+    private JLabel jLabelIconWater;
+    private JLabel jLabelIconWind;
+    private JPanel jPanel1;
+    private JPanel jPanel2;
+    private JPanel jPanel3;
+    private JScrollPane jScrollPane1;
+    private JScrollPane jScrollPane12;
+    private JScrollPane jScrollPane2;
+    private JScrollPane jScrollPane3;
+    private JScrollPane jScrollPane4;
+    private JScrollPane jScrollPane5;
+    private JScrollPane jScrollPane6;
+    private JScrollPane jScrollPane7;
+    private JScrollPane jScrollPane9;
+    private JTabbedPane jTabbedAllPets;
+    private JTabbedPane jTabbedPane1;
+    private JTable jTableAllPets;
+    private JTable jTableExtraPetInfo;
+    private JTable jTableFullDamage;
+    private JTable jTablePetsCompare;
+    private JTable jTableRuneDetail;
+    private JTable jTableSkillDamage;
+    private JTable jTableStatMain;
+    private JTextField jTextBossStats;
+    private JTextField jTextPetName;
+    private JTextField jTextRuneSetInfo;
+    private JTextField jTextSkillDesc;
+    private JTextPane jTextSkillExplain;
+    private JTextArea jTextSkills;
+    private JTextField jTextTotalPets;
 
     /**
      * Creates new form PetManager
@@ -96,7 +175,7 @@ public class PetManager extends javax.swing.JFrame {
                 Point p = me.getPoint();
                 int row = table.rowAtPoint(p);
                 if (me.getClickCount() == 2) {
-                    // your valueChanged overridden method 
+                    // your valueChanged overridden method
                     String petName = jTablePetsCompare.getValueAt(row, 0).toString();
                     if (!jDialogPetDetail.isVisible()) {
                         jDialogPetDetail.pack();
@@ -109,6 +188,58 @@ public class PetManager extends javax.swing.JFrame {
         jTablePetsCompare.getSelectionModel().addListSelectionListener(new ListSelectionListenerImpl());
 
         loadData();
+    }
+
+    public static PetManager getInstance() {
+        if (instance == null) {
+            instance = new PetManager();
+        }
+        return instance;
+    }
+
+    public static void clearTable(final JTable table) {
+        for (int i = 0; i < table.getRowCount(); i++) {
+            for (int j = 0; j < table.getColumnCount(); j++) {
+                table.setValueAt("", i, j);
+            }
+        }
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(PetManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(PetManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(PetManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(PetManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        //System.out.println("Run Rune Manage alone");
+        runAlone = true;
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new PetManager().setVisible(true);
+            }
+        });
     }
 
     /**
@@ -773,15 +904,6 @@ public class PetManager extends javax.swing.JFrame {
         LoadPetDetail(petName);
     }
 
-    static PetManager instance;
-
-    public static PetManager getInstance() {
-        if (instance == null) {
-            instance = new PetManager();
-        }
-        return instance;
-    }
-
     private void jCheckShowBaseStatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckShowBaseStatActionPerformed
         // TODO add your handling code here:
         updateAllPetsTable();
@@ -871,8 +993,6 @@ public class PetManager extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jLabelIconWindMouseClicked
-
-    PetType curBoss = null;
 
     private void jComboBossActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBossActionPerformed
         // TODO add your handling code here:
@@ -984,8 +1104,6 @@ public class PetManager extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTabbedAllPetsStateChanged
 
-    public static boolean runAlone = false;
-
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         //System.out.println("Window closing : " + runAlone);
@@ -999,50 +1117,6 @@ public class PetManager extends javax.swing.JFrame {
         updateDmgPetsTable();
         updateCompareDmgPetsTable();
     }//GEN-LAST:event_jComboPetElementActionPerformed
-
-    boolean loadingData = false;
-
-    public static void clearTable(final JTable table) {
-        for (int i = 0; i < table.getRowCount(); i++) {
-            for (int j = 0; j < table.getColumnCount(); j++) {
-                table.setValueAt("", i, j);
-            }
-        }
-    }
-
-    final class RenderWrapText extends DefaultTableCellRenderer {
-
-        JTextArea textarea;
-
-        @Override
-        public Component getTableCellRendererComponent(
-                JTable aTable, Object aNumberValue, boolean aIsSelected,
-                boolean aHasFocus, int aRow, int aColumn) {
-            String value = (String) aNumberValue;
-
-            textarea = new JTextArea();
-            aTable.add(textarea);
-
-            textarea.setWrapStyleWord(true);
-            textarea.setLineWrap(true);
-            DefaultCaret caret = (DefaultCaret) textarea.getCaret();
-            caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
-
-            textarea.setText(value);
-            aTable.setRowHeight(90);
-
-            if (aNumberValue == null) {
-                return this;
-            }
-
-            Component renderer = super.getTableCellRendererComponent(
-                    aTable, aNumberValue, aIsSelected, aHasFocus, aRow, aColumn
-            );
-            return this;
-        }
-    }
-
-    public static PetType curPetDetail = null;
 
     void LoadPetDetail(String petName) {
         //System.out.println("LoadPetDetail : " + petName);
@@ -1069,7 +1143,7 @@ public class PetManager extends javax.swing.JFrame {
         jLabelIconDark.setIcon(new ImageIcon(Crawler.crawlPetPicture(SwManager.petFamily.get(curPet.u_name+" (Dark)"))));
         jLabelIconLight.setIcon(new ImageIcon(Crawler.crawlPetPicture(SwManager.petFamily.get(curPet.u_name+" (Light)"))));*/
         //jTableSkills.getColumnModel().getColumn(1).setCellRenderer(new RenderWrapText());
-        //jTextSkills.setContentType( "text/html" );    
+        //jTextSkills.setContentType( "text/html" );
         jTextSkills.setText("");
         int num = 0;
         PetType pet = SwManager.getInstance().searchPets(petName);
@@ -1096,8 +1170,8 @@ public class PetManager extends javax.swing.JFrame {
                 jTextSkills.setText(jTextSkills.getText() + lvup);
             }
         }
-        //jTextSkills.setText(jTextSkills.getText()+"</body></html>");    
-//jTextSkills.setText( "<html><body>Hello, world</body></html>" );        
+        //jTextSkills.setText(jTextSkills.getText()+"</body></html>");
+//jTextSkills.setText( "<html><body>Hello, world</body></html>" );
     }
 
     public void updateAllPetsTable() {
@@ -1130,7 +1204,7 @@ public class PetManager extends javax.swing.JFrame {
 
         jTextTotalPets.setText("" + petList.size());
         jTableAllPets.getColumnModel().getColumn(1).setCellRenderer(new Application.IconRenderer());
-        //if (true) return;        
+        //if (true) return;
 
         DefaultTableModel model = (DefaultTableModel) jTableAllPets.getModel();
         int numCol = jTableAllPets.getColumnModel().getColumnCount();
@@ -1248,7 +1322,7 @@ public class PetManager extends javax.swing.JFrame {
 
         jTextTotalPets.setText("" + petList.size());
         jTableFullDamage.getColumnModel().getColumn(1).setCellRenderer(new Application.IconRenderer());
-        //if (true) return;        
+        //if (true) return;
 
         DefaultTableModel model = (DefaultTableModel) jTableFullDamage.getModel();
         int numCol = jTableFullDamage.getColumnModel().getColumnCount();
@@ -1337,9 +1411,6 @@ public class PetManager extends javax.swing.JFrame {
 
     }
 
-    public RuneSet mainEquipSet = null;
-    public List<RuneSet> equipList = new ArrayList();
-
     public void updateCompareDmgPetsTable() {
         if (loadingData) {
             return;
@@ -1375,7 +1446,7 @@ public class PetManager extends javax.swing.JFrame {
 
         jTextTotalPets.setText("" + petList.size());
         jTablePetsCompare.getColumnModel().getColumn(1).setCellRenderer(new Application.IconRenderer());
-        //if (true) return;        
+        //if (true) return;
 
         DefaultTableModel model = (DefaultTableModel) jTablePetsCompare.getModel();
         int numCol = jTablePetsCompare.getColumnModel().getColumnCount();
@@ -1503,8 +1574,6 @@ public class PetManager extends javax.swing.JFrame {
         //System.out.println("Num rows : " + jTablePetsCompare.getRowCount());
     }
 
-    public List<PetType> BossList = new ArrayList();
-
     public TreeSet<String> sortString(TreeSet<PetType> tr1) {
         TreeSet<String> tr2 = new TreeSet();
         for (PetType p1 : tr1) {
@@ -1605,108 +1674,6 @@ public class PetManager extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PetManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PetManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PetManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PetManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        //System.out.println("Run Rune Manage alone");
-        runAlone = true;
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PetManager().setVisible(true);
-            }
-        });
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckOnlyPets;
-    private javax.swing.JCheckBox jCheckShowBaseStat;
-    private javax.swing.JComboBox<String> jComboAllPet;
-    private javax.swing.JComboBox<String> jComboBoss;
-    private javax.swing.JComboBox<String> jComboEquipRunes;
-    private javax.swing.JComboBox<String> jComboLeaderSkill;
-    private javax.swing.JComboBox<String> jComboNumDebuff;
-    private javax.swing.JComboBox<String> jComboPetElement;
-    private javax.swing.JComboBox<String> jComboPetHave;
-    private javax.swing.JComboBox<String> jComboSkillFilter;
-    private javax.swing.JComboBox<String> jComboSkillScale;
-    private javax.swing.JDialog jDialogPetDetail;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabelIcon1;
-    private javax.swing.JLabel jLabelIconDark;
-    private javax.swing.JLabel jLabelIconDetail;
-    private javax.swing.JLabel jLabelIconFire;
-    private javax.swing.JLabel jLabelIconLight;
-    private javax.swing.JLabel jLabelIconWater;
-    private javax.swing.JLabel jLabelIconWind;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane12;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JTabbedPane jTabbedAllPets;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTableAllPets;
-    private javax.swing.JTable jTableExtraPetInfo;
-    private javax.swing.JTable jTableFullDamage;
-    private javax.swing.JTable jTablePetsCompare;
-    private javax.swing.JTable jTableRuneDetail;
-    private javax.swing.JTable jTableSkillDamage;
-    private javax.swing.JTable jTableStatMain;
-    private javax.swing.JTextField jTextBossStats;
-    private javax.swing.JTextField jTextPetName;
-    private javax.swing.JTextField jTextRuneSetInfo;
-    private javax.swing.JTextField jTextSkillDesc;
-    private javax.swing.JTextPane jTextSkillExplain;
-    private javax.swing.JTextArea jTextSkills;
-    private javax.swing.JTextField jTextTotalPets;
-    // End of variables declaration//GEN-END:variables
-
     public void updatePetMath(PetType p2, String petSkill, RuneSet runeEquip) {
         if (p2 != null) {
             for (RuneSkill r1 : p2.skillList) {
@@ -1747,7 +1714,7 @@ public class PetManager extends javax.swing.JFrame {
                     int leader_def = 0;
 
                     long f_atk = p2.b_atk + p2.r_atk + p2.b_atk * (glory_atk + ele_atk + leader_atk) / 100;
-                    //long f_atk = (p2.b_atk * (glory_atk + ele_atk + 0 + (int)p2.atk_leader) / 100 + mainEquipSet.pet_atk);                            
+                    //long f_atk = (p2.b_atk * (glory_atk + ele_atk + 0 + (int)p2.atk_leader) / 100 + mainEquipSet.pet_atk);
                     long f_def = p2.b_def + p2.r_def + p2.b_def * (glory_def + leader_def) / 100;
                     double f_cd = p2.b_cd + p2.r_cd + glory_cd + skill_up + r1.extra_cd * 100;
 
@@ -1841,6 +1808,39 @@ public class PetManager extends javax.swing.JFrame {
                     //System.out.println("f_cd : " + f_cd);
                 }
             }
+        }
+    }
+    // End of variables declaration//GEN-END:variables
+
+    final class RenderWrapText extends DefaultTableCellRenderer {
+
+        JTextArea textarea;
+
+        @Override
+        public Component getTableCellRendererComponent(
+                JTable aTable, Object aNumberValue, boolean aIsSelected,
+                boolean aHasFocus, int aRow, int aColumn) {
+            String value = (String) aNumberValue;
+
+            textarea = new JTextArea();
+            aTable.add(textarea);
+
+            textarea.setWrapStyleWord(true);
+            textarea.setLineWrap(true);
+            DefaultCaret caret = (DefaultCaret) textarea.getCaret();
+            caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+
+            textarea.setText(value);
+            aTable.setRowHeight(90);
+
+            if (aNumberValue == null) {
+                return this;
+            }
+
+            Component renderer = super.getTableCellRendererComponent(
+                    aTable, aNumberValue, aIsSelected, aHasFocus, aRow, aColumn
+            );
+            return this;
         }
     }
 

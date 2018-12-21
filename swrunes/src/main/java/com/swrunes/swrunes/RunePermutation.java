@@ -1,5 +1,9 @@
 package com.swrunes.swrunes;
 
+import com.google.common.collect.Sets;
+import com.swrunes.swrunes.RuneType.RuneSet;
+
+import javax.swing.JComboBox;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -7,28 +11,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
-
-import com.swrunes.swrunes.RuneType.RuneSet;
-
-import com.google.common.collect.Sets;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicLong;
-import javax.swing.JComboBox;
+import java.util.function.Function;
 
 import static com.swrunes.swrunes.RuneType.RAGE_SET;
 import static com.swrunes.swrunes.RuneType.setBonnusNum;
@@ -39,20 +37,41 @@ public class RunePermutation implements Serializable {
     public static AtomicInteger firstRuneRoundCount = new AtomicInteger(0);
     public static int allFirstRune = 0;
     public static long runFirstRune = 0;
-
-    static int bestValue = 0;
-
-    static PetType mainPet;
     public static RuneSet bestRuneSet;
-
-    static List<RuneSet> foundRuneGroup = new ArrayList();
-    static List<RuneType> perRunes = new ArrayList();
-
     public static boolean useThreads = true;
     public static int numThreads = 5;
     public static Set<Integer> exceptPetIds = new HashSet();
-
+    //HashMap<Long,RuneSet> cacheRunes = new HashMap();
+    public static Map<Long, int[]> cacheRunes = new HashMap();
+    public static String estimateTime = "";
+    public static long allBest = 0;
+    public static long curBest = 0;
+    public static long foundBest = 0;
+    public static RuneSet curBestRuneSet = null;
+    public static TreeSet<RuneSet> resultTreeRunes = new TreeSet();
+    public static List<RuneSet> resultRunesList = new ArrayList();
+    public static Set<Integer> excludeList = new HashSet();
+    public static int[] slot246 = {0, 0, 0};
+    public static Set<String>[] slotData = new HashSet[3];
+    public static boolean noBrokenSet = false;
+    public static int[] includeRunes = {-1, -1, -1, -1, -1, -1, -1};
+    public static long startTime = 0;
+    public static long preCalc = 1, preRunes = 0;
+    public static List<String> lockPetLists = new ArrayList<>();
+    public static boolean useStorage = false;
+    public static List<Function<RuneSet, Boolean>> paraRuneList = new ArrayList();
+    public static boolean fullSearch = false;
+    public static boolean fullStop = false;
+    public static javax.swing.JProgressBar pBar = null;
+    static int bestValue = 0;
+    static PetType mainPet;
+    static List<RuneSet> foundRuneGroup = new ArrayList();
+    static List<RuneType> perRunes = new ArrayList();
     static Map<String, RuneType> bestSlot = new HashMap();
+    static int icount = 0;
+    public int minTreeValue = 0;
+    public boolean completeSet = false;
+    int count0 = 0;
 
     // if (a>b) return true
     public static boolean runeCompare(List<Integer> a, List<Integer> b) {
@@ -95,82 +114,6 @@ public class RunePermutation implements Serializable {
         return "[ Total : " + total + " ; free : " + free + " ; used : " + used + " ] ";
     }
 
-    //HashMap<Long,RuneSet> cacheRunes = new HashMap();
-    public static Map<Long, int[]> cacheRunes = new HashMap();
-
-    public void saveCache() {
-        //System.out.println("Save caches : " + cacheRunes.size());
-        try {
-            FileOutputStream fos = new FileOutputStream("cacheRunes.dat");
-
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeInt(cacheRunes.size());
-            for (Long l1 : cacheRunes.keySet()) {
-                oos.writeLong(l1);
-
-                for (int i1 = 0; i1 < RuneType.slabelsFix.length; i1++) {
-                    //s[i1] = ois.readInt();
-                    oos.writeInt(cacheRunes.get(l1)[i1]);
-                }
-                //oos.writeObject(cacheRunes.get(l1));
-            }
-            oos.close();
-            fos.close();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-    }
-
-    public void loadCache() {
-
-        cacheRunes.clear();
-        long t1 = System.currentTimeMillis();
-        try {
-            FileInputStream fis = new FileInputStream("cacheRunes.dat");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            //cacheRunes = (Map<String,String>) ois.readObject();
-            int len = ois.readInt();
-            for (int i = 0; i < len; i++) {
-                long l1 = ois.readLong();
-
-                int[] s = new int[RuneType.slabelsFix.length];
-                for (int i1 = 0; i1 < RuneType.slabelsFix.length; i1++) {
-                    s[i1] = ois.readInt();
-                }
-
-                cacheRunes.put(l1, s);
-            }
-
-            ois.close();
-            fis.close();
-        } catch (Exception ioe) {
-            ioe.printStackTrace();
-            cacheRunes.clear();
-        }
-
-        //System.out.println("Load caches : " + cacheRunes.size() + "  in " + (System.currentTimeMillis() - t1) + " ms");
-    }
-
-    public long getRuneSetId(List<RuneType> curRune) {
-        long total = 0;
-        for (int i = 0; i < 6; i++) {
-            total = total * 1024 + curRune.get(i).id;
-        }
-        return total;
-    }
-
-    public static String estimateTime = "";
-    public static long allBest = 0;
-    public static long curBest = 0;
-    public static long foundBest = 0;
-    public static RuneSet curBestRuneSet = null;
-    public static TreeSet<RuneSet> resultTreeRunes = new TreeSet();
-    public int minTreeValue = 0;
-
-    public static List<RuneSet> resultRunesList = new ArrayList();
-
-    int count0 = 0;
-
     public static String du_str(long s) {
         s = s / 1000;
         if (s >= 3600 * 24) {
@@ -202,236 +145,6 @@ public class RunePermutation implements Serializable {
         //System.out.println("estim : "+current+" ; "+full+" ; "+es);
         return du_str(es);
     }
-
-    public void processTreeSet(RuneSet r1) {
-        //System.out.println("processTreeSet : "+r1.bestValue+" ; "+(count0++));
-        resultTreeRunes.add(r1);
-        //resultRunesList.add(r1);
-        if (true) {
-            return;
-        }
-
-        if (resultTreeRunes.size() < 1000) {
-            resultTreeRunes.add(r1);
-
-            //System.out.println("Min : "+resultTreeRunes.first().bestValue+" ; max : "+resultTreeRunes.last().bestValue);
-            //System.out.println("Add tree : "+minTreeValue+" ; size = "+resultTreeRunes.size());
-        } else if (r1.bestValue > minTreeValue) {
-            resultTreeRunes.add(r1);
-            //System.out.println("Min : "+resultTreeRunes.first().bestValue+" ; max : "+resultTreeRunes.last().bestValue);
-
-            RuneSet p1 = resultTreeRunes.pollFirst();
-            minTreeValue = p1.bestValue;
-            //System.out.println("Remove tree : "+minTreeValue+" ; size = "+resultTreeRunes.size());
-        }
-    }
-
-    public boolean runePosOK(RuneType r, int pos, int mainSet, Set<Integer> formation) {
-        if (r.slot == (pos + 1)) {
-            //if (paraRune!=null && !paraRune.apply(r)) continue;
-            if (formation.contains(pos) && mainSet != r.runeTypeIndex) {
-                return false;
-            }
-            if (completeSet && !formation.contains(pos) && mainSet == r.runeTypeIndex) {
-                return false;
-            }
-            return true;
-        }
-        return false;
-    }
-   
-    public void iteratePermute(int mainSet, Set<Integer> formation, Function<RuneSet, Boolean> para, Function<RuneType, List<Integer>> paraRune,
-            Function<RuneSet, Integer> bestpara, List<RuneSet> bestRuneSet) {
-        if (fullStop) {
-            return;
-        }
-
-        LinkedList<List<RuneType>> fullStack = new LinkedList();
-        int count = 0;
-        Set<RuneType> usedRunes = new HashSet();
-        int pos = 0;
-        for (RuneType r : perRunes) {
-            if (fullStop) {
-                return;
-            }
-            if (runePosOK(r, pos, mainSet, formation)) {
-                List<RuneType> res = new ArrayList();
-                res.add(r);
-                fullStack.add(res);
-            }
-        }
-        //System.out.println(formation + " : " + fullStack);
-        long time1 = System.currentTimeMillis();
-        boolean doneOne=false;
-        while (true) {
-            List<RuneType> last = fullStack.pollLast();
-            if (last != null) {
-                
-
-                Set<Integer> flags = new HashSet();
-                for (RuneType r1 : last) {
-                    flags.add(r1.id);
-                }
-                pos = last.size();
-                if (last.size() >= 6) {
-                    processRune(last, para, paraRune, bestpara, bestRuneSet);
-                    doneOne = true;
-                } else {
-                    for (RuneType r1 : perRunes) {
-                        if (fullStop) {
-                            break;
-                        }
-                        if (!flags.contains(r1.id)) {
-                            if (runePosOK(r1, pos, mainSet, formation)) {
-
-                                List<RuneType> res = new ArrayList();
-                                res.addAll(last);
-                                res.add(r1);
-                                fullStack.add(res);
-                            }
-                        }
-                    }
-                }                
-                if (last.size() == 1) {
-                    firstRuneRoundCount.incrementAndGet();
-                    //System.out.println(firstRuneRoundCount + " / " + allFirstRune);
-                    if (pBar != null && doneOne) {
-                        pBar.setValue(firstRuneRoundCount.get());
-                        estimateTime = estim_str(firstRuneRoundCount.get(), allFirstRune, runFirstRune);
-                    }
-                }
-            }
-            if (fullStack.isEmpty() || fullStop) {
-                RuneSet r1 = new RuneSet();
-                if (bestRuneSet.size() > 0) {
-                    r1 = bestRuneSet.get(0);
-                    if (bestpara.apply(r1) > allBest) {
-                        allBest = bestpara.apply(r1);
-                    }
-                }
-                //System.out.println("Done this patch : " + formation + " : " + totalCount + " : in " + (System.currentTimeMillis() - time1) + " ms. [" + Thread.currentThread().getName() + "] Best rune set : "
-                //        + bestpara.apply(r1) + " : " + r1.runeSets + " curBest : " + allBest);
-                foundRuneGroup.addAll(bestRuneSet);
-                time1 = System.currentTimeMillis();
-                return;
-            }
-        }
-    }
-
-    public void processRune(List<RuneType> curRune, Function<RuneSet, Boolean> para, Function<RuneType, List<Integer>> paraRune, Function<RuneSet, Integer> bestpara, List<RuneSet> bestRuneSet) {
-        totalCount.incrementAndGet();
-
-        //if (true) return;
-        //long id = getRuneSetId(curRune);
-        RuneSet s1 = new RuneSet(curRune);
-        //System.out.println(totalCount + " : Process : " + s1.getSetRunesType());
-        if (noBrokenSet && s1.isBroken) {
-            //System.out.println("Found broken : "+s1);
-            return;
-        }
-        //System.out.println(totalCount+" : Process : "+s1.runeSets);
-
-        s1.equipOnPet(RuneSet.runePet);
-
-        if (totalCount.get() % 10000000 == 0) {
-            //System.out.println("Process : "+totalCount+" : "+s1.getRuneStats(paraRune));
-        }
-
-        if (RuneSet.runePet != null && s1.isSamePet()) {
-            if (curRune.get(0).monsterId == RuneSet.runePet.id) {
-                //System.out.println("Found current rune pet : " + curRune.get(0).monster + " : " + s1.getRuneStats(paraRune));
-            }
-        }
-
-        if (para != null && !para.apply(s1)) {
-            return;
-        }
-
-        //if (true) return;
-        //synchronized(bestRuneSet){
-        s1.bestValue = bestpara.apply(s1);
-        //processTreeSet(s1);
-
-        if (bestRuneSet.size() == 0 || s1.compareTo(bestRuneSet.get(0)) < 0) {
-            if (bestRuneSet.size() > 0) {
-                bestRuneSet.clear();
-            }
-            bestRuneSet.add(s1);
-
-            if (bestpara.apply(s1) > allBest) {
-                allBest = bestpara.apply(s1);
-                curBestRuneSet = s1;
-            }
-            //System.out.println(totalCount+" : Best Rune : "+s1+" : "+bestpara.apply(s1));
-        }
-        if (s1.bestValue >= (allBest * 90) / 100) {
-            processTreeSet(s1);
-        }
-        foundBest++;
-    }
-
-    public void recurPermute(int pos, List<RuneType> curRune, int mainSet, Set<Integer> formation, Set<RuneType> usedRunes, Function<RuneSet, Boolean> para, Function<RuneType, List<Integer>> paraRune,
-            Function<RuneSet, Integer> bestpara, List<RuneSet> bestRuneSet) {
-
-        if (fullStop) {
-            return;
-        }
-        long time1 = System.currentTimeMillis();
-        List<RuneType> res = new ArrayList();
-        res.addAll(curRune);
-        if (pos == 6) {
-            processRune(curRune, para, paraRune, bestpara, bestRuneSet);
-            return;
-        }
-        res.add(perRunes.get(0));
-
-        for (RuneType r : perRunes) {
-            if (fullStop) {
-                break;
-            }
-            if (!usedRunes.contains(r) && r.slot == (pos + 1)) {
-                //if (paraRune!=null && !paraRune.apply(r)) continue;                
-                if (!runePosOK(r, pos, mainSet, formation)) {
-                    continue;
-                }
-
-                String label = r.runeType + "_" + r.slot;
-                //System.out.println("Come here : "+label);
-
-                res.set(pos, r);
-                usedRunes.add(r);
-                recurPermute(pos + 1, res, mainSet, formation, usedRunes, para, paraRune, bestpara, bestRuneSet);
-                usedRunes.remove(r);
-            }
-            if (pos == 0) {
-                firstRuneRoundCount.incrementAndGet();
-                //System.out.println(firstRuneRoundCount + " / " + allFirstRune);
-                if (pBar != null) {
-                    pBar.setValue(firstRuneRoundCount.get());
-                }
-            }
-        }
-        if (pos == 0) {
-            RuneSet r1 = new RuneSet();
-            if (bestRuneSet.size() > 0) {
-                r1 = bestRuneSet.get(0);
-            }
-
-            if (bestpara.apply(r1) > allBest) {
-                allBest = bestpara.apply(r1);
-
-            }
-            //System.out.println("Done this patch : " + formation + " : " + totalCount + " : in " + (System.currentTimeMillis() - time1) + " ms. [" + Thread.currentThread().getName() + "] Best rune set : "
-            //        + bestpara.apply(r1) + " : " + r1.runeSets + " curBest : " + allBest);
-            foundRuneGroup.addAll(bestRuneSet);
-        }
-    }
-
-    public static Set<Integer> excludeList = new HashSet();
-    public static int[] slot246 = {0, 0, 0};
-    public static Set<String>[] slotData = new HashSet[3];
-
-    public static boolean noBrokenSet = false;
 
     public static void genSlot246(String d1, String d2, String d3) {
         //"HP%", "DEF%", "ATK%", "CDmg", "CRate", "ACC", "RES", "SPD"};
@@ -487,8 +200,6 @@ public class RunePermutation implements Serializable {
         return s1;
     }
 
-    public static int[] includeRunes = {-1, -1, -1, -1, -1, -1, -1};
-
     public static void excludeRunes(List<Integer> list) {
         //excludeList.clear();
         excludeList.addAll(list);
@@ -498,24 +209,10 @@ public class RunePermutation implements Serializable {
         exceptPetIds.addAll(list);
     }
 
-    static int icount = 0;
-    public static long startTime = 0;
-
     public static List<RuneSet> perMute(String mainSet, Function<RuneSet, Boolean> para, Function<RuneType, List<Integer>> paraRune,
-            Function<RuneSet, Integer> bestpara) {
+                                        Function<RuneSet, Integer> bestpara) {
         return new RunePermutation().perMuteReal(mainSet, para, paraRune, bestpara);
     }
-
-    //Rune for broken set
-    //must have 2x sub stat or 3 1x stat
-    public boolean isSuperRune(Function<RuneType, List<Integer>> paraRune, RuneType rune) {
-
-        return false;
-    }
-
-    public static long preCalc = 1, preRunes = 0;
-    public static List<String> lockPetLists = new ArrayList<>();
-    public static boolean useStorage = false;
 
     public static void preOptimize(String mainSet, Function<RuneType, List<Integer>> paraRune, Collection<Set<Integer>> alls) {
         int mainSetId = RuneType.getSetId(mainSet);
@@ -749,28 +446,28 @@ public class RunePermutation implements Serializable {
                         //System.out.println("Add broken runes pair : " + r1);
                     }
                 }
-            }            
+            }
             int count2 = 0;
             int count4 = 0;
             for (int i = 0; i < perRunes.size(); i++) {
                 RuneType r1 = perRunes.get(perRunes.size() - i - 1);
                 if (m3[r1.slot] < 10 && r1.runeTypeIndex == mainSetId && !tempRunes1.contains(r1)) {
-                    if (!tempRunes1.contains(r1)){
+                    if (!tempRunes1.contains(r1)) {
                         tempRunes1.add(r1);
                         count2++;
                     }
-                    m3[r1.slot]++;                    
-                }                
-                if (mainSet.contains(",") && m4[r1.runeTypeIndex*10+r1.slot]<5 && 
+                    m3[r1.slot]++;
+                }
+                if (mainSet.contains(",") && m4[r1.runeTypeIndex * 10 + r1.slot] < 5 &&
                         mainSet.toLowerCase().contains(r1.runeType.toLowerCase())) {
-                    m4[r1.runeTypeIndex*10+r1.slot]++;
-                    if (!tempRunes1.contains(r1)){
-                        tempRunes1.add(r1);   
+                    m4[r1.runeTypeIndex * 10 + r1.slot]++;
+                    if (!tempRunes1.contains(r1)) {
+                        tempRunes1.add(r1);
                         count4++;
                     }
                 }
             }
-            /*for (RuneType r1 : perRunes) {            
+            /*for (RuneType r1 : perRunes) {
             if (r1.runeTypeIndex==mainSetId && !tempRunes1.contains(r1)){
                 tempRunes1.add(r1);
                 count2++;
@@ -865,8 +562,6 @@ public class RunePermutation implements Serializable {
         Collection<Set<Integer>> alls = Sets.newHashSet();
         preOptimize(mainSet, paraRune1, alls);
     }
-
-    public static List<Function<RuneSet, Boolean>> paraRuneList = new ArrayList();
 
     public static Function<RuneSet, Integer> detectBestPara(String mainBestPara) {
         Function<RuneSet, Integer> bestpara = null;
@@ -970,13 +665,300 @@ public class RunePermutation implements Serializable {
         return perMute(mainSet, x -> (x.runesetOK(paraRuneList)), paraRune1, detectBestPara(mainBestPara));
     }
 
-    public static boolean fullSearch = false;
-    public static boolean fullStop = false;
-    public static javax.swing.JProgressBar pBar = null;
-    public boolean completeSet = false;
+    public void saveCache() {
+        //System.out.println("Save caches : " + cacheRunes.size());
+        try {
+            FileOutputStream fos = new FileOutputStream("cacheRunes.dat");
+
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeInt(cacheRunes.size());
+            for (Long l1 : cacheRunes.keySet()) {
+                oos.writeLong(l1);
+
+                for (int i1 = 0; i1 < RuneType.slabelsFix.length; i1++) {
+                    //s[i1] = ois.readInt();
+                    oos.writeInt(cacheRunes.get(l1)[i1]);
+                }
+                //oos.writeObject(cacheRunes.get(l1));
+            }
+            oos.close();
+            fos.close();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+    public void loadCache() {
+
+        cacheRunes.clear();
+        long t1 = System.currentTimeMillis();
+        try {
+            FileInputStream fis = new FileInputStream("cacheRunes.dat");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            //cacheRunes = (Map<String,String>) ois.readObject();
+            int len = ois.readInt();
+            for (int i = 0; i < len; i++) {
+                long l1 = ois.readLong();
+
+                int[] s = new int[RuneType.slabelsFix.length];
+                for (int i1 = 0; i1 < RuneType.slabelsFix.length; i1++) {
+                    s[i1] = ois.readInt();
+                }
+
+                cacheRunes.put(l1, s);
+            }
+
+            ois.close();
+            fis.close();
+        } catch (Exception ioe) {
+            ioe.printStackTrace();
+            cacheRunes.clear();
+        }
+
+        //System.out.println("Load caches : " + cacheRunes.size() + "  in " + (System.currentTimeMillis() - t1) + " ms");
+    }
+
+    public long getRuneSetId(List<RuneType> curRune) {
+        long total = 0;
+        for (int i = 0; i < 6; i++) {
+            total = total * 1024 + curRune.get(i).id;
+        }
+        return total;
+    }
+
+    public void processTreeSet(RuneSet r1) {
+        //System.out.println("processTreeSet : "+r1.bestValue+" ; "+(count0++));
+        resultTreeRunes.add(r1);
+        //resultRunesList.add(r1);
+        if (true) {
+            return;
+        }
+
+        if (resultTreeRunes.size() < 1000) {
+            resultTreeRunes.add(r1);
+
+            //System.out.println("Min : "+resultTreeRunes.first().bestValue+" ; max : "+resultTreeRunes.last().bestValue);
+            //System.out.println("Add tree : "+minTreeValue+" ; size = "+resultTreeRunes.size());
+        } else if (r1.bestValue > minTreeValue) {
+            resultTreeRunes.add(r1);
+            //System.out.println("Min : "+resultTreeRunes.first().bestValue+" ; max : "+resultTreeRunes.last().bestValue);
+
+            RuneSet p1 = resultTreeRunes.pollFirst();
+            minTreeValue = p1.bestValue;
+            //System.out.println("Remove tree : "+minTreeValue+" ; size = "+resultTreeRunes.size());
+        }
+    }
+
+    public boolean runePosOK(RuneType r, int pos, int mainSet, Set<Integer> formation) {
+        if (r.slot == (pos + 1)) {
+            //if (paraRune!=null && !paraRune.apply(r)) continue;
+            if (formation.contains(pos) && mainSet != r.runeTypeIndex) {
+                return false;
+            }
+            if (completeSet && !formation.contains(pos) && mainSet == r.runeTypeIndex) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public void iteratePermute(int mainSet, Set<Integer> formation, Function<RuneSet, Boolean> para, Function<RuneType, List<Integer>> paraRune,
+                               Function<RuneSet, Integer> bestpara, List<RuneSet> bestRuneSet) {
+        if (fullStop) {
+            return;
+        }
+
+        LinkedList<List<RuneType>> fullStack = new LinkedList();
+        int count = 0;
+        Set<RuneType> usedRunes = new HashSet();
+        int pos = 0;
+        for (RuneType r : perRunes) {
+            if (fullStop) {
+                return;
+            }
+            if (runePosOK(r, pos, mainSet, formation)) {
+                List<RuneType> res = new ArrayList();
+                res.add(r);
+                fullStack.add(res);
+            }
+        }
+        //System.out.println(formation + " : " + fullStack);
+        long time1 = System.currentTimeMillis();
+        boolean doneOne = false;
+        while (true) {
+            List<RuneType> last = fullStack.pollLast();
+            if (last != null) {
+
+
+                Set<Integer> flags = new HashSet();
+                for (RuneType r1 : last) {
+                    flags.add(r1.id);
+                }
+                pos = last.size();
+                if (last.size() >= 6) {
+                    processRune(last, para, paraRune, bestpara, bestRuneSet);
+                    doneOne = true;
+                } else {
+                    for (RuneType r1 : perRunes) {
+                        if (fullStop) {
+                            break;
+                        }
+                        if (!flags.contains(r1.id)) {
+                            if (runePosOK(r1, pos, mainSet, formation)) {
+
+                                List<RuneType> res = new ArrayList();
+                                res.addAll(last);
+                                res.add(r1);
+                                fullStack.add(res);
+                            }
+                        }
+                    }
+                }
+                if (last.size() == 1) {
+                    firstRuneRoundCount.incrementAndGet();
+                    //System.out.println(firstRuneRoundCount + " / " + allFirstRune);
+                    if (pBar != null && doneOne) {
+                        pBar.setValue(firstRuneRoundCount.get());
+                        estimateTime = estim_str(firstRuneRoundCount.get(), allFirstRune, runFirstRune);
+                    }
+                }
+            }
+            if (fullStack.isEmpty() || fullStop) {
+                RuneSet r1 = new RuneSet();
+                if (bestRuneSet.size() > 0) {
+                    r1 = bestRuneSet.get(0);
+                    if (bestpara.apply(r1) > allBest) {
+                        allBest = bestpara.apply(r1);
+                    }
+                }
+                //System.out.println("Done this patch : " + formation + " : " + totalCount + " : in " + (System.currentTimeMillis() - time1) + " ms. [" + Thread.currentThread().getName() + "] Best rune set : "
+                //        + bestpara.apply(r1) + " : " + r1.runeSets + " curBest : " + allBest);
+                foundRuneGroup.addAll(bestRuneSet);
+                time1 = System.currentTimeMillis();
+                return;
+            }
+        }
+    }
+
+    public void processRune(List<RuneType> curRune, Function<RuneSet, Boolean> para, Function<RuneType, List<Integer>> paraRune, Function<RuneSet, Integer> bestpara, List<RuneSet> bestRuneSet) {
+        totalCount.incrementAndGet();
+
+        //if (true) return;
+        //long id = getRuneSetId(curRune);
+        RuneSet s1 = new RuneSet(curRune);
+        //System.out.println(totalCount + " : Process : " + s1.getSetRunesType());
+        if (noBrokenSet && s1.isBroken) {
+            //System.out.println("Found broken : "+s1);
+            return;
+        }
+        //System.out.println(totalCount+" : Process : "+s1.runeSets);
+
+        s1.equipOnPet(RuneSet.runePet);
+
+        if (totalCount.get() % 10000000 == 0) {
+            //System.out.println("Process : "+totalCount+" : "+s1.getRuneStats(paraRune));
+        }
+
+        if (RuneSet.runePet != null && s1.isSamePet()) {
+            if (curRune.get(0).monsterId == RuneSet.runePet.id) {
+                //System.out.println("Found current rune pet : " + curRune.get(0).monster + " : " + s1.getRuneStats(paraRune));
+            }
+        }
+
+        if (para != null && !para.apply(s1)) {
+            return;
+        }
+
+        //if (true) return;
+        //synchronized(bestRuneSet){
+        s1.bestValue = bestpara.apply(s1);
+        //processTreeSet(s1);
+
+        if (bestRuneSet.size() == 0 || s1.compareTo(bestRuneSet.get(0)) < 0) {
+            if (bestRuneSet.size() > 0) {
+                bestRuneSet.clear();
+            }
+            bestRuneSet.add(s1);
+
+            if (bestpara.apply(s1) > allBest) {
+                allBest = bestpara.apply(s1);
+                curBestRuneSet = s1;
+            }
+            //System.out.println(totalCount+" : Best Rune : "+s1+" : "+bestpara.apply(s1));
+        }
+        if (s1.bestValue >= (allBest * 90) / 100) {
+            processTreeSet(s1);
+        }
+        foundBest++;
+    }
+
+    public void recurPermute(int pos, List<RuneType> curRune, int mainSet, Set<Integer> formation, Set<RuneType> usedRunes, Function<RuneSet, Boolean> para, Function<RuneType, List<Integer>> paraRune,
+                             Function<RuneSet, Integer> bestpara, List<RuneSet> bestRuneSet) {
+
+        if (fullStop) {
+            return;
+        }
+        long time1 = System.currentTimeMillis();
+        List<RuneType> res = new ArrayList();
+        res.addAll(curRune);
+        if (pos == 6) {
+            processRune(curRune, para, paraRune, bestpara, bestRuneSet);
+            return;
+        }
+        res.add(perRunes.get(0));
+
+        for (RuneType r : perRunes) {
+            if (fullStop) {
+                break;
+            }
+            if (!usedRunes.contains(r) && r.slot == (pos + 1)) {
+                //if (paraRune!=null && !paraRune.apply(r)) continue;
+                if (!runePosOK(r, pos, mainSet, formation)) {
+                    continue;
+                }
+
+                String label = r.runeType + "_" + r.slot;
+                //System.out.println("Come here : "+label);
+
+                res.set(pos, r);
+                usedRunes.add(r);
+                recurPermute(pos + 1, res, mainSet, formation, usedRunes, para, paraRune, bestpara, bestRuneSet);
+                usedRunes.remove(r);
+            }
+            if (pos == 0) {
+                firstRuneRoundCount.incrementAndGet();
+                //System.out.println(firstRuneRoundCount + " / " + allFirstRune);
+                if (pBar != null) {
+                    pBar.setValue(firstRuneRoundCount.get());
+                }
+            }
+        }
+        if (pos == 0) {
+            RuneSet r1 = new RuneSet();
+            if (bestRuneSet.size() > 0) {
+                r1 = bestRuneSet.get(0);
+            }
+
+            if (bestpara.apply(r1) > allBest) {
+                allBest = bestpara.apply(r1);
+
+            }
+            //System.out.println("Done this patch : " + formation + " : " + totalCount + " : in " + (System.currentTimeMillis() - time1) + " ms. [" + Thread.currentThread().getName() + "] Best rune set : "
+            //        + bestpara.apply(r1) + " : " + r1.runeSets + " curBest : " + allBest);
+            foundRuneGroup.addAll(bestRuneSet);
+        }
+    }
+
+    //Rune for broken set
+    //must have 2x sub stat or 3 1x stat
+    public boolean isSuperRune(Function<RuneType, List<Integer>> paraRune, RuneType rune) {
+
+        return false;
+    }
 
     public List<RuneSet> perMuteReal(String mainSet, Function<RuneSet, Boolean> para, Function<RuneType, List<Integer>> paraRune,
-            Function<RuneSet, Integer> bestpara) {
+                                     Function<RuneSet, Integer> bestpara) {
         List<RuneSet> finalResult = new ArrayList();
         Collection<Set<Integer>> alls = Sets.newHashSet();
 
@@ -1031,7 +1013,7 @@ public class RunePermutation implements Serializable {
             icount = 0;
             startTime = System.currentTimeMillis();
             firstRuneRoundCount.set(0);
-            estimateTime=" ";
+            estimateTime = " ";
 
             totalCount.set(0);
             for (Set<Integer> formation : alls) {

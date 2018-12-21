@@ -1,19 +1,23 @@
 package com.swrunes.gui;
 
-import java.awt.Font;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeSet;
-import javax.swing.ImageIcon;
-import javax.swing.UIManager;
-
 import com.swrunes.swrunes.ConfigInfo;
 import com.swrunes.swrunes.Crawler;
 import com.swrunes.swrunes.PetType;
 import com.swrunes.swrunes.RuneType;
 import com.swrunes.swrunes.RuneType.RuneSet;
 import com.swrunes.swrunes.SwManager;
+
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.UIManager;
+import java.awt.Font;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TreeSet;
 
 import static com.swrunes.gui.Application.showPetFinalStats;
 
@@ -22,7 +26,83 @@ import static com.swrunes.gui.Application.showPetFinalStats;
  */
 public class PetCompare extends javax.swing.JFrame {
 
+    public static PetType curpet1, curpet2;
+    static PetCompare instance;
     boolean loadingData = false;
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private JComboBox jComboPets1;
+    private JComboBox jComboPets2;
+    private JComboBox jComboRunes1;
+    private JComboBox jComboRunes2;
+    private JComboBox<String> jComboSkill1;
+    private JComboBox<String> jComboSkill2;
+    private JLabel jLabelIcon1;
+    private JLabel jLabelIcon2;
+    private JScrollPane jScrollPane1;
+    private JScrollPane jScrollPane10;
+    private JScrollPane jScrollPane9;
+    private JTable jTable1;
+    private JTable jTableExtraPetInfo1;
+    private JTable jTableExtraPetInfo2;
+
+    /**
+     * Creates new form PetCompare
+     */
+    public PetCompare() {
+
+        UIManager.getLookAndFeelDefaults()
+                .put("defaultFont", new Font("Tahoma", Font.PLAIN, 14));
+
+        initComponents();
+        loadData();
+        updateAllContents();
+    }
+
+    public static PetType detectPet(String s2) {
+        PetType curpet2 = SwManager.pets.get(s2.toLowerCase());
+        if (curpet2 == null) {
+            curpet2 = SwManager.petsBestiary.get(s2);
+        }
+        return curpet2;
+    }
+
+    public static PetCompare getInstance() {
+        if (instance == null) {
+            instance = new PetCompare();
+        }
+        return instance;
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(PetCompare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(PetCompare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(PetCompare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(PetCompare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> new PetCompare().setVisible(true));
+    }
 
     void loadData() {
         loadingData = true;
@@ -62,19 +142,6 @@ public class PetCompare extends javax.swing.JFrame {
             }
         }
         loadingData = false;
-    }
-
-    /**
-     * Creates new form PetCompare
-     */
-    public PetCompare() {
-
-        UIManager.getLookAndFeelDefaults()
-                .put("defaultFont", new Font("Tahoma", Font.PLAIN, 14));
-
-        initComponents();
-        loadData();
-        updateAllContents();
     }
 
     /**
@@ -260,19 +327,9 @@ public class PetCompare extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static PetType curpet1, curpet2;
-
-    public static PetType detectPet(String s2) {
-        PetType curpet2 = SwManager.pets.get(s2.toLowerCase());
-        if (curpet2 == null) {
-            curpet2 = SwManager.petsBestiary.get(s2);
-        }
-        return curpet2;
-    }
-
     public void updateAllContents() {
         if (loadingData) return;
-        //System.out.println("curpet : "+jComboPets1.getSelectedItem().toString());        
+        //System.out.println("curpet : "+jComboPets1.getSelectedItem().toString());
         String s1 = jComboPets1.getSelectedItem().toString();
         String s2 = jComboPets2.getSelectedItem().toString();
 
@@ -365,15 +422,6 @@ public class PetCompare extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jComboSkill2ActionPerformed
 
-    static PetCompare instance;
-
-    public static PetCompare getInstance() {
-        if (instance == null) {
-            instance = new PetCompare();
-        }
-        return instance;
-    }
-
     private void jLabelIcon1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelIcon1MouseClicked
         // TODO add your handling code here:
         //System.out.println("Mouse click : ");
@@ -384,56 +432,5 @@ public class PetCompare extends javax.swing.JFrame {
         // TODO add your handling code here:
         PetManager.getInstance().showDialogDetail(curpet2.name);
     }//GEN-LAST:event_jLabelIcon2MouseClicked
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PetCompare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PetCompare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PetCompare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PetCompare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PetCompare().setVisible(true);
-            }
-        });
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox jComboPets1;
-    private javax.swing.JComboBox jComboPets2;
-    private javax.swing.JComboBox jComboRunes1;
-    private javax.swing.JComboBox jComboRunes2;
-    private javax.swing.JComboBox<String> jComboSkill1;
-    private javax.swing.JComboBox<String> jComboSkill2;
-    private javax.swing.JLabel jLabelIcon1;
-    private javax.swing.JLabel jLabelIcon2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane10;
-    private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTableExtraPetInfo1;
-    private javax.swing.JTable jTableExtraPetInfo2;
     // End of variables declaration//GEN-END:variables
 }

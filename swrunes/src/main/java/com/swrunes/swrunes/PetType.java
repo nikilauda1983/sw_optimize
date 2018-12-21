@@ -1,107 +1,67 @@
 package com.swrunes.swrunes;
 
-import static com.swrunes.gui.Application.scaleImage;
+import com.swrunes.swrunes.RuneType.RuneSet;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import javax.swing.ImageIcon;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import javax.swing.ImageIcon;
 
-import org.json.JSONArray;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.swrunes.swrunes.RuneType.RuneSet;
-
+import static com.swrunes.gui.Application.scaleImage;
 import static com.swrunes.swrunes.SwManager.petsBestiary;
 
 public class PetType implements Comparable<PetType> {
 
-    @Override
-    public int compareTo(PetType o) {
-        return Integer.compare(o.finalValue, finalValue);
-    }
-
-    public int finalValue = 0;
-
-    public static class RuneSkill {
-
-        public String skillName;
-        int skillType;
-        public String skillMulty, skillDesc;
-        public int skillUp = 0;
-        public int numHits = 1;
-        public boolean noWikiMulty = false;
-        public String hitStr = "";
-        public boolean isAoe = false;
-        public double aoeIndex = 1.0;
-        public boolean isAoeRandom = false;
-        public boolean ignoreChloe = false;
-        public boolean ignoreChance = false;
-        public long debuffScale = 0;
-        public long debuffIncre = 0;
-        public long ignoreChanceNum = 0;
-        public long ignoreChanceHit = 0;
-        public double extra_cd = 0.0;
-        public double extra_atk = 0.0;
-        public double extra_damage = 1.0;
-
-        double skillValue = 0;
-        public boolean ignoreDmg = false;
-        public Function<RuneSet, Double> damageMultySkill = null;
-        public Function<RuneSet, Double> afterMulty = null;
-        public boolean isBomb = false;
-        public int type = 0;
-
-        public RuneSkill() {
-
-        }
-
-        @Override
-        public String toString() {
-            return "[" + skillName + " : " + skillMulty + " ; hits : " + numHits + "; skillsup = " + skillUp + "] " + damageMultySkill;
-        }
-    }
+    public static String[] petLabels = {"b_hp", "b_def", "b_atk", "b_cdmg", "b_crate", "b_acc", "b_res", "b_spd"};
+    public static String[] petLabelsNew = {"con", "def", "atk", "critical_damage", "critical_rate", "accuracy", "resist", "spd"};
+    public static Map<String, String> petNameMap = new HashMap();
 
     ;
-
+    public static Map<String, String> petNameMapInv = new HashMap();
+    public static Map<String, String> petNameElement = new HashMap();
+    public int finalValue = 0;
     public RuneSet savedBuild = null;
     public RuneSkill skillItem = new RuneSkill();
     public List<RuneSkill> skillList = new ArrayList();
-
     public int runesEquip = 0;
-    int stats[];
-
     public List<RuneType> equipRuneList = new ArrayList();
     public String name, attribute, oname, a_name = "", u_name = "", full_name = "";
     public int id, stars, element;
     public String unit_id, master_id;
-
-    public static String[] petLabels = {"b_hp", "b_def", "b_atk", "b_cdmg", "b_crate", "b_acc", "b_res", "b_spd"};
-    public static String[] petLabelsNew = {"con", "def", "atk", "critical_damage", "critical_rate", "accuracy", "resist", "spd"};
-
-    ImageIcon petIcon = null;
-
-    public ImageIcon getPetIcon() {
-        if (petIcon == null) {
-            petIcon = new ImageIcon(scaleImage(Crawler.crawlPetPicture(this.a_name), 0.5));
-            return petIcon;
-        } else
-            return petIcon;
-    }
-
     public int baseStats[] = new int[petLabels.length];
     public Map<String, Integer> statfixMap = new HashMap();
-    Map<String, Integer> baseMap = new HashMap();
     public Map<String, String> comboMap = new HashMap();
     public String[] comboList = new String[petLabels.length];
-
-    public static Map<String, String> petNameMap = new HashMap();
-    public static Map<String, String> petNameMapInv = new HashMap();
-    public static Map<String, String> petNameElement = new HashMap();
+    public RuneSet currentEquip = new RuneSet();
+    public boolean isBomb = false;
+    public boolean defDame = false;
+    public boolean isGuildWars = false;
+    public float def_leader = 0;
+    public float atk_leader = 30;
+    public int leader_skill = 30;
+    public long hp, spd, acc, res, cr, cd, def, atk;
+    public int b_atk, b_def, b_hp, b_spd, b_cd;
+    public int r_atk, r_def, r_hp, r_spd, r_cd;
+    public int level = 0;
+    public double SkillMulty = 3;
+    public double skillsUp = 25;
+    public double def_buff = 1.7;
+    public double atk_buff = 1.5;
+    public int statfixRune[] = new int[petLabels.length];
+    public JSONObject jsonData = null;
+    int stats[];
+    ImageIcon petIcon = null;
+    Map<String, Integer> baseMap = new HashMap();
+    Map<String, String> info = new HashMap();
+    Function<RuneSet, Double> damageMulty = x -> (x.f_atk * 3);
+    RuneSet oldRune;
+    RuneSet curRune;
+    int[] REMOVE_COST = {1000, 2500, 5000, 10000, 25000, 50000};
 
     // Mapping can be found at https://github.com/lstern/SWProxy-plugins/blob/master/SWParser/monsters.py
     {
@@ -941,138 +901,6 @@ public class PetType implements Comparable<PetType> {
         }
     }
 
-    Map<String, String> info = new HashMap();
-
-    Function<RuneSet, Double> damageMulty = x -> (x.f_atk * 3);
-    public RuneSet currentEquip = new RuneSet();
-
-    public boolean isBomb = false;
-    public boolean defDame = false;
-    public boolean isGuildWars = false;
-    public float def_leader = 0;
-    public float atk_leader = 30;
-    public int leader_skill = 30;
-
-    public long hp, spd, acc, res, cr, cd, def, atk;
-    public int b_atk, b_def, b_hp, b_spd, b_cd;
-    public int r_atk, r_def, r_hp, r_spd, r_cd;
-
-    public int level = 0;
-    public double SkillMulty = 3;
-    public double skillsUp = 25;
-    public double def_buff = 1.7;
-    public double atk_buff = 1.5;
-
-    public int statfixRune[] = new int[petLabels.length];
-
-    long getDamage() {
-        return atk * cr * cd;
-    }
-
-    public void setBaseStats(int hp, int atk, int def, int spd, int crit) {
-        b_atk = atk;
-        b_def = def;
-        b_hp = hp;
-
-        baseStats[4] = crit;
-        baseStats[2] = atk;
-        baseStats[1] = def;
-        baseStats[0] = hp;
-        baseStats[7] = spd;
-    }
-
-    public void setBaseAtk(int atk) {
-        b_atk = atk;
-        baseStats[2] = atk;
-    }
-
-
-    RuneSet oldRune;
-    RuneSet curRune;
-
-    int[] REMOVE_COST = {1000, 2500, 5000, 10000, 25000, 50000};
-
-    public int calRemoveCost() {
-        int totalCost = 0;
-        for (int i = 0; i < 6; i++) {
-            RuneType r1 = curRune.set[i];
-            RuneType r2 = currentEquip.set[i];
-
-            if (r1 == null || r2 == null) {
-                continue;
-            }
-
-            if (r1.id == r2.id) {
-                continue;
-            }
-
-            if (r2.grade > 0) {
-                totalCost += REMOVE_COST[r2.grade - 1];
-            }
-            if (r1.monsterId > 0 && r1.monsterId != this.id) {
-                totalCost += REMOVE_COST[r1.grade - 1];
-            }
-
-        }
-        return totalCost;
-    }
-
-    public Map<String, String> applyRuneSet(RuneSet set) {
-        curRune = set;
-        set.runePet = this;
-        for (int i = 0; i < petLabels.length; i++) {
-            statfixRune[i] = 0;
-            int incre = 0;
-            try {
-                if (i < 3) {
-                    incre = baseStats[i] * set.totalStats[i] / 100 + set.totalStats[i + petLabels.length];
-                } else {
-                    incre = set.totalStats[i];
-                }
-
-                if (i == 7) {//swift bonus
-                    incre += Math.ceil((double) baseStats[i] * set.totalStats[i + 8] / 100);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                //System.out.println("Error : " + set);
-                System.exit(0);
-            }
-
-            statfixRune[i] = baseStats[i] + incre;
-
-            statfixMap.put(RuneType.slabels[i], statfixRune[i]);
-
-            if (incre == 0) {
-                comboMap.put(RuneType.slabels[i], "" + baseStats[i]);
-            } else if (baseStats[i] == 0) {
-                comboMap.put(RuneType.slabels[i], "" + incre);
-            } else {
-                comboMap.put(RuneType.slabels[i], "" + baseStats[i] + "+" + incre);
-            }
-            comboList[i] = "+" + incre;
-        }
-
-        spd = statfixMap.getOrDefault("spd", 0);
-        acc = statfixMap.getOrDefault("acc", 0);
-        res = statfixMap.getOrDefault("res", 0);
-        cr = statfixMap.getOrDefault("cr", 0);
-        cd = statfixMap.getOrDefault("cd", 0);
-        atk = statfixMap.getOrDefault("atk", 0);
-        def = statfixMap.getOrDefault("def", 0);
-        hp = statfixMap.getOrDefault("hp", 0);
-
-        return comboMap;
-
-    }
-
-    @Override
-    public String toString() {
-        String s1 = "";
-        s1 = "[" + name + " , id_" + id + " ,lv_" + level + " ; " + stars + "* : " + attribute + element + "] " + skillItem;//+statfixMap;
-        return s1;
-    }
-
     public PetType(String name, int def, double hp, int spd) {
         this.spd = spd;
         this.name = name;
@@ -1089,6 +917,7 @@ public class PetType implements Comparable<PetType> {
             this.spd = p2.b_spd + spd;
         }
     }
+
 
     PetType(Bestiary.PetInfo p1) {
         //"b_hp","b_def","b_atk","b_cdmg","b_crate","b_acc","b_res","b_spd"};
@@ -1110,20 +939,6 @@ public class PetType implements Comparable<PetType> {
         u_name = p1.uName;
         full_name = p1.aName + " - " + p1.uName + " (" + p1.element + ")";
     }
-
-    public void updatePetBaseStat() {
-        for (int i = 0; i < petLabels.length; i++) {
-            statfixMap.put(RuneType.slabels[i], baseStats[i]);
-            baseMap.put(RuneType.slabels[i], baseStats[i]);
-        }
-        b_atk = baseMap.getOrDefault("atk", 0);
-        b_def = baseMap.getOrDefault("def", 0);
-        b_hp = baseMap.getOrDefault("hp", 0);
-        b_spd = baseMap.getOrDefault("spd", 0);
-    }
-
-    public JSONObject jsonData = null;
-
     PetType(JSONObject p1, boolean optimizerFile, int index, int runeIndex) {
         try {
             jsonData = p1;
@@ -1275,6 +1090,158 @@ public class PetType implements Comparable<PetType> {
         }
     }
 
+    public static void checkPet(String petName) {
+        //System.out.println("Found pet in petNameMap : " + petName + " : " + petNameMap.values().contains(petName));
+        //System.out.println("petsBestiary : " + petName + " : " + petsBestiary.containsKey(petName));
+
+        //System.out.println("Found id : " + petNameMapInv.get(petName));
+
+        if (petsBestiary.containsKey(petName)) {
+            //System.out.println("Family : [" + petsBestiary.get(petName).u_name + "]");
+            //System.out.println("Found id : " + petNameMapInv.get(petsBestiary.get(petName).u_name));
+        }
+    }
+
+    public static void main(String[] args) {
+        SwManager.getInstance().loadPets("optimizer.json");
+        //SwManager.searchPets("Zaiross");
+        //SwManager.searchPets("Akhamamir");
+        //SwManager.searchPets("Ran");
+        //SwManager.searchPets("Spectra");
+        //SwManager.searchPets("Spectra");
+        //SwManager.searchPets("Sigmarus");
+        //SwManager.searchPets("Hwa");
+        //SwManager.searchPets("Ran");
+        checkPet("Zaiross");
+        checkPet("Martina");
+    }
+
+    @Override
+    public int compareTo(PetType o) {
+        return Integer.compare(o.finalValue, finalValue);
+    }
+
+    public ImageIcon getPetIcon() {
+        if (petIcon == null) {
+            petIcon = new ImageIcon(scaleImage(Crawler.crawlPetPicture(this.a_name), 0.5));
+            return petIcon;
+        } else
+            return petIcon;
+    }
+
+    long getDamage() {
+        return atk * cr * cd;
+    }
+
+    public void setBaseStats(int hp, int atk, int def, int spd, int crit) {
+        b_atk = atk;
+        b_def = def;
+        b_hp = hp;
+
+        baseStats[4] = crit;
+        baseStats[2] = atk;
+        baseStats[1] = def;
+        baseStats[0] = hp;
+        baseStats[7] = spd;
+    }
+
+    public void setBaseAtk(int atk) {
+        b_atk = atk;
+        baseStats[2] = atk;
+    }
+
+    public int calRemoveCost() {
+        int totalCost = 0;
+        for (int i = 0; i < 6; i++) {
+            RuneType r1 = curRune.set[i];
+            RuneType r2 = currentEquip.set[i];
+
+            if (r1 == null || r2 == null) {
+                continue;
+            }
+
+            if (r1.id == r2.id) {
+                continue;
+            }
+
+            if (r2.grade > 0) {
+                totalCost += REMOVE_COST[r2.grade - 1];
+            }
+            if (r1.monsterId > 0 && r1.monsterId != this.id) {
+                totalCost += REMOVE_COST[r1.grade - 1];
+            }
+
+        }
+        return totalCost;
+    }
+
+    public Map<String, String> applyRuneSet(RuneSet set) {
+        curRune = set;
+        set.runePet = this;
+        for (int i = 0; i < petLabels.length; i++) {
+            statfixRune[i] = 0;
+            int incre = 0;
+            try {
+                if (i < 3) {
+                    incre = baseStats[i] * set.totalStats[i] / 100 + set.totalStats[i + petLabels.length];
+                } else {
+                    incre = set.totalStats[i];
+                }
+
+                if (i == 7) {//swift bonus
+                    incre += Math.ceil((double) baseStats[i] * set.totalStats[i + 8] / 100);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                //System.out.println("Error : " + set);
+                System.exit(0);
+            }
+
+            statfixRune[i] = baseStats[i] + incre;
+
+            statfixMap.put(RuneType.slabels[i], statfixRune[i]);
+
+            if (incre == 0) {
+                comboMap.put(RuneType.slabels[i], "" + baseStats[i]);
+            } else if (baseStats[i] == 0) {
+                comboMap.put(RuneType.slabels[i], "" + incre);
+            } else {
+                comboMap.put(RuneType.slabels[i], "" + baseStats[i] + "+" + incre);
+            }
+            comboList[i] = "+" + incre;
+        }
+
+        spd = statfixMap.getOrDefault("spd", 0);
+        acc = statfixMap.getOrDefault("acc", 0);
+        res = statfixMap.getOrDefault("res", 0);
+        cr = statfixMap.getOrDefault("cr", 0);
+        cd = statfixMap.getOrDefault("cd", 0);
+        atk = statfixMap.getOrDefault("atk", 0);
+        def = statfixMap.getOrDefault("def", 0);
+        hp = statfixMap.getOrDefault("hp", 0);
+
+        return comboMap;
+
+    }
+
+    @Override
+    public String toString() {
+        String s1 = "";
+        s1 = "[" + name + " , id_" + id + " ,lv_" + level + " ; " + stars + "* : " + attribute + element + "] " + skillItem;//+statfixMap;
+        return s1;
+    }
+
+    public void updatePetBaseStat() {
+        for (int i = 0; i < petLabels.length; i++) {
+            statfixMap.put(RuneType.slabels[i], baseStats[i]);
+            baseMap.put(RuneType.slabels[i], baseStats[i]);
+        }
+        b_atk = baseMap.getOrDefault("atk", 0);
+        b_def = baseMap.getOrDefault("def", 0);
+        b_hp = baseMap.getOrDefault("hp", 0);
+        b_spd = baseMap.getOrDefault("spd", 0);
+    }
+
     public String showPetRune() {
         ConfigInfo cf = ConfigInfo.getInstance();
         /*this.atk_buff = 1.0;
@@ -1309,29 +1276,41 @@ public class PetType implements Comparable<PetType> {
         return s;
     }
 
-    public static void checkPet(String petName) {
-        //System.out.println("Found pet in petNameMap : " + petName + " : " + petNameMap.values().contains(petName));
-        //System.out.println("petsBestiary : " + petName + " : " + petsBestiary.containsKey(petName));
+    public static class RuneSkill {
 
-        //System.out.println("Found id : " + petNameMapInv.get(petName));
+        public String skillName;
+        public String skillMulty, skillDesc;
+        public int skillUp = 0;
+        public int numHits = 1;
+        public boolean noWikiMulty = false;
+        public String hitStr = "";
+        public boolean isAoe = false;
+        public double aoeIndex = 1.0;
+        public boolean isAoeRandom = false;
+        public boolean ignoreChloe = false;
+        public boolean ignoreChance = false;
+        public long debuffScale = 0;
+        public long debuffIncre = 0;
+        public long ignoreChanceNum = 0;
+        public long ignoreChanceHit = 0;
+        public double extra_cd = 0.0;
+        public double extra_atk = 0.0;
+        public double extra_damage = 1.0;
+        public boolean ignoreDmg = false;
+        public Function<RuneSet, Double> damageMultySkill = null;
+        public Function<RuneSet, Double> afterMulty = null;
+        public boolean isBomb = false;
+        public int type = 0;
+        int skillType;
+        double skillValue = 0;
 
-        if (petsBestiary.containsKey(petName)) {
-            //System.out.println("Family : [" + petsBestiary.get(petName).u_name + "]");
-            //System.out.println("Found id : " + petNameMapInv.get(petsBestiary.get(petName).u_name));
+        public RuneSkill() {
+
         }
-    }
 
-    public static void main(String[] args) {
-        SwManager.getInstance().loadPets("optimizer.json");
-        //SwManager.searchPets("Zaiross");
-        //SwManager.searchPets("Akhamamir");
-        //SwManager.searchPets("Ran");
-        //SwManager.searchPets("Spectra");
-        //SwManager.searchPets("Spectra");
-        //SwManager.searchPets("Sigmarus");
-        //SwManager.searchPets("Hwa");
-        //SwManager.searchPets("Ran");
-        checkPet("Zaiross");
-        checkPet("Martina");
+        @Override
+        public String toString() {
+            return "[" + skillName + " : " + skillMulty + " ; hits : " + numHits + "; skillsup = " + skillUp + "] " + damageMultySkill;
+        }
     }
 };

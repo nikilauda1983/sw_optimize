@@ -1,5 +1,46 @@
 package com.swrunes.gui;
 
+import com.swrunes.swrunes.ConfigInfo;
+import com.swrunes.swrunes.ConfigInfo.PetSetting;
+import com.swrunes.swrunes.Crawler;
+import com.swrunes.swrunes.PetType;
+import com.swrunes.swrunes.PetType.RuneSkill;
+import com.swrunes.swrunes.RunePermutation;
+import com.swrunes.swrunes.RuneType;
+import com.swrunes.swrunes.RuneType.RuneSet;
+import com.swrunes.swrunes.SwManager;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.Timer;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -12,15 +53,9 @@ import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.io.File;
 import java.nio.file.Files;
-
-import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
-import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -28,40 +63,709 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Function;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-
-import com.swrunes.swrunes.ConfigInfo;
-import com.swrunes.swrunes.ConfigInfo.PetSetting;
-import com.swrunes.swrunes.Crawler;
-import com.swrunes.swrunes.PetType;
-import com.swrunes.swrunes.PetType.RuneSkill;
-import com.swrunes.swrunes.RunePermutation;
 
 import static com.swrunes.swrunes.RunePermutation.curBestRuneSet;
 import static com.swrunes.swrunes.RunePermutation.excludeList;
-
-import com.swrunes.swrunes.RuneType;
-import com.swrunes.swrunes.RuneType.RuneSet;
-
 import static com.swrunes.swrunes.RuneType.SPD;
 import static com.swrunes.swrunes.RuneType.setBonnusNum;
-
-import com.swrunes.swrunes.SwManager;
-
 import static com.swrunes.swrunes.SwManager.runesIds;
+import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
+import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 
 /**
  * The main application
  */
 public class Application extends javax.swing.JFrame {
+
+    public static int[] FONT_SIZE = {13, 14, 16, 18, 20};
+    public static RuneSet curRuneSet;
+    public static PetType curPet = null;
+    public static Map<String, BufferedImage> runeIconCache = new HashMap<>();
+    public static Map<String, BufferedImage> cachedImages = new HashMap();
+    String oTitle = "";
+    boolean initOk = false;
+    boolean petLoading = false;
+    PetSetting curPetSetting = null;
+    int paraValue = 0;
+    String paraRunes = "";
+    String mainSet = "";
+    JCheckBox[] checkBoxFilters = new JCheckBox[RuneType.slabels.length];
+    RuneSet curGoodSet = new RuneSet();
+    long timerCount = 0;
+    List<RuneSet> displayRuneList = new ArrayList();
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private JComboBox fifthFilterVar;
+    private JComboBox<String> firstFilterVar;
+    private JComboBox fourthFilterVar;
+    private JButton jButton1;
+    private JButton jButton10;
+    private JButton jButton11;
+    private JButton jButton12;
+    private JButton jButton13;
+    private JButton jButton2;
+    private JButton jButton3;
+    private JButton jButton4;
+    private JButton jButton5;
+    private JButton jButton6;
+    private JButton jButton7;
+    private JButton jButton8;
+    private JButton jButton9;
+    private JButton jButtonBuildSave;
+    private JButton jButtonCheckRunes;
+    private JButton jButtonDelete;
+    private JButton jButtonGWSetting;
+    private JButton jButtonOptimize;
+    private JButton jButtonStop;
+    private JCheckBox jCheckAcc;
+    private JCheckBox jCheckAtk;
+    private JCheckBox jCheckCrit;
+    private JCheckBox jCheckCritDmg;
+    private JCheckBox jCheckDef;
+    private JCheckBox jCheckExcludeLocked;
+    private JCheckBox jCheckFavourite;
+    private JCheckBox jCheckGuildWars;
+    private JCheckBox jCheckHP;
+    private JCheckBox jCheckLockedBuild;
+    private JCheckBox jCheckNemesis;
+    private JCheckBox jCheckNoBroken;
+    private JCheckBox jCheckOnlyStorge;
+    private JCheckBox jCheckPet4StarRune;
+    private JCheckBox jCheckPet5StarRune;
+    private JCheckBox jCheckRes;
+    private JCheckBox jCheckRevenge;
+    private JCheckBox jCheckShield;
+    private JCheckBox jCheckSpd;
+    private JCheckBox jCheckThreads;
+    private JCheckBox jCheckUpPet40;
+    private JCheckBox jCheckWill;
+    private JComboBox<String> jComboDouble;
+    private JComboBox<String> jComboFavourite;
+    private JComboBox<String> jComboFontSize;
+    private JComboBox jComboMainRune;
+    private JComboBox jComboOptimizeFinal;
+    private JComboBox<String> jComboPetBuilds;
+    private JComboBox<String> jComboPetLevel;
+    private JComboBox jComboPets;
+    private JComboBox<String> jComboRuneUpgrade;
+    private JComboBox<String> jComboSkill;
+    private JComboBox jComboSlot2;
+    private JComboBox jComboSlot4;
+    private JComboBox jComboSlot6;
+    private JDialog jDialogBuilds;
+    private JDialog jDialogGlorySetting;
+    private JDialog jDialogHelp;
+    private JDialog jDialogRune;
+    private JDialog jDialogRuneManage;
+    private JFrame jFrameOptimize;
+    private JFrame jFrameResults;
+    private JLabel jLabel1;
+    private JLabel jLabel10;
+    private JLabel jLabel100;
+    private JLabel jLabel11;
+    private JLabel jLabel12;
+    private JLabel jLabel13;
+    private JLabel jLabel14;
+    private JLabel jLabel15;
+    private JLabel jLabel16;
+    private JLabel jLabel17;
+    private JLabel jLabel18;
+    private JLabel jLabel19;
+    private JLabel jLabel2;
+    private JLabel jLabel20;
+    private JLabel jLabel21;
+    private JLabel jLabel22;
+    private JLabel jLabel23;
+    private JLabel jLabel24;
+    private JLabel jLabel25;
+    private JLabel jLabel26;
+    private JLabel jLabel27;
+    private JLabel jLabel28;
+    private JLabel jLabel29;
+    private JLabel jLabel3;
+    private JLabel jLabel30;
+    private JLabel jLabel31;
+    private JLabel jLabel32;
+    private JLabel jLabel33;
+    private JLabel jLabel34;
+    private JLabel jLabel35;
+    private JLabel jLabel36;
+    private JLabel jLabel37;
+    private JLabel jLabel38;
+    private JLabel jLabel4;
+    private JLabel jLabel5;
+    private JLabel jLabel6;
+    private JLabel jLabel7;
+    private JLabel jLabel8;
+    private JLabel jLabel9;
+    private JLabel jLabelIcon;
+    private JMenu jMenu1;
+    private JMenu jMenu2;
+    private JMenu jMenu3;
+    private JMenu jMenu4;
+    private JMenu jMenu5;
+    private JMenuBar jMenuBar1;
+    private JMenuItem jMenuItem1;
+    private JMenuItem jMenuItem10;
+    private JMenuItem jMenuItem11;
+    private JMenuItem jMenuItem12;
+    private JMenuItem jMenuItem13;
+    private JMenuItem jMenuItem2;
+    private JMenuItem jMenuItem3;
+    private JMenuItem jMenuItem4;
+    private JMenuItem jMenuItem5;
+    private JMenuItem jMenuItem6;
+    private JMenuItem jMenuItem7;
+    private JMenuItem jMenuItem8;
+    private JMenuItem jMenuItem9;
+    private JPanel jPanel1;
+    private JPanel jPanel10;
+    private JPanel jPanel11;
+    private JPanel jPanel2;
+    private JPanel jPanel3;
+    private JPanel jPanel4;
+    private JPanel jPanel5;
+    private JPanel jPanel6;
+    private JPanel jPanel7;
+    private JPanel jPanel8;
+    private JPanel jPanel9;
+    private JProgressBar jProgressBar;
+    private JScrollPane jScrollPane1;
+    private JScrollPane jScrollPane10;
+    private JScrollPane jScrollPane11;
+    private JScrollPane jScrollPane12;
+    private JScrollPane jScrollPane13;
+    private JScrollPane jScrollPane14;
+    private JScrollPane jScrollPane15;
+    private JScrollPane jScrollPane16;
+    private JScrollPane jScrollPane17;
+    private JScrollPane jScrollPane18;
+    private JScrollPane jScrollPane19;
+    private JScrollPane jScrollPane2;
+    private JScrollPane jScrollPane3;
+    private JScrollPane jScrollPane4;
+    private JScrollPane jScrollPane5;
+    private JScrollPane jScrollPane6;
+    private JScrollPane jScrollPane7;
+    private JScrollPane jScrollPane8;
+    private JScrollPane jScrollPane9;
+    private JTabbedPane jTabbedPane1;
+    private JTable jTable1;
+    private JTable jTableBuilds;
+    private JTable jTableCurRune;
+    private JTable jTableCurRune2;
+    private JTable jTableCurRuneBuild;
+    private JTable jTableCurRuneMain;
+    private JTable jTableCurRuneOptimized;
+    private JTable jTableExtraPetInfo;
+    private JTable jTablePetStatOptmized;
+    private JTable jTablePetStatResults;
+    private JTable jTableResults;
+    private JTable jTableResultsOptimized;
+    private JTable jTableStatBuild;
+    private JTable jTableStatMain;
+    private JFormattedTextField jTextAllPermus;
+    private JTextArea jTextArea1;
+    private JTextArea jTextArea2;
+    private JFormattedTextField jTextCurBest;
+    private JTextPane jTextCurrentRune;
+    private JTextField jTextExcludeRunes;
+    private JFormattedTextField jTextFilterValue;
+    private JFormattedTextField jTextFoundSet;
+    ActionListener updateClockAction = new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            //System.out.println("Say hello : "+RunePermutation.totalCount);
+            jTextAllPermus.setValue(RunePermutation.totalCount);
+            jProgressBar.setStringPainted(true);
+            jProgressBar.setString((System.currentTimeMillis() - RunePermutation.startTime) / 1000 + " s");
+
+            jTextCurBest.setValue(RunePermutation.allBest);
+            setTitle("" + jProgressBar.getValue() * 100 / jProgressBar.getMaximum() + " % ; " + jProgressBar.getString() + " ; " + RunePermutation.estimateTime);
+
+            //System.out.println("curBestRuneSet : "+curBestRuneSet);
+            //System.out.println("curGoodSet : "+curGoodSet);
+            jTextFoundSet.setValue(RunePermutation.foundBest);
+
+            if (curBestRuneSet != null && curBestRuneSet != curGoodSet) {
+                curGoodSet = RunePermutation.curBestRuneSet;
+                loadOptimizedRune(curGoodSet);
+            }
+            timerCount++;
+            if (timerCount % 2 == 0) {
+                //updateOptimizeResults();
+            }
+        }
+    };
+    private javax.swing.JTextField jTextGlobalLocks;
+    private javax.swing.JTextField jTextIncludeRunes;
+    private javax.swing.JTextField jTextLocks;
+    private javax.swing.JTextPane jTextOutput;
+    private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JFormattedTextField jTextRuneLevel;
+    private javax.swing.JFormattedTextField jTextRuneProcess;
+    private javax.swing.JTextField jTextSkillMulty;
+    private javax.swing.JComboBox<String> secondFilterVar;
+    private javax.swing.JFormattedTextField tFifthValue;
+    private javax.swing.JFormattedTextField tFirstValue;
+    private javax.swing.JFormattedTextField tFourthValue;
+    private javax.swing.JFormattedTextField tGloryATK;
+    private javax.swing.JFormattedTextField tGloryCD;
+    private javax.swing.JFormattedTextField tGloryDEF;
+    private javax.swing.JFormattedTextField tGloryDarkAtk;
+    private javax.swing.JFormattedTextField tGloryFireAtk;
+    private javax.swing.JFormattedTextField tGloryHP;
+    private javax.swing.JFormattedTextField tGloryLightAtk;
+    private javax.swing.JFormattedTextField tGlorySpd;
+    private javax.swing.JFormattedTextField tGloryWaterAtk;
+    private javax.swing.JFormattedTextField tGloryWindAtk;
+    private javax.swing.JFormattedTextField tLeaderSkill;
+    private javax.swing.JTextField tSecondRuneSet;
+    private javax.swing.JFormattedTextField tSecondValue;
+    private javax.swing.JFormattedTextField tThirdValue;
+    private javax.swing.JFormattedTextField tWarAtk;
+    private javax.swing.JFormattedTextField tWarCd;
+    private javax.swing.JFormattedTextField tWarDef;
+    private javax.swing.JFormattedTextField tWarHp;
+    private javax.swing.JFormattedTextField textNumThreads;
+    private javax.swing.JComboBox thirdFilterVar;
+
+    /**
+     * Creates new form mainWindow
+     */
+    public Application() {
+        int fontSize = FONT_SIZE[ConfigInfo.getInstance().fontSize];
+        //System.out.println("Font size : " + fontSize);
+        UIManager.getLookAndFeelDefaults()
+                .put("defaultFont", new Font("Tahoma", Font.PLAIN, fontSize));
+        initComponents();
+        loadData();
+        initOk = true;
+
+        loadOneTime();
+
+        jTableResults.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                if (jTableResults.getSelectedRow() > -1) {
+                    // print first column value from selected row
+                    //System.out.println(jTableResults.getValueAt(jTableResults.getSelectedRow(), 0).toString());
+                    int runeId = Integer.parseInt(jTableResults.getValueAt(jTableResults.getSelectedRow(), 0).toString()) - 1;
+
+                    if (runeId < displayRuneList.size()) {
+                        RuneSet r1 = displayRuneList.get(runeId);
+                        displayRune2Table(r1, jTableResultsOptimized);
+                        updateOptimizedRuneStats(jTablePetStatResults, r1);
+                    }
+                }
+            }
+        });
+
+        //System.out.println("Come here last pet : " + ConfigInfo.getInstance().lastPet);
+        oTitle = this.getTitle();
+
+        loadOnePet(ConfigInfo.getInstance().lastPet);
+        jFrameOptimize.pack();
+        jFrameOptimize.setVisible(true);
+    }
+
+    public static void displayStatMain(JTable jTableStatMain, PetType pet) {
+        setupTable(jTableStatMain);
+        jTableStatMain.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTableStatMain.getColumnModel().getColumn(1).setPreferredWidth(60);
+        jTableStatMain.getColumnModel().getColumn(2).setPreferredWidth(70);
+        for (int i = 0; i < RuneType.slabels.length; i++) {
+            jTableStatMain.getModel().setValueAt("<html><b><font color=\"blue\">" + RuneType.slabels[i].toUpperCase() + "</font></b></html>", i, 0);
+            jTableStatMain.getModel().setValueAt(pet.baseStats[i], i, 1);
+            jTableStatMain.getModel().setValueAt(pet.comboList[i], i, 2);
+            jTableStatMain.getModel().setValueAt("<html><b><font color=\"red\">" + formatNumber(pet.statfixRune[i]) + "</font></b></html>", i, 3);
+        }
+    }
+
+    public static int getInt(JFormattedTextField text) {
+        try {
+            // TODO add your handling code here:
+            text.commitEdit();
+        } catch (ParseException ex) {
+            //ex.printStackTrace();
+            return 0;
+        }
+        if (text.getValue() != null) {
+            return ((Number) text.getValue()).intValue();
+        }
+        return 0;
+    }
+
+    public static void drawImageScale(BufferedImage bf, BufferedImage legend, int x, int y, double scale) {
+        bf.getGraphics().drawImage(legend, x, y, (int) (legend.getWidth() * scale), (int) (legend.getHeight() * scale), null);
+    }
+
+    public static BufferedImage tint2(BufferedImage image, Color color) {
+        BufferedImage dt = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        for (int x = 0; x < image.getWidth(); x++) {
+            for (int y = 0; y < image.getHeight(); y++) {
+                Color pixelColor = new Color(image.getRGB(x, y), true);
+                int r = (pixelColor.getRed() + color.getRed()) / 2;
+                int g = (pixelColor.getGreen() + color.getGreen()) / 2;
+                int b = (pixelColor.getBlue() + color.getBlue()) / 2;
+                int a = pixelColor.getAlpha();
+                int rgba = (a << 24) | (r << 16) | (g << 8) | b;
+
+                //image.setRGB(x, y, rgba);
+                dt.setRGB(x, y, rgba);
+            }
+        }
+        return dt;
+    }
+
+    public static BufferedImage tint(BufferedImage loadImg, Color color) {
+        BufferedImage img = new BufferedImage(loadImg.getWidth(), loadImg.getHeight(),
+                BufferedImage.TRANSLUCENT);
+        final float tintOpacity = 0.45f;
+        Graphics2D g2d = img.createGraphics();
+
+        //Draw the base image
+        g2d.drawImage(loadImg, null, 0, 0);
+        //Set the color to a transparent version of the input color
+        g2d.setColor(new Color(color.getRed() / 255f, color.getGreen() / 255f,
+                color.getBlue() / 255f, tintOpacity));
+
+        //Iterate over every pixel, if it isn't transparent paint over it
+        Raster data = loadImg.getData();
+        for (int x = data.getMinX(); x < data.getWidth(); x++) {
+            for (int y = data.getMinY(); y < data.getHeight(); y++) {
+                int[] pixel = data.getPixel(x, y, new int[4]);
+                if (pixel[3] > 0) { //If pixel isn't full alpha. Could also be pixel[3]==255
+                    g2d.fillRect(x, y, 1, 1);
+                }
+            }
+        }
+        g2d.dispose();
+        return img;
+    }
+
+    public static BufferedImage scaleImage(BufferedImage background, double scale) {
+        BufferedImage bf = new BufferedImage((int) (background.getWidth() * scale), (int) (background.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
+        drawImageScale(bf, background, 0, 0, scale);
+        return bf;
+    }
+
+    public static BufferedImage getRuneIcon(RuneType r1) {
+        int rune_quality = r1.subStatGuis.size();
+        String iname = r1.runeType + "_" + r1.slot + "_" + r1.runeTypeIndex + "_" + rune_quality + "_" + r1.level + "_" + r1.grade;
+
+        if (!runeIconCache.containsKey(iname)) {
+            runeIconCache.put(iname, getRuneIcon2(r1));
+        }
+        return runeIconCache.get(iname);
+    }
+
+    public static BufferedImage getRuneIcon2(RuneType r1) {
+        try {
+            double scale = 0.8;
+            String[] bg_files = {"normal", "magic", "rare", "hero", "legend"};
+
+            int rune_quality = r1.subStatGuis.size();
+            BufferedImage background = getResImg("bg_" + bg_files[rune_quality]);
+            BufferedImage rune1 = getResImg("rune" + r1.slot);
+            BufferedImage violent = getResImg(RuneType.setBonnusLabel[r1.runeTypeIndex].toLowerCase());
+            BufferedImage star1 = getResImg("star-unawakened");
+            BufferedImage star2 = getResImg("star-awakened");
+            //bf.getGraphics().fillRect(0, 0, 80, 80);
+
+            BufferedImage bf = new BufferedImage((int) (background.getWidth() * scale), (int) (background.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
+
+            int x = 0;
+            int y = 0;
+            int w = bf.getWidth();
+            int h = bf.getHeight();
+
+            Graphics g = bf.getGraphics();
+
+            drawImageScale(bf, background, x, y, scale);
+
+            //g.drawImage(rune1, x+9, y+6, null);
+            g.drawImage(rune1, x + w / 2 - rune1.getWidth() / 2, y + h / 2 - rune1.getHeight() / 2, null);
+
+            Color[] tintColors = {new Color(255, 255, 255), new Color(5, 222, 105), new Color(80, 255, 237), new Color(255, 144, 255), new Color(250, 170, 81)};
+
+            double d2 = 0.5;
+            int[] offsets = {5, 0, 0, -2, 0, 0};
+            int[] offsetsX = {0, -2, -2, 0, 2, 2};
+
+            //System.out.println("Draw rune : "+r1+" ; "+rune_quality);
+            if (violent != null && rune_quality >= 0) {
+                drawImageScale(bf, tint2(violent, tintColors[rune_quality]), x + offsetsX[r1.slot - 1] + w / 2 - (int) (violent.getWidth() * d2 / 2), y + offsets[r1.slot - 1] + h / 2 - (int) (violent.getHeight() * d2 / 2), d2);
+            }
+
+            if (r1.level == 15) {
+                star1 = star2;
+            }
+
+            for (int i = 0; i < r1.grade; i++) {
+                drawImageScale(bf, star1, x + 2 + (int) (i * 8), y + 2, 0.5);
+            }
+            //Font myFont = new Font ("Courier New", 1, 10);
+            g.setFont(new Font("default", Font.BOLD, 12));
+
+            int of2 = 0;
+            if (r1.level < 10) {
+                of2 = 7;
+            }
+
+            if (r1.level > 0) {
+                g.drawString("+" + r1.level, x + 36 + of2, y + 56);
+            }
+
+            return bf;
+
+        } catch (Exception e) {
+            System.out.println("Rune error : " + r1);
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void drawRune(RuneType r1, JLabel p1) {
+        drawRune(r1, p1, false);
+    }
+
+    public static void drawRune(RuneType r1, JLabel p1, boolean showPowerUp) {
+        try {
+            if (p1.getWidth() == 0) {
+                return;
+            }
+
+            BufferedImage bf = new BufferedImage(p1.getWidth(), p1.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            String[] bg_files = {"normal", "magic", "rare", "hero", "legend"};
+
+            int rune_quality = r1.subStatGuis.size();
+            BufferedImage background = getResImg("bg_" + bg_files[rune_quality]);
+            BufferedImage rune1 = getResImg("rune1");
+            BufferedImage violent = getResImg(RuneType.setBonnusLabel[r1.runeTypeIndex].toLowerCase());
+            BufferedImage star1 = getResImg("star-unawakened");
+            BufferedImage star2 = getResImg("star-awakened");
+
+            //bf.getGraphics().fillRect(0, 0, 80, 80);
+            double scale = 0.8;
+            int x = 6;
+            int y = 16;
+            Graphics g = bf.getGraphics();
+
+            /*drawImageScale(bf, background, x, y, scale);
+            g.drawImage(rune1, x+9, y+6, null);
+
+            Color magic = new Color(5,222,105);
+            Color rare = new Color(80,255,237);
+            Color hero = new Color(255,144,255);
+            Color legend = new Color(250,170,81);
+
+
+            Color[] tintColors = {null,new Color(5,222,105),new Color(80,255,237),new Color(255,144,255),new Color(250,170,81)};
+
+            drawImageScale(bf,tint2(violent,tintColors[rune_quality]), x+15, y+19, 0.5);   */
+            g.drawImage(getRuneIcon(r1), x, y, null);
+
+            //Font myFont = new Font ("Courier New", 1, 10);
+            g.setFont(new Font("default", Font.BOLD, 12));
+            //g.drawString("+"+r1.level, x+36, y+56);
+
+            g.setFont(new Font("default", Font.BOLD, 16));
+            g.setColor(Color.BLUE);
+            g.drawString(r1.mainStatGui + " +" + r1.mainStatVal, x + 68, y + 20);
+
+            /*System.out.println("subStat1 : "+r1.subStat1);
+            System.out.println("subStat2 : "+r1.subStat2);
+            System.out.println("subStatGuis : "+r1.subStatGuis);
+            System.out.println("grinds : "+r1.grinds);*/
+
+            if (showPowerUp)
+                g.setFont(new Font("default", Font.BOLD, 14));
+
+            for (int i = 0; i < rune_quality; i++) {
+                String s1 = r1.subStatGuis.get(i);
+                g.setColor(Color.BLUE);
+                s1 = s1.replace("CRt", "CRate");
+                s1 = s1.replace("CDm", "CDmg");
+                if (showPowerUp) {
+                    //g.setColor(Color.RED);
+                    int d2 = r1.getSingleRarity(i);
+                    if (d2 > 0) {
+                        s1 = s1 + " (" + (r1.subStat2.get(i) - r1.grinds.get(i)) + ")";
+                        s1 = s1 + " (+" + d2 + ")";
+                    }
+                } else {
+                    if (r1.grinds.get(i) > 0) {
+                        g.setColor(Color.RED);
+                        s1 = s1 + " (+" + r1.grinds.get(i) + ")";
+                    }
+                    if (r1.enchanted.get(i)) {
+                        g.setColor(Color.MAGENTA);
+                        s1 = s1 + " @";
+                    }
+                }
+                g.drawString(s1, x + 5, y + 80 + i * 19);
+            }
+
+            g.setFont(new Font("default", Font.BOLD, 14));
+            g.drawString(r1.optionStatGui, x + 68, y + 40);
+
+            p1.setIcon(new ImageIcon(bf));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static BufferedImage getResImg(String name) {
+        if (name == null) {
+            return null;
+        }
+        if (!cachedImages.containsKey(name)) {
+            try {
+                BufferedImage star2 = ImageIO.read(Application.class.getResourceAsStream("/" + name + ".png"));
+                cachedImages.put(name, star2);
+            } catch (Exception e) {
+                System.out.println("Error name : " + name);
+                e.printStackTrace();
+            }
+        }
+        return cachedImages.get(name);
+    }
+
+    public static String addBold(String s) {
+        s = "<html><b><font color=\"blue\">" + s;
+        //s=s.replace("+", "</font></b></html>+");
+        return s;
+    }
+
+    public static void setupTable(JTable table) {
+        table.setDefaultEditor(Object.class, null);
+        table.getTableHeader().setReorderingAllowed(false);
+
+        int numCol = table.getColumnCount();
+        for (int i = 0; i < numCol; i++) {
+            table.getColumnModel().getColumn(i).setResizable(false);
+        }
+    }
+
+    public static String formatNumber(long num) {
+        return NumberFormat.getIntegerInstance().format(num);
+    }
+
+    public static String formatSkill(String skill) {
+        if (skill == null) {
+            return "";
+        }
+        skill = skill.replace(",*,", "*");
+        skill = skill.replace(",+,", "+");
+        skill = skill.replace(",(/),", "/");
+        skill = skill.replace("ATTACK_TOT_", "");
+        skill = skill.replace("ATTACK_SPEED", "SPD");
+        skill = skill.replace("ATTACK_DEF", "DEF");
+        skill = skill.replace("TARGET_CUR_HP_RATE", "eHP");
+        skill = skill.replace("ATTACK_CUR_HP_RATE", "cHP");
+        skill = skill.replace("TARGET_TOT_HP", "eHP");
+        skill = skill.replace("(ATK*1.0)", "ATK");
+        skill = skill.replace("100%*", "");
+        skill = skill.replace(",/,", "/");
+
+        if (skill.startsWith("(") && skill.endsWith(")")) {
+            skill = skill.substring(1, skill.length() - 1);
+        }
+        return skill;
+    }
+
+    public static void clearTable(final JTable table) {
+        for (int i = 0; i < table.getRowCount(); i++) {
+            for (int j = 0; j < table.getColumnCount(); j++) {
+                table.setValueAt("", i, j);
+            }
+        }
+    }
+
+    public static void displayRune2Table(RuneSet rs, JTable table) {
+        if (rs == null) {
+            System.out.println("Oops this runeset is Null");
+            return;
+        }
+        //System.out.println("displayRune2Table: " + rs);
+        setupTable(table);
+
+        //jTableCurRuneMain.setRowHeight(1, 30);
+        table.validate();
+
+        DefaultTableModel model = ((DefaultTableModel) table.getModel());
+        clearTable(table);
+
+        table.setRowHeight(0, 60);
+        for (int i = 0; i < 6; i++) {
+            if (rs.set[i] == null || rs.set[i].slot <= 0 || rs.set[i].runeTypeIndex < 0) {
+                continue;
+            }
+            table.getColumnModel().getColumn(i).setHeaderValue("id_" + rs.set[i].id);
+
+            table.getColumnModel().getColumn(i).setCellRenderer(new IconRenderer2());
+            table.getModel().setValueAt(addBold(" " + rs.set[i].mainStatGui + "+" + rs.set[i].futureMainStat), 1, i);
+            table.getModel().setValueAt(new ImageIcon(getRuneIcon(rs.set[i])), 0, i);
+            int k = 2;
+            table.getModel().setValueAt(" " + rs.set[i].optionStatGui, 2, i);
+            //jTableCurRune.getColumnModel().getColumn(i).setCellRenderer(jTableCurRune.getDefaultRenderer(String.class));
+            for (String p1 : rs.set[i].subStatGuis) {
+                k++;
+                table.getModel().setValueAt(" " + p1.replace(" ", ""), k, i);
+            }
+            if (table.getRowCount() > 7) {
+                table.getModel().setValueAt(addBold(rs.set[i].monster), 7, i);
+            }
+        }
+        JTableHeader th = table.getTableHeader();
+        th.repaint();
+        table.invalidate();
+    }
+
+    public static void showPetFinalStats(PetType curPet, JTable jTableExtraPetInfo) {
+        int k1 = 0;
+        RuneSet.runePet = curPet;
+        RuneType.RuneSet rs = curPet.currentEquip;
+        setupTable(jTableExtraPetInfo);
+        jTableExtraPetInfo.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTableExtraPetInfo.getModel().setValueAt(curPet.name, k1++, 1);
+        jTableExtraPetInfo.getModel().setValueAt(formatNumber(rs.finalDamage(0, 0, 0)), k1++, 1);
+        jTableExtraPetInfo.getModel().setValueAt(formatNumber(rs.finalDamage()), k1++, 1);
+        jTableExtraPetInfo.getModel().setValueAt(formatNumber(rs.effectiveHP()), k1++, 1);
+        jTableExtraPetInfo.getModel().setValueAt(formatNumber(rs.pet_hp), k1++, 1);
+        jTableExtraPetInfo.getModel().setValueAt(formatNumber(rs.pet_def), k1++, 1);
+        jTableExtraPetInfo.getModel().setValueAt(rs.pet_spd, k1++, 1);
+        jTableExtraPetInfo.getModel().setValueAt(rs.runeSets, k1++, 1);
+        jTableExtraPetInfo.getModel().setValueAt(curPet.skillItem.skillName, k1++, 1);
+        jTableExtraPetInfo.getModel().setValueAt(formatSkill(curPet.skillItem.skillMulty), k1++, 1);
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Application.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> new Application().setVisible(true));
+    }
 
     public void loadData() {
         jComboMainRune.removeAllItems();
@@ -219,8 +923,6 @@ public class Application extends javax.swing.JFrame {
         jComboFontSize.setSelectedIndex(cf.fontSize);
     }
 
-    String oTitle = "";
-
     public void saveConfig() {
         ConfigInfo cf = ConfigInfo.getInstance();
         cf.glory_cd = Integer.parseInt(tGloryCD.getText());
@@ -287,8 +989,6 @@ public class Application extends javax.swing.JFrame {
         }
     }
 
-    boolean initOk = false;
-
     public void loadOneTime() {
         jTableCurRuneOptimized.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -322,47 +1022,6 @@ public class Application extends javax.swing.JFrame {
                 }
             }
         });
-    }
-
-    public static int[] FONT_SIZE = {13, 14, 16, 18, 20};
-
-    /**
-     * Creates new form mainWindow
-     */
-    public Application() {
-        int fontSize = FONT_SIZE[ConfigInfo.getInstance().fontSize];
-        //System.out.println("Font size : " + fontSize);
-        UIManager.getLookAndFeelDefaults()
-                .put("defaultFont", new Font("Tahoma", Font.PLAIN, fontSize));
-        initComponents();
-        loadData();
-        initOk = true;
-
-        loadOneTime();
-
-        jTableResults.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent event) {
-                if (jTableResults.getSelectedRow() > -1) {
-                    // print first column value from selected row
-                    //System.out.println(jTableResults.getValueAt(jTableResults.getSelectedRow(), 0).toString());
-                    int runeId = Integer.parseInt(jTableResults.getValueAt(jTableResults.getSelectedRow(), 0).toString()) - 1;
-
-                    if (runeId < displayRuneList.size()) {
-                        RuneSet r1 = displayRuneList.get(runeId);
-                        displayRune2Table(r1, jTableResultsOptimized);
-                        updateOptimizedRuneStats(jTablePetStatResults, r1);
-                    }
-                }
-            }
-        });
-
-        //System.out.println("Come here last pet : " + ConfigInfo.getInstance().lastPet);
-        oTitle = this.getTitle();
-
-        loadOnePet(ConfigInfo.getInstance().lastPet);
-        jFrameOptimize.pack();
-        jFrameOptimize.setVisible(true);
     }
 
     /**
@@ -2674,23 +3333,6 @@ public class Application extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void displayStatMain(JTable jTableStatMain, PetType pet) {
-        setupTable(jTableStatMain);
-        jTableStatMain.getColumnModel().getColumn(0).setPreferredWidth(50);
-        jTableStatMain.getColumnModel().getColumn(1).setPreferredWidth(60);
-        jTableStatMain.getColumnModel().getColumn(2).setPreferredWidth(70);
-        for (int i = 0; i < RuneType.slabels.length; i++) {
-            jTableStatMain.getModel().setValueAt("<html><b><font color=\"blue\">" + RuneType.slabels[i].toUpperCase() + "</font></b></html>", i, 0);
-            jTableStatMain.getModel().setValueAt(pet.baseStats[i], i, 1);
-            jTableStatMain.getModel().setValueAt(pet.comboList[i], i, 2);
-            jTableStatMain.getModel().setValueAt("<html><b><font color=\"red\">" + formatNumber(pet.statfixRune[i]) + "</font></b></html>", i, 3);
-        }
-    }
-
-    public static RuneSet curRuneSet;
-
-    boolean petLoading = false;
-
     public void loadOnePet(String petName) {
         if (petLoading) {
             return;
@@ -2794,9 +3436,6 @@ public class Application extends javax.swing.JFrame {
         ((DefaultTableModel) jTableResults.getModel()).setNumRows(0);
     }
 
-    public static PetType curPet = null;
-    PetSetting curPetSetting = null;
-
     private void jComboPetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPetsActionPerformed
         // TODO add your handling code here:
         //System.out.println("Came here comboPet : " + evt.getID() + "; " + jComboPets.getSelectedIndex() + " ; " + jComboPets.getSelectedItem());
@@ -2806,11 +3445,6 @@ public class Application extends javax.swing.JFrame {
             loadOnePet(petName);
         }
     }//GEN-LAST:event_jComboPetsActionPerformed
-
-    int paraValue = 0;
-    String paraRunes = "";
-    String mainSet = "";
-    JCheckBox[] checkBoxFilters = new JCheckBox[RuneType.slabels.length];
 
     //preoptimize; pre optimize
     void updateTotalPermutation() {
@@ -3085,20 +3719,6 @@ public class Application extends javax.swing.JFrame {
         }
     }
 
-    public static int getInt(JFormattedTextField text) {
-        try {
-            // TODO add your handling code here:
-            text.commitEdit();
-        } catch (ParseException ex) {
-            //ex.printStackTrace();
-            return 0;
-        }
-        if (text.getValue() != null) {
-            return ((Number) text.getValue()).intValue();
-        }
-        return 0;
-    }
-
     public String genExcludedListText(Set<String> l) {
         String res = "";
         for (String s1 : l) {
@@ -3194,10 +3814,6 @@ public class Application extends javax.swing.JFrame {
 
     }
 
-    RuneSet curGoodSet = new RuneSet();
-    long timerCount = 0;
-    List<RuneSet> displayRuneList = new ArrayList();
-
     public void updateOptimizeResults() {
         //jTableResults;
         ((DefaultTableModel) jTableResults.getModel()).setNumRows(0);
@@ -3230,31 +3846,6 @@ public class Application extends javax.swing.JFrame {
             i++;
         }
     }
-
-    ActionListener updateClockAction = new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-            //System.out.println("Say hello : "+RunePermutation.totalCount);
-            jTextAllPermus.setValue(RunePermutation.totalCount);
-            jProgressBar.setStringPainted(true);
-            jProgressBar.setString((System.currentTimeMillis() - RunePermutation.startTime) / 1000 + " s");
-
-            jTextCurBest.setValue(RunePermutation.allBest);
-            setTitle("" + jProgressBar.getValue() * 100 / jProgressBar.getMaximum() + " % ; " + jProgressBar.getString() + " ; " + RunePermutation.estimateTime);
-
-            //System.out.println("curBestRuneSet : "+curBestRuneSet);
-            //System.out.println("curGoodSet : "+curGoodSet);
-            jTextFoundSet.setValue(RunePermutation.foundBest);
-
-            if (curBestRuneSet != null && curBestRuneSet != curGoodSet) {
-                curGoodSet = RunePermutation.curBestRuneSet;
-                loadOptimizedRune(curGoodSet);
-            }
-            timerCount++;
-            if (timerCount % 2 == 0) {
-                //updateOptimizeResults();
-            }
-        }
-    };
 
     void actionFilterVar(javax.swing.JComboBox<String> firstFilterVar,
                          javax.swing.JFormattedTextField tFirstValue) {
@@ -3299,7 +3890,7 @@ public class Application extends javax.swing.JFrame {
         jTablePetStatOptmized.getModel().setValueAt("dmg", 8, 0);
         jTablePetStatOptmized.getModel().setValueAt(formatNumber(rs.finalDamage(0, 0, 0)), 8, 1);
         jTablePetStatOptmized.getModel().setValueAt(formatPlus(rs.finalDamage(0, 0, 0) - curRuneSet.finalDamage(0, 0, 0)), 8, 2);
-        
+
         /*jTablePetStatOptmized.getModel().setValueAt("effectHP", 8, 0);
         jTablePetStatOptmized.getModel().setValueAt(formatNumber(rs.effectiveHP()), 8, 1);
         jTablePetStatOptmized.getModel().setValueAt("<html><b><font color=\"orange\">"
@@ -3886,361 +4477,11 @@ public class Application extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckNemesisActionPerformed
 
-    public static void drawImageScale(BufferedImage bf, BufferedImage legend, int x, int y, double scale) {
-        bf.getGraphics().drawImage(legend, x, y, (int) (legend.getWidth() * scale), (int) (legend.getHeight() * scale), null);
-    }
-
-    public static BufferedImage tint2(BufferedImage image, Color color) {
-        BufferedImage dt = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        for (int x = 0; x < image.getWidth(); x++) {
-            for (int y = 0; y < image.getHeight(); y++) {
-                Color pixelColor = new Color(image.getRGB(x, y), true);
-                int r = (pixelColor.getRed() + color.getRed()) / 2;
-                int g = (pixelColor.getGreen() + color.getGreen()) / 2;
-                int b = (pixelColor.getBlue() + color.getBlue()) / 2;
-                int a = pixelColor.getAlpha();
-                int rgba = (a << 24) | (r << 16) | (g << 8) | b;
-
-                //image.setRGB(x, y, rgba);
-                dt.setRGB(x, y, rgba);
-            }
-        }
-        return dt;
-    }
-
-    public static BufferedImage tint(BufferedImage loadImg, Color color) {
-        BufferedImage img = new BufferedImage(loadImg.getWidth(), loadImg.getHeight(),
-                BufferedImage.TRANSLUCENT);
-        final float tintOpacity = 0.45f;
-        Graphics2D g2d = img.createGraphics();
-
-        //Draw the base image
-        g2d.drawImage(loadImg, null, 0, 0);
-        //Set the color to a transparent version of the input color
-        g2d.setColor(new Color(color.getRed() / 255f, color.getGreen() / 255f,
-                color.getBlue() / 255f, tintOpacity));
-
-        //Iterate over every pixel, if it isn't transparent paint over it
-        Raster data = loadImg.getData();
-        for (int x = data.getMinX(); x < data.getWidth(); x++) {
-            for (int y = data.getMinY(); y < data.getHeight(); y++) {
-                int[] pixel = data.getPixel(x, y, new int[4]);
-                if (pixel[3] > 0) { //If pixel isn't full alpha. Could also be pixel[3]==255
-                    g2d.fillRect(x, y, 1, 1);
-                }
-            }
-        }
-        g2d.dispose();
-        return img;
-    }
-
-    public static BufferedImage scaleImage(BufferedImage background, double scale) {
-        BufferedImage bf = new BufferedImage((int) (background.getWidth() * scale), (int) (background.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-        drawImageScale(bf, background, 0, 0, scale);
-        return bf;
-    }
-
-    public static Map<String, BufferedImage> runeIconCache = new HashMap<>();
-
-    public static BufferedImage getRuneIcon(RuneType r1) {
-        int rune_quality = r1.subStatGuis.size();
-        String iname = r1.runeType + "_" + r1.slot + "_" + r1.runeTypeIndex + "_" + rune_quality + "_" + r1.level + "_" + r1.grade;
-
-        if (!runeIconCache.containsKey(iname)) {
-            runeIconCache.put(iname, getRuneIcon2(r1));
-        }
-        return runeIconCache.get(iname);
-    }
-
-    public static BufferedImage getRuneIcon2(RuneType r1) {
-        try {
-            double scale = 0.8;
-            String[] bg_files = {"normal", "magic", "rare", "hero", "legend"};
-
-            int rune_quality = r1.subStatGuis.size();
-            BufferedImage background = getResImg("bg_" + bg_files[rune_quality]);
-            BufferedImage rune1 = getResImg("rune" + r1.slot);
-            BufferedImage violent = getResImg(RuneType.setBonnusLabel[r1.runeTypeIndex].toLowerCase());
-            BufferedImage star1 = getResImg("star-unawakened");
-            BufferedImage star2 = getResImg("star-awakened");
-            //bf.getGraphics().fillRect(0, 0, 80, 80);
-
-            BufferedImage bf = new BufferedImage((int) (background.getWidth() * scale), (int) (background.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-
-            int x = 0;
-            int y = 0;
-            int w = bf.getWidth();
-            int h = bf.getHeight();
-
-            Graphics g = bf.getGraphics();
-
-            drawImageScale(bf, background, x, y, scale);
-
-            //g.drawImage(rune1, x+9, y+6, null);
-            g.drawImage(rune1, x + w / 2 - rune1.getWidth() / 2, y + h / 2 - rune1.getHeight() / 2, null);
-
-            Color[] tintColors = {new Color(255, 255, 255), new Color(5, 222, 105), new Color(80, 255, 237), new Color(255, 144, 255), new Color(250, 170, 81)};
-
-            double d2 = 0.5;
-            int[] offsets = {5, 0, 0, -2, 0, 0};
-            int[] offsetsX = {0, -2, -2, 0, 2, 2};
-
-            //System.out.println("Draw rune : "+r1+" ; "+rune_quality);
-            if (violent != null && rune_quality >= 0) {
-                drawImageScale(bf, tint2(violent, tintColors[rune_quality]), x + offsetsX[r1.slot - 1] + w / 2 - (int) (violent.getWidth() * d2 / 2), y + offsets[r1.slot - 1] + h / 2 - (int) (violent.getHeight() * d2 / 2), d2);
-            }
-
-            if (r1.level == 15) {
-                star1 = star2;
-            }
-
-            for (int i = 0; i < r1.grade; i++) {
-                drawImageScale(bf, star1, x + 2 + (int) (i * 8), y + 2, 0.5);
-            }
-            //Font myFont = new Font ("Courier New", 1, 10);
-            g.setFont(new Font("default", Font.BOLD, 12));
-
-            int of2 = 0;
-            if (r1.level < 10) {
-                of2 = 7;
-            }
-
-            if (r1.level > 0) {
-                g.drawString("+" + r1.level, x + 36 + of2, y + 56);
-            }
-
-            return bf;
-
-        } catch (Exception e) {
-            System.out.println("Rune error : " + r1);
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static void drawRune(RuneType r1, JLabel p1) {
-        drawRune(r1, p1, false);
-    }
-
-    public static void drawRune(RuneType r1, JLabel p1, boolean showPowerUp) {
-        try {
-            if (p1.getWidth() == 0) {
-                return;
-            }
-
-            BufferedImage bf = new BufferedImage(p1.getWidth(), p1.getHeight(), BufferedImage.TYPE_INT_ARGB);
-            String[] bg_files = {"normal", "magic", "rare", "hero", "legend"};
-
-            int rune_quality = r1.subStatGuis.size();
-            BufferedImage background = getResImg("bg_" + bg_files[rune_quality]);
-            BufferedImage rune1 = getResImg("rune1");
-            BufferedImage violent = getResImg(RuneType.setBonnusLabel[r1.runeTypeIndex].toLowerCase());
-            BufferedImage star1 = getResImg("star-unawakened");
-            BufferedImage star2 = getResImg("star-awakened");
-
-            //bf.getGraphics().fillRect(0, 0, 80, 80);
-            double scale = 0.8;
-            int x = 6;
-            int y = 16;
-            Graphics g = bf.getGraphics();
-
-            /*drawImageScale(bf, background, x, y, scale);
-            g.drawImage(rune1, x+9, y+6, null);
-
-            Color magic = new Color(5,222,105);
-            Color rare = new Color(80,255,237);
-            Color hero = new Color(255,144,255);
-            Color legend = new Color(250,170,81);
-
-
-            Color[] tintColors = {null,new Color(5,222,105),new Color(80,255,237),new Color(255,144,255),new Color(250,170,81)};
-
-            drawImageScale(bf,tint2(violent,tintColors[rune_quality]), x+15, y+19, 0.5);   */
-            g.drawImage(getRuneIcon(r1), x, y, null);
-
-            //Font myFont = new Font ("Courier New", 1, 10);
-            g.setFont(new Font("default", Font.BOLD, 12));
-            //g.drawString("+"+r1.level, x+36, y+56);
-
-            g.setFont(new Font("default", Font.BOLD, 16));
-            g.setColor(Color.BLUE);
-            g.drawString(r1.mainStatGui + " +" + r1.mainStatVal, x + 68, y + 20);
-
-            /*System.out.println("subStat1 : "+r1.subStat1);
-            System.out.println("subStat2 : "+r1.subStat2);
-            System.out.println("subStatGuis : "+r1.subStatGuis);
-            System.out.println("grinds : "+r1.grinds);*/
-
-            if (showPowerUp)
-                g.setFont(new Font("default", Font.BOLD, 14));
-
-            for (int i = 0; i < rune_quality; i++) {
-                String s1 = r1.subStatGuis.get(i);
-                g.setColor(Color.BLUE);
-                s1 = s1.replace("CRt", "CRate");
-                s1 = s1.replace("CDm", "CDmg");
-                if (showPowerUp) {
-                    //g.setColor(Color.RED);                    
-                    int d2 = r1.getSingleRarity(i);
-                    if (d2 > 0) {
-                        s1 = s1 + " (" + (r1.subStat2.get(i) - r1.grinds.get(i)) + ")";
-                        s1 = s1 + " (+" + d2 + ")";
-                    }
-                } else {
-                    if (r1.grinds.get(i) > 0) {
-                        g.setColor(Color.RED);
-                        s1 = s1 + " (+" + r1.grinds.get(i) + ")";
-                    }
-                    if (r1.enchanted.get(i)) {
-                        g.setColor(Color.MAGENTA);
-                        s1 = s1 + " @";
-                    }
-                }
-                g.drawString(s1, x + 5, y + 80 + i * 19);
-            }
-
-            g.setFont(new Font("default", Font.BOLD, 14));
-            g.drawString(r1.optionStatGui, x + 68, y + 40);
-
-            p1.setIcon(new ImageIcon(bf));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static Map<String, BufferedImage> cachedImages = new HashMap();
-
-    public static BufferedImage getResImg(String name) {
-        if (name == null) {
-            return null;
-        }
-        if (!cachedImages.containsKey(name)) {
-            try {
-                BufferedImage star2 = ImageIO.read(Application.class.getResourceAsStream("/" + name + ".png"));
-                cachedImages.put(name, star2);
-            } catch (Exception e) {
-                System.out.println("Error name : " + name);
-                e.printStackTrace();
-            }
-        }
-        return cachedImages.get(name);
-    }
-
-    public static String addBold(String s) {
-        s = "<html><b><font color=\"blue\">" + s;
-        //s=s.replace("+", "</font></b></html>+");
-        return s;
-    }
-
-    public static void setupTable(JTable table) {
-        table.setDefaultEditor(Object.class, null);
-        table.getTableHeader().setReorderingAllowed(false);
-
-        int numCol = table.getColumnCount();
-        for (int i = 0; i < numCol; i++) {
-            table.getColumnModel().getColumn(i).setResizable(false);
-        }
-    }
-
     public String formatPlus(int num) {
         if (num >= 0) {
             return "+" + num;
         }
         return "" + num;
-    }
-
-    public static String formatNumber(long num) {
-        return NumberFormat.getIntegerInstance().format(num);
-    }
-
-    public static String formatSkill(String skill) {
-        if (skill == null) {
-            return "";
-        }
-        skill = skill.replace(",*,", "*");
-        skill = skill.replace(",+,", "+");
-        skill = skill.replace(",(/),", "/");
-        skill = skill.replace("ATTACK_TOT_", "");
-        skill = skill.replace("ATTACK_SPEED", "SPD");
-        skill = skill.replace("ATTACK_DEF", "DEF");
-        skill = skill.replace("TARGET_CUR_HP_RATE", "eHP");
-        skill = skill.replace("ATTACK_CUR_HP_RATE", "cHP");
-        skill = skill.replace("TARGET_TOT_HP", "eHP");
-        skill = skill.replace("(ATK*1.0)", "ATK");
-        skill = skill.replace("100%*", "");
-        skill = skill.replace(",/,", "/");
-
-        if (skill.startsWith("(") && skill.endsWith(")")) {
-            skill = skill.substring(1, skill.length() - 1);
-        }
-        return skill;
-    }
-
-    public static void clearTable(final JTable table) {
-        for (int i = 0; i < table.getRowCount(); i++) {
-            for (int j = 0; j < table.getColumnCount(); j++) {
-                table.setValueAt("", i, j);
-            }
-        }
-    }
-
-    public static void displayRune2Table(RuneSet rs, JTable table) {
-        if (rs == null) {
-            System.out.println("Oops this runeset is Null");
-            return;
-        }
-        //System.out.println("displayRune2Table: " + rs);
-        setupTable(table);
-
-        //jTableCurRuneMain.setRowHeight(1, 30);
-        table.validate();
-
-        DefaultTableModel model = ((DefaultTableModel) table.getModel());
-        clearTable(table);
-
-        table.setRowHeight(0, 60);
-        for (int i = 0; i < 6; i++) {
-            if (rs.set[i] == null || rs.set[i].slot <= 0 || rs.set[i].runeTypeIndex < 0) {
-                continue;
-            }
-            table.getColumnModel().getColumn(i).setHeaderValue("id_" + rs.set[i].id);
-
-            table.getColumnModel().getColumn(i).setCellRenderer(new IconRenderer2());
-            table.getModel().setValueAt(addBold(" " + rs.set[i].mainStatGui + "+" + rs.set[i].futureMainStat), 1, i);
-            table.getModel().setValueAt(new ImageIcon(getRuneIcon(rs.set[i])), 0, i);
-            int k = 2;
-            table.getModel().setValueAt(" " + rs.set[i].optionStatGui, 2, i);
-            //jTableCurRune.getColumnModel().getColumn(i).setCellRenderer(jTableCurRune.getDefaultRenderer(String.class));
-            for (String p1 : rs.set[i].subStatGuis) {
-                k++;
-                table.getModel().setValueAt(" " + p1.replace(" ", ""), k, i);
-            }
-            if (table.getRowCount() > 7) {
-                table.getModel().setValueAt(addBold(rs.set[i].monster), 7, i);
-            }
-        }
-        JTableHeader th = table.getTableHeader();
-        th.repaint();
-        table.invalidate();
-    }
-
-    public static void showPetFinalStats(PetType curPet, JTable jTableExtraPetInfo) {
-        int k1 = 0;
-        RuneSet.runePet = curPet;
-        RuneType.RuneSet rs = curPet.currentEquip;
-        setupTable(jTableExtraPetInfo);
-        jTableExtraPetInfo.getColumnModel().getColumn(0).setPreferredWidth(50);
-        jTableExtraPetInfo.getModel().setValueAt(curPet.name, k1++, 1);
-        jTableExtraPetInfo.getModel().setValueAt(formatNumber(rs.finalDamage(0, 0, 0)), k1++, 1);
-        jTableExtraPetInfo.getModel().setValueAt(formatNumber(rs.finalDamage()), k1++, 1);
-        jTableExtraPetInfo.getModel().setValueAt(formatNumber(rs.effectiveHP()), k1++, 1);
-        jTableExtraPetInfo.getModel().setValueAt(formatNumber(rs.pet_hp), k1++, 1);
-        jTableExtraPetInfo.getModel().setValueAt(formatNumber(rs.pet_def), k1++, 1);
-        jTableExtraPetInfo.getModel().setValueAt(rs.pet_spd, k1++, 1);
-        jTableExtraPetInfo.getModel().setValueAt(rs.runeSets, k1++, 1);
-        jTableExtraPetInfo.getModel().setValueAt(curPet.skillItem.skillName, k1++, 1);
-        jTableExtraPetInfo.getModel().setValueAt(formatSkill(curPet.skillItem.skillMulty), k1++, 1);
     }
 
     public void applyCurrentRuneMain() {
@@ -4297,55 +4538,6 @@ public class Application extends javax.swing.JFrame {
             }
         }
     }
-
-    public static class IconRenderer2 extends DefaultTableCellRenderer {
-
-        public IconRenderer2() {
-            super();
-        }
-
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                                                       boolean isSelected, boolean hasFocus, int row, int column) {
-
-            JLabel label = new JLabel();
-            label.setOpaque(true);
-
-            if (value != null && value instanceof String) { //Checking if  cell´s values isnt null and the condition is true
-                //label.setText((String)value);
-                setValue((String) value);
-                return this;
-            } else if (value instanceof ImageIcon) {
-                label.setIcon((ImageIcon) value);
-                //System.out.println("Came here : ");
-                return label;
-            }
-            if (value instanceof JButton) {
-                //this.setSize(new Dimension(20, 20));
-                JButton b1 = (JButton) value;
-                b1.setPreferredSize(new Dimension(10, 10));
-            }
-            return (Component) value;
-        }
-
-    }
-
-    public static class IconRenderer extends DefaultTableCellRenderer {
-
-        public IconRenderer() {
-            super();
-        }
-
-        public void setValue(Object value) {
-            if (value == null) {
-                setText("");
-            } else if (value instanceof String) {
-                setText((String) value);
-            } else {
-                setIcon((ImageIcon) value);
-            }
-        }
-    }
-
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -4926,7 +5118,7 @@ public class Application extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (curPet != null) {
             int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to remove all runes from this pet " + curPet.name +
-                    " ? \nBe carefull, this will change the json File, Better back it up!", "Confirm", JOptionPane.YES_NO_OPTION);
+                    " ? \nBe careful, this will change the json File, Better back it up!", "Confirm", JOptionPane.YES_NO_OPTION);
             if (dialogResult == 0) {
                 for (RuneType r1 : SwManager.runes) {
                     if (r1.monsterId == curPet.id) {
@@ -4994,244 +5186,52 @@ public class Application extends javax.swing.JFrame {
         performOptimize();
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Application.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    public static class IconRenderer2 extends DefaultTableCellRenderer {
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Application().setVisible(true);
+        public IconRenderer2() {
+            super();
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus, int row, int column) {
+
+            JLabel label = new JLabel();
+            label.setOpaque(true);
+
+            if (value != null && value instanceof String) { //Checking if  cell´s values isnt null and the condition is true
+                //label.setText((String)value);
+                setValue((String) value);
+                return this;
+            } else if (value instanceof ImageIcon) {
+                label.setIcon((ImageIcon) value);
+                //System.out.println("Came here : ");
+                return label;
             }
-        });
+            if (value instanceof JButton) {
+                //this.setSize(new Dimension(20, 20));
+                JButton b1 = (JButton) value;
+                b1.setPreferredSize(new Dimension(10, 10));
+            }
+            return (Component) value;
+        }
+
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox fifthFilterVar;
-    private javax.swing.JComboBox<String> firstFilterVar;
-    private javax.swing.JComboBox fourthFilterVar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JButton jButtonBuildSave;
-    private javax.swing.JButton jButtonCheckRunes;
-    private javax.swing.JButton jButtonDelete;
-    private javax.swing.JButton jButtonGWSetting;
-    private javax.swing.JButton jButtonOptimize;
-    private javax.swing.JButton jButtonStop;
-    private javax.swing.JCheckBox jCheckAcc;
-    private javax.swing.JCheckBox jCheckAtk;
-    private javax.swing.JCheckBox jCheckCrit;
-    private javax.swing.JCheckBox jCheckCritDmg;
-    private javax.swing.JCheckBox jCheckDef;
-    private javax.swing.JCheckBox jCheckExcludeLocked;
-    private javax.swing.JCheckBox jCheckFavourite;
-    private javax.swing.JCheckBox jCheckGuildWars;
-    private javax.swing.JCheckBox jCheckHP;
-    private javax.swing.JCheckBox jCheckLockedBuild;
-    private javax.swing.JCheckBox jCheckNemesis;
-    private javax.swing.JCheckBox jCheckNoBroken;
-    private javax.swing.JCheckBox jCheckOnlyStorge;
-    private javax.swing.JCheckBox jCheckPet4StarRune;
-    private javax.swing.JCheckBox jCheckPet5StarRune;
-    private javax.swing.JCheckBox jCheckRes;
-    private javax.swing.JCheckBox jCheckRevenge;
-    private javax.swing.JCheckBox jCheckShield;
-    private javax.swing.JCheckBox jCheckSpd;
-    private javax.swing.JCheckBox jCheckThreads;
-    private javax.swing.JCheckBox jCheckUpPet40;
-    private javax.swing.JCheckBox jCheckWill;
-    private javax.swing.JComboBox<String> jComboDouble;
-    private javax.swing.JComboBox<String> jComboFavourite;
-    private javax.swing.JComboBox<String> jComboFontSize;
-    private javax.swing.JComboBox jComboMainRune;
-    private javax.swing.JComboBox jComboOptimizeFinal;
-    private javax.swing.JComboBox<String> jComboPetBuilds;
-    private javax.swing.JComboBox<String> jComboPetLevel;
-    private javax.swing.JComboBox jComboPets;
-    private javax.swing.JComboBox<String> jComboRuneUpgrade;
-    private javax.swing.JComboBox<String> jComboSkill;
-    private javax.swing.JComboBox jComboSlot2;
-    private javax.swing.JComboBox jComboSlot4;
-    private javax.swing.JComboBox jComboSlot6;
-    private javax.swing.JDialog jDialogBuilds;
-    private javax.swing.JDialog jDialogGlorySetting;
-    private javax.swing.JDialog jDialogHelp;
-    private javax.swing.JDialog jDialogRune;
-    private javax.swing.JDialog jDialogRuneManage;
-    private javax.swing.JFrame jFrameOptimize;
-    private javax.swing.JFrame jFrameResults;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel100;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
-    private javax.swing.JLabel jLabel37;
-    private javax.swing.JLabel jLabel38;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabelIcon;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
-    private javax.swing.JProgressBar jProgressBar;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane10;
-    private javax.swing.JScrollPane jScrollPane11;
-    private javax.swing.JScrollPane jScrollPane12;
-    private javax.swing.JScrollPane jScrollPane13;
-    private javax.swing.JScrollPane jScrollPane14;
-    private javax.swing.JScrollPane jScrollPane15;
-    private javax.swing.JScrollPane jScrollPane16;
-    private javax.swing.JScrollPane jScrollPane17;
-    private javax.swing.JScrollPane jScrollPane18;
-    private javax.swing.JScrollPane jScrollPane19;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTableBuilds;
-    private javax.swing.JTable jTableCurRune;
-    private javax.swing.JTable jTableCurRune2;
-    private javax.swing.JTable jTableCurRuneBuild;
-    private javax.swing.JTable jTableCurRuneMain;
-    private javax.swing.JTable jTableCurRuneOptimized;
-    private javax.swing.JTable jTableExtraPetInfo;
-    private javax.swing.JTable jTablePetStatOptmized;
-    private javax.swing.JTable jTablePetStatResults;
-    private javax.swing.JTable jTableResults;
-    private javax.swing.JTable jTableResultsOptimized;
-    private javax.swing.JTable jTableStatBuild;
-    private javax.swing.JTable jTableStatMain;
-    private javax.swing.JFormattedTextField jTextAllPermus;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JFormattedTextField jTextCurBest;
-    private javax.swing.JTextPane jTextCurrentRune;
-    private javax.swing.JTextField jTextExcludeRunes;
-    private javax.swing.JFormattedTextField jTextFilterValue;
-    private javax.swing.JFormattedTextField jTextFoundSet;
-    private javax.swing.JTextField jTextGlobalLocks;
-    private javax.swing.JTextField jTextIncludeRunes;
-    private javax.swing.JTextField jTextLocks;
-    private javax.swing.JTextPane jTextOutput;
-    private javax.swing.JTextPane jTextPane1;
-    private javax.swing.JFormattedTextField jTextRuneLevel;
-    private javax.swing.JFormattedTextField jTextRuneProcess;
-    private javax.swing.JTextField jTextSkillMulty;
-    private javax.swing.JComboBox<String> secondFilterVar;
-    private javax.swing.JFormattedTextField tFifthValue;
-    private javax.swing.JFormattedTextField tFirstValue;
-    private javax.swing.JFormattedTextField tFourthValue;
-    private javax.swing.JFormattedTextField tGloryATK;
-    private javax.swing.JFormattedTextField tGloryCD;
-    private javax.swing.JFormattedTextField tGloryDEF;
-    private javax.swing.JFormattedTextField tGloryDarkAtk;
-    private javax.swing.JFormattedTextField tGloryFireAtk;
-    private javax.swing.JFormattedTextField tGloryHP;
-    private javax.swing.JFormattedTextField tGloryLightAtk;
-    private javax.swing.JFormattedTextField tGlorySpd;
-    private javax.swing.JFormattedTextField tGloryWaterAtk;
-    private javax.swing.JFormattedTextField tGloryWindAtk;
-    private javax.swing.JFormattedTextField tLeaderSkill;
-    private javax.swing.JTextField tSecondRuneSet;
-    private javax.swing.JFormattedTextField tSecondValue;
-    private javax.swing.JFormattedTextField tThirdValue;
-    private javax.swing.JFormattedTextField tWarAtk;
-    private javax.swing.JFormattedTextField tWarCd;
-    private javax.swing.JFormattedTextField tWarDef;
-    private javax.swing.JFormattedTextField tWarHp;
-    private javax.swing.JFormattedTextField textNumThreads;
-    private javax.swing.JComboBox thirdFilterVar;
+    public static class IconRenderer extends DefaultTableCellRenderer {
+
+        public IconRenderer() {
+            super();
+        }
+
+        public void setValue(Object value) {
+            if (value == null) {
+                setText("");
+            } else if (value instanceof String) {
+                setText((String) value);
+            } else {
+                setIcon((ImageIcon) value);
+            }
+        }
+    }
     // End of variables declaration//GEN-END:variables
 }
