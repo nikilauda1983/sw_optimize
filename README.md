@@ -48,7 +48,7 @@
 
 ## Updates
 
-### Update 1.3.1 - Project Modernization
+### Update 3.1.1 - Project Modernization
 
 * Small internal updates related to new tooling and build process
     * You can now build the jar by going into the `swrunes` folder via terminal and using `./gradlew jar` command.
@@ -61,14 +61,6 @@
 * Project now contains all resources within the jar -- in update 1.4, better optimizations for locally downloading missing resources will be introduced. (Current implementation is broken due to the above transitions)
 * A few resource names were fixed
 * Many `System.out.print` statements were silenced -- new logging will be introduced in version 1.4.X
-
-### Update 1.3 - Summoners War Monster Update and New Features
-
-* Add File/Load menu so we can choose json file instead of Edit/replace content of current json file.
-* Add filter (%hp,%def,%CD) for slot 2,4,6.
-* Support lock rune sets
-* Rune management features . Click Manage Runes button.
-* Better UI with grid table for runeset display
 
 ### Coming Soon
 
