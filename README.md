@@ -28,12 +28,12 @@
 
 ## How to Use
 
-* Generate optimizer.json file from SwProxy. If you dont know how check this : 
+* Generate optimizer.json file from SwProxy. If you don't know how check this:
 	https://www.reddit.com/r/summonerswar/comments/490u23/swproxy_new_version_released/
 * Load your optimizer.json file from Menu File/Load. Or replace the content of file optimizer.json with the new file you got.
-* Choose the pet from Choose pet box, or Favourite ( if you already use this pet before). The pet info will be displayed, current stats, current runes set, current Damage (in gw or toa).
+* Choose the monster from Choose pet box, or Favorite (if you already use this monster before). The monster info will be displayed, current stats, current runes set, current Damage (in gw or toa).
 * Setting your guildwar/glory building level in button GW/Glory Setting
-* Choose your pet stat to optimize near "Optimize for". MainSet set the main runeset, second Set is for secondSet, it can be blank for BrokenSet or :"Blade","Blade,Will","Guard,Energy,Endure"... you can type any set you want with comma. 
+* Choose your monster stat to optimize near "Optimize for". MainSet set the main runeset, second Set is for secondSet, it can be blank for BrokenSet or :"Blade","Blade,Will","Guard,Energy,Endure"... you can type any set you want with comma.
 	* Example for Bernard you want him best spd, choose spd, choose MainSet is Swift, SeconSet we left blank (it means all possible set, broken set). Then hit Optimize button. 
 	* For Lushen : Mainset choose Rage, SecondSet type Blade (We will use Rage,Blade set). optimize for finalDamage (Base on skill 3 of Lushen Amputation). This will generate the best output damage. On "Pet filter" panel, select Cr >= and 70. We want lushen to have at least 70 crit, if you want speed, choose speed at the below. We can have 3 more filters here.
 	* For Chloe : Mainset will be Swift, Second set will be Will. but to be sure Chloe have will set, click on "Will" on Pet Filter (on the right top). Lockpet should be "Bernard", we dont want to use Bernard rune here. Bernard should have best spd runes.
@@ -47,6 +47,13 @@
 * "Values>" next to this text. Is the value to filter all Runes. All rune will have at least one stat >= this value. The higher this value, the less Rune will match and run faster. 7-10 is ok, set it too high, and we will have no runes match our filter. For endGame user, you want it to be 10, most your rune will have substats >=10, but for begginer/medium players set to 5.
 
 ## Updates
+
+### Update 1.3.1
+
+* Small internal updates related to new tooling and build process
+    * You can now build the jar by going into the `swrunes` folder via terminal and using `./gradlew jar` command.
+    * The file will be located under `build/libs/swrunes-<current_version>.jar`
+    * You can also find new releases under the **Release** tab at the top of the main repository page (here)[https://github.com/nikilauda1983/sw_optimize/releases].
 
 ### Update 1.3
 
